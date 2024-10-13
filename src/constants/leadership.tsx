@@ -1,6 +1,6 @@
 export const timeline = [
   {
-    company: "Anirveda - TechnoEconomics Society of PDEU",
+    company: "Anirveda - Techno-Economics Society of PDEU",
     title: "Vice President",
     date: "2021 - 2024",
     description: "",

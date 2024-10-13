@@ -13,15 +13,15 @@ export default function Home() {
     <Container>
       <span className="text-4xl">💼</span>
       <Heading className="font-black">Work History</Heading>
-      <Paragraph className="max-w-xl mt-4">
-        I&apos;m a full-stack developer that loves{" "}
+      <Paragraph className="max-w-xl">
+        I&apos;m an AI Engineer that loves{" "}
         <Highlight>building products</Highlight> and web apps that can impact
         millions of lives
       </Paragraph>
       <WorkHistory />
       <span className="text-4xl">🏆</span>
       <Heading className="font-black">Leadership</Heading>
-      <Paragraph className="max-w-xl mt-4">
+      <Paragraph className="max-w-xl">
         I&apos;ts always a{" "}
         <Highlight>Team Job</Highlight> because not everything is meant to be <Highlight>One-Man Job </Highlight>
       </Paragraph>

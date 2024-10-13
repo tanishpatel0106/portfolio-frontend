@@ -1,6 +1,6 @@
 export const timeline = [
   {
-    company: "",
+    company: "Co-Curriculars",
     title: "",
     date: "",
     description: "",
