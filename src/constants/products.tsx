@@ -14,7 +14,7 @@ export const products = [
     content: (
       <div>
         <p>
-        Developed a cutting-edge speech-to-speech assistant designed to facilitate communication in rural areas where technology adoption is limited. The frontend of the system was built using React, providing a user-friendly interface, while Flask handled the backend services, ensuring seamless integration and efficient processing. Oracle MySQL was employed for database management, offering robust data storage and retrieval capabilities. This assistant supports interactions in multiple vernacular languages, making it accessible to a wide range of users. Leveraging the power of OpenAI&apos;s GPT-3.5, fine-tuned for specific language processing needs, and Whisper for accurate speech recognition, the system enables users to converse effortlessly in their native languages, promoting inclusivity and ease of use.{" "}
+        Developed a cutting-edge speech-to-speech assistant designed to facilitate communication in rural areas where technology adoption is limited. The frontend of the system was built using React, providing a user-friendly interface, while Flask handled the backend services, ensuring seamless integration and efficient processing. Oracle MySQL was employed for database management, offering robust data storage and retrieval capabilities. This assistant supports interactions in multiple vernacular languages, making it accessible to a wide range of users. Leveraging the power of OpenAI&apos;s GPT-4o, fine-tuned for specific language processing needs, and Whisper for accurate speech recognition, the system enables users to converse effortlessly in their native languages, promoting inclusivity and ease of use.{" "}
         </p>
         <p>
         The assistant&apos;s architecture is meticulously crafted to address the unique challenges faced by rural populations, especially those with limited exposure to advanced technology. By combining state-of-the-art speech recognition and natural language processing technologies, the platform offers an intuitive and responsive communication experience. The backend, built with Flask, ensures the system&apos;s operations are smooth and reliable, while Oracle MySQL provides a sturdy foundation for managing user data. This integration of React, Flask, and Oracle MySQL results in a powerful, yet lightweight solution that not only meets the users&apos; needs but also enhances their ability to communicate effectively. The assistant&apos;s ability to support multiple languages and dialects underscores its versatility and commitment to breaking down communication barriers in underserved communities
@@ -23,7 +23,7 @@ export const products = [
     ),
   },
   {
-    href: "https://www.linkedin.com/posts/tanishpatel01_demystifying-defects-activity-7203989235035521024-VeTc?utm_source=share&utm_medium=member_desktop",
+    href: "https://doi.org/10.1109/ACCESS.2024.3425226",
     title: "Demystifying Defects",
     description:
       "Federated Learning and Explainable AI for Semiconductor Fault Detection",
@@ -63,7 +63,7 @@ export const products = [
     content: (
       <div>
         <p>
-        In a groundbreaking project aimed at revolutionizing hospital appointment systems, I engineered an AI-driven scheduling platform designed to optimize appointment allocations. Leveraging a custom Genetic Algorithm, this platform dynamically adjusts and refines scheduling to meet the complex demands of healthcare environments. By simulating the natural selection process, the algorithm intelligently prioritizes patient needs, availability, and resource constraints to minimize waiting times. This innovative solution has successfully reduced patient waiting times by an average of 35%, significantly enhancing the overall efficiency of hospital operations. The reduction in wait times not only alleviates patient frustration but also contributes to a smoother workflow for hospital staff, ultimately leading to improved satisfaction for both patients and healthcare providers. This project stands as a testament to the power of AI in streamlining processes and elevating the quality of healthcare services.{" "}
+        In an innovative project aimed at revolutionizing hospital appointment systems, I engineered an AI-driven scheduling platform designed to optimize appointment allocations. Leveraging a custom Genetic Algorithm, this platform dynamically adjusts and refines scheduling to meet the complex demands of healthcare environments. By simulating the natural selection process, the algorithm intelligently prioritizes patient needs, availability, and resource constraints to minimize waiting times. This innovative solution has successfully reduced patient waiting times by an average of 35%, significantly enhancing the overall efficiency of hospital operations. The reduction in wait times not only alleviates patient frustration but also contributes to a smoother workflow for hospital staff, ultimately leading to improved satisfaction for both patients and healthcare providers. This project stands as a testament to the power of AI in streamlining processes and elevating the quality of healthcare services.{" "}
         </p>
         <p>
         In addition to the AI-driven scheduling platform, I developed a comprehensive web application aimed at streamlining pre-doctor visit processes and simplifying in-app appointment scheduling. This web application is designed to assist patients in conducting preliminary health analyses before their appointments, providing insights that support doctors in making initial assessments. The application integrates predictive AI algorithms to analyze patient data, offering a preliminary diagnosis that can expedite the consultation process. This project has proven to be highly effective, improving patient processing times by 20%. By reducing the time required for initial assessments, the application not only enhances the patient experience but also allows doctors to focus more on personalized patient care. The dual impact of facilitating faster processing and aiding in initial diagnoses underscores the transformative potential of AI in healthcare, making this project a critical tool for modern medical practices.
@@ -94,7 +94,7 @@ export const products = [
     ),
   },
   {
-    href: "https://github.com/tanishpatel0106/Pythakon22-SitRight",
+    href: "https://link.springer.com/book/9789819767939",
     title: "FL for State of Charge Prediction",
     description:
       "Data-Driven SoC Forecasting in Electric Vehicles: A Federated Learning Perspective",
