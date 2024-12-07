@@ -4,10 +4,10 @@ export const products = [
     title: "Predictive Maintenance in SCANIA Trucks",
     description:
       "Mitigating failures by using Federated Learning and Explainable AI",
-    thumbnail: "/images/SOC_1.png",
+    thumbnail: "/images/diagram_minor.png",
     images: [
       "/images/diagram_minor.png",
-      "/images/SHAP_Summary.png",
+      // "/images/SHAP_Summary.png",
     ],
     stack: ["Machine Learning", "xAI", "Secure ML"],
     slug: "pmscania",
