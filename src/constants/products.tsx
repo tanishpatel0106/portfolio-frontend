@@ -1,5 +1,34 @@
 export const products = [
   {
+    href: "https://drive.google.com/file/d/1ifI7p4PkfIVfg2vRjPw-sKFXm30l4Q8t/view?usp=drive_link",
+    title: "Predictive Maintenance in SCANIA Trucks",
+    description:
+      "Mitigating failures by using Federated Learning and Explainable AI",
+    thumbnail: "/images/SOC_1.png",
+    images: [
+      "/images/diagram_minor.png",
+      "/images/SHAP_Summary.png",
+    ],
+    stack: ["Machine Learning", "xAI", "Secure ML"],
+    slug: "pmscania",
+    content: (
+      <div>
+        <p>
+        Predictive maintenance is a vital approach in modern industries, enabling reduced downtime, optimized resources, and enhanced operational efficiency. This study develops a federated survival analysis framework augmented with explainable AI (XAI) to predict the Remaining Useful Life (RUL) of components and assess failure risks while preserving data privacy.{" "}
+        </p>
+        <p>
+        The framework leverages federated learning to aggregate insights from decentralized data across multiple clients. Three survival models—Random Survival Forest (RSF), Gradient Boosting Survival Analysis (GBSA), and Support Survival Vector Machines (SSVM)—were evaluated across 10 federated clients over 10 rounds. Model performance was assessed using the Concordance Index (C-index), where RSF outperformed the others with global training and testing C-index values of 0.7577 and 0.7376, respectively. GBSA followed closely, while SSVM exhibited comparatively lower accuracy, highlighting its limitations in federated environments.
+        </p>
+        <p>
+        Explainability was achieved through SHAP (SHapley Additive exPlanations), providing insights into feature contributions to model predictions. Key features, including 666_0, 309_0, and 158_8, were identified as critical predictors of survival outcomes. SHAP dependence plots illustrated complex feature interactions, while instance-specific force plots highlighted individual component risks, empowering maintenance teams to target high-risk components proactively.
+        </p>
+        <p>
+        The RSF survivability plot demonstrated declining survival probabilities over time, enabling predictive maintenance planning. By identifying components with steeper survival declines, planners can prioritize repairs or replacements, reducing costs and operational disruptions. The federated approach successfully handled client heterogeneity, synthesizing insights from diverse data distributions without compromising data privacy.
+        </p>
+      </div>
+    ),
+  },
+  {
     href: "https://www.linkedin.com/posts/tanishpatel01_codeforgood-codeforgood-activity-7209043833530048512-ujm9?utm_source=share&utm_medium=member_desktop",
     title: "Margshala",
     description:
