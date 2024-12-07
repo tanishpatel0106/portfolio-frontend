@@ -7,9 +7,8 @@ export const products = [
     thumbnail: "/images/diagram_minor.png",
     images: [
       "/images/diagram_minor.png",
-      // "/images/SHAP_Summary.png",
     ],
-    stack: ["Machine Learning", "xAI", "Secure ML"],
+    stack: ["Machine Learning", "Explainable AI", "Federated Learning"],
     slug: "pmscania",
     content: (
       <div>
@@ -24,6 +23,35 @@ export const products = [
         </p>
         <p>
         The RSF survivability plot demonstrated declining survival probabilities over time, enabling predictive maintenance planning. By identifying components with steeper survival declines, planners can prioritize repairs or replacements, reducing costs and operational disruptions. The federated approach successfully handled client heterogeneity, synthesizing insights from diverse data distributions without compromising data privacy.
+        </p>
+      </div>
+    ),
+  },
+  {
+    href: "https://drive.google.com/file/d/1rSmbVlX8G1SdT0GGpVcnLCq5P-Z3NmVH/view?usp=sharing",
+    title: "Advanced Time Series Forecasting",
+    description:
+      "Time Series Forecasting with Exogenous Variables for Restarurants Globally",
+    thumbnail: "/images/PC-1.png",
+    images: [
+      "/images/PC-1.png",
+      "/images/PC-2.png"
+    ],
+    stack: ["Time Series", "Machine Learning", "Applied AI"],
+    slug: "atsforecast",
+    content: (
+      <div>
+        <p>
+        This project explores the application of various forecasting models to predict sales data in a real-world business environment, focusing on both traditional time series models and advanced machine learning techniques. The study aims to compare the performance of models such as SARIMA and Exponential Smoothing with cutting-edge machine learning models, including Long Short-Term Memory (LSTM), NBEATS, and NHITS. Additionally, the research investigates the utility of automated machine learning platforms like Azure AutoML and AutoTS in simplifying the forecasting process while maintaining accuracy.
+        </p>
+        <p>
+        The comparative analysis reveals that while traditional models are effective for simpler time series data with strong seasonal components, they struggle with complex patterns and are less adaptable to changes in data trends. In contrast, machine learning models, particularly LSTM and NBEATS, demonstrate superior performance in capturing intricate patterns and long-term dependencies, offering more accurate forecasts. Automated machine learning platforms significantly reduce the time required for model selection and optimization, making them accessible for businesses with limited data science expertise.
+        </p>
+        <p>
+        The models were deployed in a production environment, where AutoTS was used for daily sales forecasting and Azure AutoML for hourly predictions. The results showed that both models delivered accurate forecasts closely aligned with actual sales data, with Mean Absolute Percentage Errors (MAPE) of 7% for daily forecasts and 7.67% for hourly forecasts. These findings underscore the practical utility of advanced forecasting models in business operations, providing actionable insights for decision-making in areas such as inventory management and staffing.
+        </p>
+        <p>
+        The project concludes that while traditional models have their place, the integration of machine learning and automated tools into forecasting practices offers substantial advantages in terms of accuracy, adaptability, and efficiency. Future research directions include the integration of external data sources, real-time model retraining, the development of hybrid models, and the exploration of these methodologies across different industries. This work lays a strong foundation for the continued enhancement of forecasting models, with the potential to significantly impact business decision-making processes.
         </p>
       </div>
     ),
