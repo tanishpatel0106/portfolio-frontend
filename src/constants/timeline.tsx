@@ -14,7 +14,7 @@
     {
       company: "Dept. of CSE, PDEU",
       title: "Student Researcher",
-      date: "January 2021 - Present",
+      date: "January 2021 - May 2025",
       description: "Involving in cutting edge research pertaining to CS Research Domains.",
       responsibilities: [
         "Conducted in-depth research on emerging data science methodologies, contributing to academic publications and advancing the field of study",
