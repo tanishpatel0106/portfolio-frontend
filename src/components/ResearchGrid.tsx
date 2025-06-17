@@ -6,7 +6,7 @@ import { papers } from "@/constants/research";
 
 export function ResearchGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  relative z-10 py-10 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 place-items-center relative z-10 py-10 max-w-7xl mx-auto">
       {papers.map((paper, index) => (
         <Link href={`/research/${paper.slug}`} key={paper.slug}>
           <Feature {...paper} index={index} />
@@ -29,30 +29,11 @@ const Feature = ({
 }) => {
   return (
     <div
-      className={cn(
-        "flex flex-col lg:border-r  py-10 relative group/feature dark:border-neutral-800",
-        (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800",
-        index < 4 && "lg:border-b dark:border-neutral-800"
-      )}
+      className="w-72 h-60 bg-sky-50 dark:bg-neutral-900 border border-sky-200 dark:border-sky-800 rounded-lg flex flex-col p-6 hover:bg-sky-100 dark:hover:bg-neutral-800 transition"
     >
-      {index < 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none" />
-      )}
-      {index >= 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none" />
-      )}
-      <div className="mb-4 relative z-10 px-10 text-neutral-600 dark:text-neutral-400">
-        {icon}
-      </div>
-      <div className="text-lg font-bold mb-2 relative z-10 px-10">
-        <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-blue-500 transition-all duration-200 origin-center" />
-        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-800 dark:text-neutral-100">
-          {title}
-        </span>
-      </div>
-      <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-10">
-        {description}
-      </p>
+      <div className="mb-3 text-sky-600 dark:text-sky-400 text-3xl">{icon}</div>
+      <div className="text-lg font-bold mb-2 text-primary">{title}</div>
+      <p className="text-sm text-secondary overflow-y-auto">{description}</p>
     </div>
   );
 };
