@@ -7,10 +7,11 @@ import { motion } from "framer-motion";
 export const ResearchCard = ({ research, onClick }: { research: Research; onClick: () => void }) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      className="bg-white rounded-xl shadow-sm hover:shadow-md p-4 cursor-pointer flex flex-col justify-between"
+      whileHover={{ y: -4 }}
+      className="group relative bg-white rounded-xl shadow-sm p-4 cursor-pointer flex flex-col justify-between transition-shadow"
       onClick={onClick}
     >
+      <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-transparent group-hover:ring-primary/30 transition" />
       <div>
         <Heading as="h4" className="font-semibold text-base">
           {research.title}
