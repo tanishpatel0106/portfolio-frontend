@@ -10,20 +10,11 @@ export const research: ResearchItem[] = [
     role: "Research Intern",
     summary:
       "We built a time-series prediction model for low BP episodes in children using EMR data.",
-    description: (
-      <div>
-        <p>
-          This work explores sequential EMR records to detect early signs of
-          hypotension.
-        </p>
-        <p>
-          We trained LSTM models on millions of patient hours and tuned them for
-          high recall on rare events. The study discusses data preprocessing
-          strategies and clinical considerations when deploying such tools in
-          pediatric ICUs.
-        </p>
-      </div>
-    ),
+    description: null,
+    descriptionHtml: `
+      <p>This work explores sequential EMR records to detect early signs of hypotension.</p>
+      <p>We trained LSTM models on millions of patient hours and tuned them for high recall on rare events. The study discusses data preprocessing strategies and clinical considerations when deploying such tools in pediatric ICUs.</p>
+    `,
     tags: ["LSTM", "Time Series", "Healthcare", "Python"],
     pdf: "/assets/papers/low_bp_prediction.pdf",
     bibtex: "@article{smith2024lowbp, ...}",

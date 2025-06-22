@@ -59,7 +59,11 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
         </div>
       </div>
       <div className="prose prose-sm md:prose-base max-w-none text-neutral-600 mt-6">
-        {item.description}
+        {item.descriptionHtml ? (
+          <div dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
+        ) : (
+          item.description
+        )}
       </div>
     </div>
   );

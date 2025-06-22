@@ -13,6 +13,8 @@ export type ResearchItem = {
   summary: string;
   /** Detailed description displayed on the dedicated page */
   description: ReactNode;
+  /** Optional HTML string for lengthy descriptions */
+  descriptionHtml?: string;
   tags: string[];
   pdf: string;
   bibtex: string;
