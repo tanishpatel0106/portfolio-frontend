@@ -5,6 +5,17 @@ import { Heading } from "./Heading";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+const sanitizeHtml = (html: string) => {
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    doc.querySelectorAll("style, link[rel='stylesheet']").forEach((el) => el.remove());
+    return doc.body.innerHTML;
+  } catch {
+    return html;
+  }
+};
+
 export const SingleResearch = ({ item }: { item: ResearchItem }) => {
   const [activeImage, setActiveImage] = useState(
     item.thumbnail || item.images?.[0]
@@ -60,7 +71,9 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
       </div>
       <div className="prose prose-sm md:prose-base max-w-none text-neutral-600 mt-6">
         {item.descriptionHtml ? (
-          <div dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.descriptionHtml) }}
+          />
         ) : (
           item.description
         )}
