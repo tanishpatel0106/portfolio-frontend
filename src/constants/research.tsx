@@ -3,6 +3,8 @@ import { ResearchItem } from "@/types/research";
 export const research: ResearchItem[] = [
   {
     slug: "low-bp-prediction",
+    thumbnail: "/images/SHAP_Summary.png",
+    images: ["/images/SHAP_Summary.png", "/images/diagram_minor.png"],
     title: "Low-BP Prediction Using LSTMs in Pediatric ICUs",
     category: "Clinical ML",
     role: "Research Intern",
@@ -26,6 +28,8 @@ export const research: ResearchItem[] = [
   },
   {
     slug: "semiconductor-fl",
+    thumbnail: "/images/PC-1.png",
+    images: ["/images/PC-1.png", "/images/PC-2.png"],
     title: "Federated Learning for Semiconductor Fault Detection",
     category: "AI Research",
     role: "Lead Author",
@@ -48,6 +52,8 @@ export const research: ResearchItem[] = [
   },
   {
     slug: "soc-prediction-ev",
+    thumbnail: "/images/SOC_1.png",
+    images: ["/images/SOC_1.png", "/images/SOC_2.png"],
     title: "Data-Driven SoC Prediction in Electric Vehicles",
     category: "Applied ML",
     role: "Research Assistant",

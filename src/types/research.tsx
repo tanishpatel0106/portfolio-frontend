@@ -2,6 +2,10 @@ export type ResearchItem = {
   /** URL slug for detail pages */
   slug: string;
   title: string;
+  /** Primary image used in detail pages */
+  thumbnail: string;
+  /** Additional images displayed in detail pages */
+  images?: string[];
   category: string;
   role: string;
   summary: string;
@@ -16,5 +20,4 @@ export type ResearchItem = {
     github?: string;
     [key: string]: string | undefined;
   };
-  image?: string;
 };

@@ -2,6 +2,7 @@
 import React from "react";
 import { ResearchItem } from "@/types/research";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export const ResearchCard = ({
   item,
@@ -17,7 +18,17 @@ export const ResearchCard = ({
       whileTap={{ scale: 0.97 }}
       className="text-left bg-white rounded-lg shadow-sm hover:shadow-md transition duration-200 p-4 w-full h-full flex flex-col justify-between overflow-hidden"
     >
-      <div>
+      {item.thumbnail && (
+        <div className="relative h-32 w-full mb-3">
+          <Image
+            src={item.thumbnail}
+            alt="thumbnail"
+            fill
+            className="object-cover rounded-md"
+          />
+        </div>
+      )}
+      <div className="flex-1">
         <p className="text-xs text-sky-600 font-semibold mb-1">{item.category}</p>
         <h3 className="font-bold text-neutral-800 mb-1">{item.title}</h3>
         <p className="text-sm text-neutral-500 mb-2">{item.role}</p>
