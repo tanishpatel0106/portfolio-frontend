@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export type ResearchItem = {
   /** URL slug for detail pages */
   slug: string;
@@ -10,7 +12,7 @@ export type ResearchItem = {
   role: string;
   summary: string;
   /** Detailed description displayed on the dedicated page */
-  description: string;
+  description: ReactNode;
   tags: string[];
   pdf: string;
   bibtex: string;

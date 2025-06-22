@@ -10,8 +10,20 @@ export const research: ResearchItem[] = [
     role: "Research Intern",
     summary:
       "We built a time-series prediction model for low BP episodes in children using EMR data.",
-    description:
-      "This work explores sequential EMR records to detect early signs of hypotension. We trained LSTM models on millions of patient hours and tuned them for high recall on rare events. The study discusses data preprocessing strategies and clinical considerations when deploying such tools in pediatric ICUs.",
+    description: (
+      <div>
+        <p>
+          This work explores sequential EMR records to detect early signs of
+          hypotension.
+        </p>
+        <p>
+          We trained LSTM models on millions of patient hours and tuned them for
+          high recall on rare events. The study discusses data preprocessing
+          strategies and clinical considerations when deploying such tools in
+          pediatric ICUs.
+        </p>
+      </div>
+    ),
     tags: ["LSTM", "Time Series", "Healthcare", "Python"],
     pdf: "/assets/papers/low_bp_prediction.pdf",
     bibtex: "@article{smith2024lowbp, ...}",
@@ -37,8 +49,19 @@ export const research: ResearchItem[] = [
     role: "Lead Author",
     summary:
       "Combining federated learning and XAI to detect semiconductor defects while preserving privacy.",
-    description:
-      "Our approach allows fab partners to collaboratively train defect detection models without pooling data. We outline the federated pipeline and illustrate how SHAP explanations uncover failure modes in sensor streams. Extensive experiments highlight privacy benefits alongside production-level accuracy.",
+    description: (
+      <div>
+        <p>
+          Our approach allows fab partners to collaboratively train defect
+          detection models without pooling data.
+        </p>
+        <p>
+          We outline the federated pipeline and illustrate how SHAP explanations
+          uncover failure modes in sensor streams. Extensive experiments
+          highlight privacy benefits alongside production-level accuracy.
+        </p>
+      </div>
+    ),
     tags: ["Federated Learning", "Explainable AI", "Semiconductor"],
     pdf: "/assets/papers/semiconductor_fl.pdf",
     bibtex: "@article{patel2024semi, ...}",
@@ -63,8 +86,19 @@ export const research: ResearchItem[] = [
     role: "Research Assistant",
     summary:
       "Enhanced SoC estimation accuracy using federated learning across fleets.",
-    description:
-      "The project leverages distributed vehicle data to improve state-of-charge predictions in diverse driving conditions. We evaluate several regression strategies and analyze communication costs for fleet-wide training. The resulting model reduces range anxiety and demonstrates scalability on real-world EV deployments.",
+    description: (
+      <div>
+        <p>
+          The project leverages distributed vehicle data to improve
+          state-of-charge predictions in diverse driving conditions.
+        </p>
+        <p>
+          We evaluate several regression strategies and analyze communication
+          costs for fleet-wide training. The resulting model reduces range
+          anxiety and demonstrates scalability on real-world EV deployments.
+        </p>
+      </div>
+    ),
     tags: ["Federated Learning", "Electric Vehicles", "Regression"],
     pdf: "/assets/papers/soc_prediction.pdf",
     bibtex: "@article{patel2024soc, ...}",

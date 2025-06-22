@@ -2,8 +2,6 @@
 import { ResearchItem } from "@/types/research";
 import Image from "next/image";
 import { Heading } from "./Heading";
-import { Paragraph } from "./Paragraph";
-import { IconExternalLink, IconFileText } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -11,10 +9,6 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
   const [activeImage, setActiveImage] = useState(
     item.thumbnail || item.images?.[0]
   );
-
-  const copyBibtex = () => {
-    navigator.clipboard.writeText(item.bibtex);
-  };
 
   return (
     <div className="py-10">
@@ -64,55 +58,8 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
           ))}
         </div>
       </div>
-      <p className="text-sm text-neutral-600 my-4">{item.authors.join(", ")}</p>
-      <div>
-        <Paragraph className="max-w-xl mt-4">{item.summary}</Paragraph>
-      </div>
       <div className="prose prose-sm md:prose-base max-w-none text-neutral-600 mt-6">
         {item.description}
-      </div>
-      <div className="prose prose-sm md:prose-base max-w-none text-neutral-600">
-        <h2>Methodology</h2>
-        <ul>
-          {item.methodology.map((m) => (
-            <li key={m}>{m}</li>
-          ))}
-        </ul>
-        <h2>Results</h2>
-        <p>{item.results}</p>
-      </div>
-
-      <div className="flex items-center gap-4 mt-6">
-        {item.pdf && (
-          <a
-            href={item.pdf}
-            className="flex items-center text-sm text-sky-600 hover:underline"
-          >
-            <IconFileText className="h-4 w-4 mr-1" /> PDF
-          </a>
-        )}
-        <button
-          onClick={copyBibtex}
-          className="flex items-center text-sm text-sky-600 hover:underline"
-        >
-          <IconExternalLink className="h-4 w-4 mr-1" /> Copy BibTeX
-        </button>
-        {item.links?.github && (
-          <a
-            href={item.links.github}
-            className="flex items-center text-sm text-sky-600 hover:underline"
-          >
-            GitHub
-          </a>
-        )}
-        {item.links?.arxiv && (
-          <a
-            href={item.links.arxiv}
-            className="flex items-center text-sm text-sky-600 hover:underline"
-          >
-            arXiv
-          </a>
-        )}
       </div>
     </div>
   );
