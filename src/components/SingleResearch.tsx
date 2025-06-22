@@ -68,6 +68,9 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
       <div>
         <Paragraph className="max-w-xl mt-4">{item.summary}</Paragraph>
       </div>
+      <div className="prose prose-sm md:prose-base max-w-none text-neutral-600 mt-6">
+        {item.description}
+      </div>
       <div className="prose prose-sm md:prose-base max-w-none text-neutral-600">
         <h2>Methodology</h2>
         <ul>

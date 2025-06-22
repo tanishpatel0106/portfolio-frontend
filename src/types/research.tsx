@@ -9,6 +9,8 @@ export type ResearchItem = {
   category: string;
   role: string;
   summary: string;
+  /** Detailed description displayed on the dedicated page */
+  description: string;
   tags: string[];
   pdf: string;
   bibtex: string;
