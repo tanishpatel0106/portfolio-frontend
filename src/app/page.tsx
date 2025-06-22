@@ -31,7 +31,7 @@ export default function Home() {
         as="h2"
         className="font-black text-lg md:text-lg lg:text-lg mt-20 mb-4"
       >
-        What This App Offers
+        What I've been working on
       </Heading>
       <FeatureGrid />
       <TechStack />
