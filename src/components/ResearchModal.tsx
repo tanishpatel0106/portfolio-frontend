@@ -1,7 +1,12 @@
 "use client";
 import React, { useEffect } from "react";
 import { ResearchItem } from "@/types/research";
-import { IconX, IconFileText, IconExternalLink } from "@tabler/icons-react";
+import {
+  IconX,
+  IconFileText,
+  IconExternalLink,
+} from "@tabler/icons-react";
+import Link from "next/link";
 
 export const ResearchModal = ({
   item,
@@ -97,6 +102,14 @@ export const ResearchModal = ({
               arXiv
             </a>
           )}
+        </div>
+        <div className="flex justify-end mt-6">
+          <Link
+            href={`/research/${item.slug}`}
+            className="text-sm text-sky-600 hover:underline"
+          >
+            Read More
+          </Link>
         </div>
       </div>
     </div>

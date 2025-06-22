@@ -1,4 +1,6 @@
 export type ResearchItem = {
+  /** URL slug for detail pages */
+  slug: string;
   title: string;
   category: string;
   role: string;

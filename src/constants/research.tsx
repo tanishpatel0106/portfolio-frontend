@@ -2,6 +2,7 @@ import { ResearchItem } from "@/types/research";
 
 export const research: ResearchItem[] = [
   {
+    slug: "low-bp-prediction",
     title: "Low-BP Prediction Using LSTMs in Pediatric ICUs",
     category: "Clinical ML",
     role: "Research Intern",
@@ -24,6 +25,7 @@ export const research: ResearchItem[] = [
     },
   },
   {
+    slug: "semiconductor-fl",
     title: "Federated Learning for Semiconductor Fault Detection",
     category: "AI Research",
     role: "Lead Author",
@@ -45,6 +47,7 @@ export const research: ResearchItem[] = [
     },
   },
   {
+    slug: "soc-prediction-ev",
     title: "Data-Driven SoC Prediction in Electric Vehicles",
     category: "Applied ML",
     role: "Research Assistant",
