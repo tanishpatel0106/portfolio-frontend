@@ -5,6 +5,7 @@ import { Paragraph } from "@/components/Paragraph";
 import { Products } from "@/components/Products";
 import { TechStack } from "@/components/TechStack";
 import Image from "next/image";
+import { ResearchCarousel } from "@/components/ResearchCarousel";
 
 export default function Home() {
   return (
@@ -27,6 +28,13 @@ export default function Home() {
       </Heading>
       <Products />
       <TechStack />
+      <Heading
+        as="h2"
+        className="font-black text-lg md:text-lg lg:text-lg mt-20 mb-4"
+      >
+        Explore My Research
+      </Heading>
+      <ResearchCarousel />
     </Container>
   );
 }
