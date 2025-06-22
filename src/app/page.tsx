@@ -24,17 +24,17 @@ export default function Home() {
         as="h2"
         className="font-black text-lg md:text-lg lg:text-lg mt-20 mb-4"
       >
-        What I&apos;ve been working on
+        Explore My Research
       </Heading>
-      <Products />
-      <TechStack />
+      <ResearchCarousel />
       <Heading
         as="h2"
         className="font-black text-lg md:text-lg lg:text-lg mt-20 mb-4"
       >
-        Explore My Research
+        What I&apos;ve been working on
       </Heading>
-      <ResearchCarousel />
+      <Products />
+      <TechStack />
     </Container>
   );
 }
