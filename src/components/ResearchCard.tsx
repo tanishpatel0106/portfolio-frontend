@@ -15,7 +15,7 @@ export const ResearchCard = ({
       onClick={onClick}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
-      className="text-left bg-white rounded-lg shadow-sm hover:shadow-md transition duration-200 p-4 w-full h-full flex flex-col justify-between"
+      className="text-left bg-white rounded-lg shadow-sm hover:shadow-md transition duration-200 p-4 w-full h-full flex flex-col justify-between overflow-hidden"
     >
       <div>
         <p className="text-xs text-sky-600 font-semibold mb-1">{item.category}</p>
