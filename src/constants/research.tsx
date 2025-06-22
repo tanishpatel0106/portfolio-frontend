@@ -3,8 +3,8 @@ import { ResearchItem } from "@/types/research";
 export const research: ResearchItem[] = [
   {
     slug: "demystifying-defects-fl-xai",
-    thumbnail: "/images/first-image.jpg",
-    images: ["/images/first-image.jpg", "/images/illust_1.jpg", "/images/illust_2.jpg"],
+    thumbnail: "/images/first-image.png",
+    images: ["/images/first-image.png", "/images/illust_1.jpg", "/images/illust_2.png"],
     title: "Demystifying Defects: Federated Learning and Explainable AI for Semiconductor Fault Detection",
     category: "Industrial Research",
     role: "Lead Author",
