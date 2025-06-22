@@ -110,7 +110,7 @@ export const research: ResearchItem[] = [
     results:
       "The proposed ResNet152-based federated learning model achieved a test accuracy of 98.78%, significantly outperforming baseline models and demonstrating strong generalization and interpretability through Grad-CAM and LIME visualizations.",
     links: {
-      IEEE_Explore: "https://ieeexplore.ieee.org/document/10589388",
+      DOI: "https://ieeexplore.ieee.org/document/10589388",
     },
   },
   // {

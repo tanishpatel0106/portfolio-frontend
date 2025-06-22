@@ -94,12 +94,12 @@ export const ResearchModal = ({
               GitHub
             </a>
           )}
-          {item.links?.arxiv && (
+          {item.links?.DOI && (
             <a
-              href={item.links.arxiv}
+              href={item.links.DOI}
               className="flex items-center text-sm text-sky-600 hover:underline"
             >
-              arXiv
+              DOI
             </a>
           )}
         </div>
