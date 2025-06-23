@@ -98,7 +98,7 @@ export const research: ResearchItem[] = [
     </section>
     `,
     tags: ["Federated Learning", "Explaianable AI", "Fault Detection", "Edge Intelligence"],
-    pdf: "/assets/papers/demystifying_defects.pdf",
+    pdf: "/assets/papers/demystifying-defects.pdf",
     bibtex: "@ARTICLE{10589388,  author={Patel, Tanish and Murugan, Ramalingam and Yenduri, Gokul and Jhaveri, Rutvij H. and Snoussi, Hichem and Gaber, Tarek},  journal={IEEE Access},   title={Demystifying Defects: Federated Learning and Explainable AI for Semiconductor Fault Detection},   year={2024},  volume={12},  number={},  pages={116987-117007},  keywords={Fault detection;Semiconductor device modeling;Semiconductor device manufacture;Explainable AI;Semiconductor process modeling;Neural networks;Fault diagnosis;Classification algorithms;Data privacy;Deep learning;Trusted computing;Artificial intelligence;Classification algorithms;data privacy;deep learning;explainable artificial intelligence;trusted AI;semiconductor materials},  doi={10.1109/ACCESS.2024.3425226}}",
     authors: ["Tanish Patel", "Ramalingam Murugan", "Gokul Yenduri", "Rutvij H Jhaveri", "Hichem Snoussi", "Tarek Gaber"],
     methodology: [
