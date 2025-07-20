@@ -112,74 +112,99 @@ export const research: ResearchItem[] = [
     links: {
       DOI: "https://ieeexplore.ieee.org/document/10589388",
     },
+
   },
-  // {
-  //   slug: "semiconductor-fl",
-  //   thumbnail: "/images/PC-1.png",
-  //   images: ["/images/PC-1.png", "/images/PC-2.png"],
-  //   title: "Federated Learning for Semiconductor Fault Detection",
-  //   category: "AI Research",
-  //   role: "Lead Author",
-  //   summary:
-  //     "Combining federated learning and XAI to detect semiconductor defects while preserving privacy.",
-  //   description: (
-  //     <div>
-  //       <p>
-  //         Our approach allows fab partners to collaboratively train defect
-  //         detection models without pooling data.
-  //       </p>
-  //       <p>
-  //         We outline the federated pipeline and illustrate how SHAP explanations
-  //         uncover failure modes in sensor streams. Extensive experiments
-  //         highlight privacy benefits alongside production-level accuracy.
-  //       </p>
-  //     </div>
-  //   ),
-  //   tags: ["Federated Learning", "Explainable AI", "Semiconductor"],
-  //   pdf: "/assets/papers/semiconductor_fl.pdf",
-  //   bibtex: "@article{patel2024semi, ...}",
-  //   authors: ["Tanish Patel", "Industry Partners"],
-  //   methodology: [
-  //     "Federated training across partners",
-  //     "Explainable AI with SHAP",
-  //   ],
-  //   results:
-  //     "Reached 98% accuracy on public dataset without sharing raw data.",
-  //   links: {
-  //     arxiv: "https://arxiv.org/abs/yyyy.yyyy",
-  //     github: "https://github.com/yourname/semi-fl",
-  //   },
-  // },
-  // {
-  //   slug: "soc-prediction-ev",
-  //   thumbnail: "/images/SOC_1.png",
-  //   images: ["/images/SOC_1.png", "/images/SOC_2.png"],
-  //   title: "Data-Driven SoC Prediction in Electric Vehicles",
-  //   category: "Applied ML",
-  //   role: "Research Assistant",
-  //   summary:
-  //     "Enhanced SoC estimation accuracy using federated learning across fleets.",
-  //   description: (
-  //     <div>
-  //       <p>
-  //         The project leverages distributed vehicle data to improve
-  //         state-of-charge predictions in diverse driving conditions.
-  //       </p>
-  //       <p>
-  //         We evaluate several regression strategies and analyze communication
-  //         costs for fleet-wide training. The resulting model reduces range
-  //         anxiety and demonstrates scalability on real-world EV deployments.
-  //       </p>
-  //     </div>
-  //   ),
-  //   tags: ["Federated Learning", "Electric Vehicles", "Regression"],
-  //   pdf: "/assets/papers/soc_prediction.pdf",
-  //   bibtex: "@article{patel2024soc, ...}",
-  //   authors: ["Jane Doe", "EV Research Lab"],
-  //   methodology: ["Federated regression", "Sklearn", "Power BI"],
-  //   results: "Improved R2 scores across rounds while keeping data local.",
-  //   links: {
-  //     github: "https://github.com/yourname/soc-prediction",
-  //   },
-  // },
+  {
+    slug: "burnout-dtss-xai",
+    thumbnail: "/images/THESIS_F.png",
+    images: ["/images/THESIS_F.png", "/images/THESIS_1.png", "/images/THESIS_2.png"],
+    title: "Impact of Digital Transformation on Mental Health of IT Professionals",
+    category: "Undergraduate Thesis",
+    role: "Principal Investigator",
+    summary:
+      "An explainable machine learning framework that predicts technostress and burnout in IT professionals using hybrid survey-synthetic data and SHAP-based insights to support proactive mental health interventions.",
+    description: null,
+    descriptionHtml: `
+    <section>
+      <h3>Abstract</h3>
+      <p>Digital transformation stress (DTSS) and burnout among IT professionals were predicted using advanced data-driven approaches. Reflecting newly developing practice in health analytics, we expanded the dataset by combining responses from actual occupational surveys with synthetic generated data. Trained to predict individual DTSS and burnout scores were four supervised models: Random Forest, Decision Tree, XGBoost, and Support Vector Regression. (DTSS here represents employees' stress resulting from fast ICT-driven change; burnout is handled per WHO as chronic occupational stress syndrome.) Held-out data allowed RMSE and <i>R<sup>2</sup></i> to evaluate model performance. The XGBoost regressor achieved the best accuracy (RMSE = 0.0216, <i>R<sup>2</sup></i> = 0.9835) for DTSS prediction; Random Forest was best for burnout prediction (RMSE = 0.0701, <i>R<sup>2</sup></i> = 0.9945). These strong <i>R<sup>2</sup></i> values show that the models captured the majority of the variance in stress results.</p>
+      <p>We utilized SHapley Additive exPlanations (SHAP) to the trained models to guarantee interpretability. The top predictors of both DTSS and burnout, according to SHAP, were high workload, upskilling pressure, and emotional self-regulation challenges. Especially, DTSS has been proposed to result from elements like time pressure and high workload during organizational transformation. Workers who reported high task loads, ongoing expectations to pick up new skills, and poor emotional coping had the highest expected stress.</p>
+      <p>All told, our XAI-powered method reveals their causes and provides accurate stress projections. We show that machine learning can routinely identify psychosocial risk factors by aggregating real-world and synthetic survey data and using tree-based models. The SHAP-based explanations make the forecasts actionable: companies can track these indicators (workload, upskilling stress, etc.) in real time and respond early to protect employee mental health. This paper shows how explainable machine learning models could guide early interventions to avert severe burnout or DTSS and promote continuous mental-health surveillance in IT companies.</p>
+    </section>
+    <section>
+      <h3>Overview of the Work</h3>
+      <p>This thesis uses machine learning combined with actual survey data to forecast technostress and burnout among IT professionals. Starting with a well-crafted survey grounded in studies on occupational health psychology and technology acceptance, data collection began. Over forty topics spanning several spheres—including demographics, work conditions (remote, hybrid, on-site), emotional responses (frustration, tiredness, pride), exposure to digital transformation, reactions to artificial intelligence systems, and effects on work-life balance—were surveyed. The survey's small response rate, a typical difficulty in mental health research notwithstanding its comprehensiveness, reflects this.</p>
+      <p>Using a fine-tuned LLaMA-based large language model (LLM), a dual-dataset approach was used to generate synthetic answers, thereby overcoming data constraints. Having been trained on OSMI survey data and psychological literature, the LLM generated realistic responses by modeling several participant profiles. This expanded the dataset, preserving contextual credibility and boosting variance. Real and synthetic replies were combined to provide a richer dataset with the understanding that synthetic data complements, rather than replaces, real data.</p>
+      <p>Derived from the dimensions of the Maslach Burnout Inventory (Emotional Exhaustion, Depersonalization, and Reduced Personal Accomplishment), Burnout Score (B) and Digital Transformation Stress Score (DTSS)—a composite metric capturing stress from techno-overload, automation anxiety, job insecurity, and upskilling pressure—were the two primary quantitative targets developed. For modeling purposes, both scores were normalized between 0 and 1.</p>
+      <p>Given its mix of accuracy and interpretability, a Random Forest model was selected for prediction. With appropriate preprocessing—including label encoding, missing value imputation, and feature scaling—the model was trained on the combined dataset. Classification and regression tools were used to evaluate model performance.</p>
+      <p>SHapley Additive exPlanations (SHAP) were used to expose how predictions were influenced by input features (e.g., AI anxiety, work hours, tech overwhelm), thereby ensuring explainability. This interpretability phase turned model outputs into actionable insights by highlighting important stress drivers such as automation fear and work-life imbalance, enabling organizations to take focused action.</p>
+      <p>To evaluate and comprehend technostress and burnout, this approach combines dual-sourced data, predictive analytics, and explainable artificial intelligence—offering both measurable outcomes and practical organizational insight.</p>
+    </section>
+    <section>
+      <h3>Methodology</h3>
+      <p>The design that this study uses a convergent parallel architecture in spirit; the synthetic data and the quantitative survey data are gathered (or produced) in tandem and subsequently combined for analysis. Our strategy combines empirical and simulated quantitative data unlike a traditional mixed-method design that could call for qualitative interviews and quantitative surveys. Two reasons support this hybrid design. First, real-world data from IT experts captures real experiences of burnout and stress in the workforce, therefore offering ground truth and external validity. Second, addressing edge instances and combinations of elements either unusual or absent in the survey sample, the synthetic data add breadth and scenario diversity. Combining various datasets guarantees a more strong modeling activity than depending just on one collection. Especially, the synthetic cases are produced depending on theoretical and empirical knowledge and thereafter utilized as extra data points for model training, functioning rather as augmented observations. This design decision solves typical problems such class imbalance and small sample size. Increasing real datasets with LLM-generated samples has been shown in recent studies to enhance model generalization and cover niche circumstances not well-represented in actual data. In our setting, integrating synthetic respondents (e.g., a nervous mid-career manager, a beginner developer burdened by continuous upskill needs, etc.), guarantees the model interacts with a broad spectrum of profiles.</p>
+      <p>A key basis for turning raw survey responses into quantitative objectives fit for machine learning prediction is the establishment of consistent, theory-grounded scoring measures. Two main outcome variables—the Digital Transformation Stress Score (DTSS) and the MBI-based Burnout Score—are constructed in this part. Based on accepted psychological theories and customised to the particular survey form intended for this research, both measures are mathematically formalised.</p>
+      <p>Burnout, as defined by the MBI framework, is a multidimensional syndrome marked by emotional depletion, depersonalization, and diminished personal accomplishment. These elements capture several but connected facets of how workers deal with ongoing stress in their jobs.</p>
+      <p>Three dimensions—exposure and demands, emotional and cognitive reactions, and organizational pressure—allow DTSS to capture psychological strain from digital change. Digital Transformation Expositional Requirements (DTEE / D<sub>1</sub>) dimension evaluates exposure to demands for digital transformation and adaptation:</p>
+      <p><strong>D<sub>1</sub></strong> = (Exposure + Upskill Pressure + Overwhelm + Mental Health Impact) × 1/4</p>
+      <p>Emotional & Cognitive Reactions (ECR / D<sub>2</sub>) is captured via the following adaptation:</p>
+      <p><strong>D<sub>2</sub></strong> = (Tech Overwhelm + Tool Anxiety + Career Stability Worry) × 1/3</p>
+      <p>Similarly, Organizational Pressure & Structural Concerns (OPS / D<sub>3</sub>) is captured via the following adaptation:</p>
+      <p><strong>D<sub>3</sub></strong> = (Unrealistic Expectations + Error Likelihood Concern + Workflow Disconnection) × 1/3</p>
+      <p>Working professionals' real-world data was gathered by means of a structured online questionnaire sent via Google Forms. Participation was voluntary and anonymous; informed permission was requested at the outset. For quantitative data, the survey had closed-ended questions using Likert-type or frequency scales; for qualitative insights, it included open-ended questions. It was broken down into various pieces covering personal issues as well as workplace events connected to burnout and technostress.</p>
+      <p>Formulated as a supervised regression problem, the modeling challenge is to predict normalized burnout and DTSS scores using structured data obtained from employee replies. Demographic information (e.g., role, experience), behavioral indicators (e.g., emotional awareness), technical stress markers (e.g., AI-related anxiety, digital transformation worries), and work setting factors (e.g., team size, work mode) are among these elements.</p>
+      <p>Although predicted accuracy is a necessary standard for assessing machine learning models, accuracy by itself is inadequate in applying artificial intelligence to delicate, human-centric fields as workplace mental health. Understanding why a model gets at its predictions is equally, if not more, crucial in settings where predictions affect well-being interventions, corporate policies, or employee support initiatives than the prediction itself. Without openness, even top-notch models run the danger of being discounted by practitioners, under attack by impacted parties, or worse—used without responsibility.</p>
+      <p>The Explainable AI (XAI) framework applied in this work to interpret and validate the predictions of burnout and digital transformation stress (DTSS) is presented in this part. The work guarantees that every prediction can be broken down into feature-level contributions by using SHAP (SHapley Additive exPlanations), a mathematically rigorous, model-agnostic explanation method grounded in cooperative game theory. Building corporate trust, spotting any biases, and allowing human-in---the-loop decision-making—particularly in relation to employee wellness—all depend on this degree of interpretability.</p>
+      <p>Starting with a thorough theoretical background of SHAP including formal mathematical formulas and fairness guarantees, the section It then describes the computational techniques utilized for tree-based models and support vector regression, therefore outlining how SHAP was applied over all model kinds employed in this research. At last, it emphasizes why explainability is not only a theoretical need but also a pragmatic need for companies trying to morally use AI-driven mental health monitoring technologies. By means of this explainability layer, the research closes the gap between computational predictions and organizational actionability, so converting model outputs into insights enabling effective, accountable, open, and transparent workplace interventions.</p>
+    </section>
+    <section>
+      <h3>Results</h3>
+      <p>The two jobs clearly differed. Linked closely to digital transformation experiences, DTSS was modeled with more accuracy than burnout, implying the survey more directly caught DTSS drivers. Burnout prediction reflected its complexity by suffering more scattered signals and reduced R². On both challenges, model-wise ensembles (Random Forest, XGBoost) routinely beat simpler learners most likely because bagging and boosting can capture nonlinearities and feature interactions missed by single trees.</p>
+      <p>According to SVR's intermediate results, kernel approaches may underperform when many interdependent features exist even if they manage some nonlinearity. By themselves, decision trees displayed the most variation and instability.</p>
+      <p>From an interpretability perspective, SHAP's offered complimentary insights. Features of both DTSS and burnout models matched domain knowledge (e.g., job strain for burnout, technological load for DTSS). This correlation strengthens trust: HR or mental health experts might observe that the model "thinks" in the same words they do. The consistency aspect of SHAP allows one to compare similar feature effects amongst models, hence supporting generalizability. Still, significant variation in feature ranking amongst models emphasizes how important explainability is alongside performance.</p>
+      <p>Practically speaking, our results imply that, when combined with SHAP, sophisticated models such as XGBoost can effectively capture patterns of occupational stress without compromising interpretability. This is important for organizational use: decision-makers—such as HR managers—need open justification for any assessment motivated by artificial intelligence. SHAP enables the conversion of numerical models into useful insights by indicating which elements most affect forecasts.</p>
+      <p>All things considered, ensemble models perform better on these psychological measures and SHAP explanations fit real-world ideas of digital stress and burnout, hence producing accurate and interpretable AI results for use in mental health contexts.</p>
+    </section>
+    <section>
+      <h3>Future Scope</h3>
+      <p>Using more comprehensive data and stronger machine learning models will help advance the predictive framework. Deep learning methods, for instance, may capture complex, multi-scale temporal patterns in workloads. Recent studies on physician burnout prediction have shown how a hierarchical deep sequence encoder can combine low-level activity logs into daily metrics and then into monthly summaries, preserving long-term dynamics without overwhelming model complexity. Similarly, hybrid systems such as coupled LSTM–Transformer networks have achieved state-of-the-art accuracy on challenging time-series tasks. Ensemble techniques can also build resilience. For example, stacking several neural networks—including specialist and differentiator classifiers—has improved burnout and stress classification performance.</p>
+      <p>These developments suggest that deeper models or transformer-based encoders should be integrated into future pipelines. To capture stress evolution over time, modeling longitudinal or sequential data—such as using LSTM or attention mechanisms over temporal survey and digital trace data—should also be prioritized. Importantly, these advanced models must retain interpretability by continuing to use SHAP or similar explainability techniques. This ensures that rising predictive power does not come at the cost of clinical transparency.</p>
+      <p>Future research should move beyond surveys to incorporate multimodal data streams that provide a more objective view of stress and burnout. Passive digital trace data may include calendar usage, email and text activity, smartphone or computer logs, and more—each offering subtle indicators of cognitive and emotional load. Studies on college students have demonstrated how stress levels can be inferred from smartphone app usage patterns, such as excessive messaging or sleep disturbance proxies. Individualized models revealed that digital stress markers vary by user.</p>
+      <p>Physiological sensors offer another layer of insight. Measures such as heart rate variability (HRV), galvanic skin response, movement tracking, and keyboard dynamics have all been investigated. Wearables like smartwatches or electrocardiogram patches have been proposed for screening burnout in high-stress roles. Machine learning models that combine behavioral data with physiological signals have achieved high accuracy, particularly using deep neural networks trained on HRV or EMG data. A multimodal approach—combining surveys with passive sensor data—may significantly enhance sensitivity to early technostress and burnout. Environmental sensors, smartphone-based monitoring, and digital biomarkers like keystroke dynamics and mouse usage all fall within this scope.</p>
+      <p>At the organizational level, these technologies could be embedded into HR and wellness systems to enable real-time monitoring and intervention. Dashboards based on modeled risk scores could flag teams or individuals facing escalating stress levels, guiding timely support. AI-powered systems could continuously collect survey results, usage logs, and wearable signals to detect early signs of burnout or technostress, enabling wellness teams to act proactively. Sentiment analysis and workload trends could trigger confidential coaching prompts when risk levels rise.</p>
+      <p>However, real-world deployment requires ethical safeguards. Data privacy and regulatory compliance (such as HIPAA and GDPR) are essential. Participation should be voluntary, data anonymized where possible, and usage clearly explained. Importantly, AI should augment—not replace—human oversight. Mental health professionals should be part of the loop, with interfaces that allow for review and override of model suggestions. All actions, such as outreach, must be carried out with human empathy. Organizations that prioritize transparency and human-centered design can leverage machine learning while respecting individual dignity.</p>
+      <p>Generalizability must also be a focus. Stressors and norms differ widely across sectors and geographies, so models should be retrained and adapted for various organizational contexts. For example, digital work habits in healthcare differ greatly from those in finance. Longitudinal studies that track stress over time will allow for the adaptation of models in response to temporal drift. Transfer learning or cohort-wise modeling can help scale findings while maintaining robustness across different populations.</p>
+      <p>This trajectory underscores the need for multidisciplinary collaboration between social sciences and computer science. Improved models will raise deeper questions about organizational culture and employee experience. Insights from psychology can guide feature selection and intervention design, while machine learning can validate and scale evidence-based strategies. The goal is not only better algorithms, but algorithms embedded within real theories of workplace well-being—bridging human understanding and digital intelligence to foster healthier work environments.</p>
+    </section>
+    <section>
+      <h3>Conclusion</h3>
+      <p>The psychosocial environment of the workplace is undergoing a considerable transition in our era, which is characterized by the unrelenting pace of technical advancement. The way in which professionals engage with their work surroundings has been rethought as a result of the widespread adoption of artificial intelligence, automation, and remote work infrastructures, as well as the digitalization of organizational activities. The most notable of these new psychological burdens are digital transformation stress (DTSS) and occupational burnout. These innovations promise to bring about unparalleled levels of efficiency and agility; nevertheless, they also bring about new psychological difficulties.</p>
+      <p>In order to forecast, comprehend, and maybe minimize the hidden costs of digital transformation on employee mental health, the purpose of this thesis was to computationally analyze these interconnected phenomena. This was accomplished by utilizing machine learning (ML) and explainable artificial intelligence (XAI). This work produced a robust dataset that reflected the multifaceted experiences of IT professionals managing digital disruption. The structure of this dataset was based on a mixed-method data strategy that blended real-world survey data with synthetically generated instances utilizing large language models.</p>
+      <p>The development and application of predictive models that are able to estimate two crucial psychological outcomes—namely, burnout and digital transformation stress (DTSS)—were the primary focuses of this research. Not only did the thesis achieve great predictive performance in both tasks, but it also provided accessible explanations for how these predictions were generated. This was accomplished through a methodical pipeline that included data cleansing, feature engineering, model training, and SHAP-based interpretability analysis. In order to present a comparative picture of algorithmic behaviors, the use of four machine learning models—Random Forest, Decision Tree, XGBoost, and Support Vector Regression (SVR)—was utilized. This allowed for the identification of important strengths and weaknesses across both prediction goals.</p>
+      <p>Ensemble models, such as XGBoost and Random Forest, have repeatedly demonstrated superior performance in comparison to simpler algorithms when it comes to DTSS prediction. These models were able to successfully capture the non-linear interactions between technological overwhelm, pressure to upskill, and anxiety about collaboration, resulting in low prediction errors and strong explanatory power. The SHAP study shed light on the psychological factors that contribute to digital stress, thereby validating theoretical constructs such as technostress producers, which include techno-overload, techno-insecurity, and techno-complexity, as actual predictors inside the learned representations of the model.</p>
+      <p>On the other hand, predicting burnout proved more difficult, which reflects the multi-faceted and intensely personal nature of professional tiredness. Despite the fact that Random Forest emerged as the most consistent performer, the overall model accuracy was lower than that of DTSS. This suggests that burnout may be driven by elements that are more subtle and heterogeneous, which go beyond the boundaries of structured survey data. In spite of this, the interpretability of SHAP showed that workload intensity (e.g., number of hours worked), perceived work-life balance, and emotional regulation capacity were consistently among the most influential factors driving burnout predictions. These findings offer practical pathways for enterprises to mitigate exhaustion through workload management, emotional resilience training, and supportive remote work policies.</p>
+      <p>Particularly noteworthy is the fact that this thesis revealed that explainable artificial intelligence is not merely a technological add-on but a fundamental prerequisite for deploying machine learning in human-centered domains such as mental health risk assessment. SHAP explanations enabled stakeholders to move beyond black-box forecasts by delivering trustworthy, transparent, and contextually grounded interpretations of model behavior. Organizational decision-makers could diagnose systemic flaws, validate model fairness, and design targeted interventions based on feature-level rationale.</p>
+      <p>Furthermore, this research highlighted the practicality of integrating predictive mental health analytics into organizational practice, as well as the ethical responsibility required to do so. The thesis presented a responsible AI deployment framework that balances innovation with employee autonomy and dignity, covering issues such as data governance, privacy, and human-in-the-loop oversight. Proposed applications included HR analytics dashboards, wellness monitoring systems, and proactive intervention tools as a blueprint for responsible, data-driven organizational health management.</p>
+      <p>The study also acknowledged limitations and highlighted future opportunities. While surveys offer rich subjective insights, they may fall short of fully capturing the complex, multimodal nature of stress. Future work could explore behavioral trace data, biometric signals, and longitudinal tracking to construct multi-dimensional digital phenotypes of stress. Advanced deep learning architectures—such as transformer-based temporal models—offer promising pathways to capture time-sensitive dynamics in burnout and stress risk. Validations across sectors and cultures are essential for ensuring generalizability and fairness in diverse organizational ecosystems.</p>
+      <p>To summarize, this thesis marks a pioneering step in enabling computationally informed mental health stewardship in the digital workplace. It offers a scalable, transparent, and ethically grounded paradigm for forecasting and mitigating the psychological consequences of digital transformation. By combining the rigor of machine learning with the interpretive clarity of explainable AI, this work equips organizations to design evidence-based interventions, support employee well-being, and shape the future of responsible, human-centered artificial intelligence in modern work environments.</p>
+    </section>
+
+    `,
+    tags: ["Explainable AI", "Stress Detection", "Digital Transformation", "Mental Health"],
+    pdf: "/assets/papers/MP_Report_BTech.pdf",
+    bibtex: "@btechthesis{patel2025impact, author={Tanish Patel}, title={Impact of Digital Transformation on the Mental Health of IT Professionals}, school={Pandit Deendayal Energy University}, type={B.Tech. Thesis}, year={2025}, address={Gandhinagar, India}, month={May}, note={Supervised by Dr. Rutvij H. Jhaveri}, keywords={Digital Transformation, Mental Health, IT Professionals, Machine Learning, Explainable AI, Technostress, Burnout}}",
+    authors: ["Tanish Patel", "Rutvij H Jhaveri"],
+    methodology: [
+      "Survey-Driven and LLM-Augmented Dataset Creation",
+      "Burnout and DTSS Prediction via Tree-Based ML Models",
+      "Model Interpretability using SHAP Explainable AI Techniques",
+      "Comparative Evaluation using RMSE and R² Metrics"
+    ],
+    results:
+      "The XGBoost model achieved 98.35% R² for DTSS prediction and Random Forest reached 99.45% R² for burnout prediction, with SHAP-based explainability revealing workload, upskilling pressure, and emotional regulation as key stress drivers.",
+    links: {
+      DOI: "https://ieeexplore.ieee.org/document/10589388",
+    },
+    
+  }
 ];
