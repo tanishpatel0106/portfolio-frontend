@@ -207,7 +207,7 @@ export const research: ResearchItem[] = [
     // },
     
   },
-    {
+  {
     slug: "fed-soc-ev",
     thumbnail: "/images/SOC_PHOTO_1.png",
     images: ["/images/SOC_PHOTO_1.png", "/images/SOC_2.png"],
@@ -277,5 +277,204 @@ export const research: ResearchItem[] = [
     },
 
   },
+    {
+    slug: "cybersec-iov",
+    thumbnail: "/images/IOV_1.png",
+    images: ["/images/IOV_1.png", "/images/IOV_2.png"],
+    title: "Enhancing Cybersecurity in Internet of Vehicles: A Machine Learning Approach with Explainable AI for Real-Time Threat Detection",
+    category: "Cybersecurity and Smart Infrastructure",
+    role: "Lead Author",
+    summary:
+      "A machine learning and Explainable AI-based cybersecurity framework for the Internet of Vehicles that enables real-time, interpretable, and high-accuracy threat detection while ensuring model transparency and operational reliability in connected vehicular networks.",
+    description: null,
+    descriptionHtml: `
+    <section>
+      <h3>Abstract</h3>
+      <p>
+        The proliferation of IoV technologies has revolutionized the use of transport systems to a great level of improvement in safety and efficiency, and convenience to users. On the other hand, increased connectivity has also brought new vulnerabilities, making IoV networks susceptible to a wide range of cyber-attacks. The contribution of this paper is the in-depth study of the development and evaluation of advanced machine learning (ML) models that detect and classify network anomalies in IoV ecosystems. Several classification models have been studied in our research to achieve high accuracy for discriminating between benign and malicious traffic. This work further harnesses Explainable AI (XAI) methodologies through the LIME framework for enhanced interpretability of models' decision-making processes. Experimental results strongly advocate the strength of Random Forest and XGBoost, proving to be better on the binary and multi-class classification tasks, respectively. Due to resilience, preciseness, and scalability these models are a practical choice in real-world IoV security frameworks. Explainability integrated not only strengthens model reliability but also closes the gap between performance and interoperability in vehicular networks. 
+      </p>
+    </section>
+    <section>
+      <h3>Overview of the Work</h3>
+      <p>The emerging paradigm of technology, the Internet of Vehicles (IoV), enables two-way communication between vehicles, infrastructure, and external networks, driving advancements in safety, efficiency, and user convenience in transportation. Increased interconnectivity stemming from IoV induces several cybersecurity problems in its systems — principally vulnerability to DoS, spoofing, and intrusion attacks. Such threats would degrade the integrity of vehicle operations and safety for the passengers, and hence, security must become an integral part of IoV development. In this dynamic environment where traditional security mechanisms face a challenge in scaling up real-time adaptability for IoV to recognize and neutralize these threats, this scenario needs IoT-based, edge-controlled, real-time security.</p>
+      <p>The innovation of machine learning (ML) models happens to be one of the most powerful methods of identifying and classifying potential cyber threats within an IoV system processing a huge volume of real-time data. At the same time, a model must be able to explain why it has arrived at a certain decision. This need further strengthens the importance of Explainable Artificial Intelligence (XAI), providing insights into complex models' processes of decision-making and improving trustworthiness. XAI contributes to the improvement of interpretability of ML models and can be leveraged in IoV applications for real-time detection of threats, forming a major step toward establishing trust in automated systems. XAI-based systems are particularly essential for real-time prediction and threat mitigation in the IoV context.</p>
+      <p>This paper proposes the development and testing of ML models against binary and multi-class classifications to solve the aforementioned cybersecurity challenges arising within IoV systems. Understanding not only how but also why a model reaches a conclusion is important for building trust and ensuring system safety in IoV. The key contributions of this work are:</p>
+      <ul>
+        <li>This study compares different ML models, such as the Support Vector Classifier, Decision Tree, and Logistic Regression against Random Forest and XGBoost, while establishing the latter to be better in IoV security contexts.</li>
+        <li>The models Random Forest and XGBoost show very high accuracies of up to 99% in binary as well as multi-class classifications for benign and malicious traffic.</li>
+        <li>The LIME method gives complete insight into what affects the made predictions, and as a result, the system becomes more interpretable and can be trusted.</li>
+      </ul>
+      <p>Critical developments in IoV cybersecurity on the application of ML and XAI in real-time threat detection are discussed in the literature review. The section on the applied methodologies covers how data collection was done, pre-processing techniques, and finally, the ML models used for network traffic classification, including applied explainability techniques like LIME. Finally, the Results section discusses in detail the models for performance evaluation of binary and multi-class classifications, in which the respective accuracy, precision, recall, and the principal F1 score are compared. In conclusion, the paper emphasizes the importance of the proposed method and outlines directions for further research, including how federated learning with blockchain technologies can work together to enhance IoV security.</p>
+    </section>
+    <section>
+      <h3>Methodology</h3>
+      <p>The great strides in IoV-related technologies have significantly enhanced transportation safety, operational efficiency, and user convenience. Advanced sensors are linked via complex networks, and today's vehicles pride themselves on an unparalleled level of interconnectivity. However, this also opens the door for new vulnerabilities, making IoV systems prone to cyber-attacks that could compromise operational safety and system integrity.</p>
 
+    <p>To address these threats, this study develops and evaluates machine learning (ML) models for traffic classification in IoV. The goal is not only to detect harmful activities with high accuracy but also to understand which features most influence classification results. This understanding is crucial for interpreting and trusting decisions in critical security applications.</p>
+
+    <p>The study applies both binary and multi-class classification approaches to detect various types of cyberattacks such as DoS and spoofing (Gas, RPM, Speed, Steering Wheel). Vehicles are instrumented with sensors to record parameters such as speed, gas level, and RPM. This data is sent to a central system, preprocessed, and then used to train various ML models including Random Forest, XGBoost, and Support Vector Classifier. The best-performing models are further analyzed using LIME to improve their interpretability.</p>
+
+    <h4>Data Collection &amp; Preprocessing</h4>
+
+    <h5>Data Collection from IoV Systems</h5>
+    <p>The IoV system collects real-time sensor data including:</p>
+    <ul>
+      <li><strong>Vehicle Speed:</strong> Fluctuations may indicate control system failures.</li>
+      <li><strong>RPM:</strong> Monitors operational behavior.</li>
+      <li><strong>Gas Level:</strong> Sudden changes may suggest spoofing attempts.</li>
+      <li><strong>Steering Wheel Position:</strong> Tracks unauthorized use or changes in direction.</li>
+    </ul>
+    <p>All sensors transmit data to a master node which aggregates it into a large dataset describing the vehicle’s current operational state. This raw data is then cleaned and prepared for ML model training.</p>
+
+    <h5>Data Preprocessing</h5>
+    <ul>
+      <li><strong>Data Cleaning:</strong> Missing values are filled using median imputation to preserve integrity.</li>
+      <li><strong>Feature Encoding:</strong> One-hot encoding is used for categorical data like sensor status and attack labels.</li>
+      <li><strong>Normalization:</strong> All features (e.g., speed, RPM) are scaled to [0, 1] using min-max scaling:
+        <br />
+        <code>x_norm = (x - x_min) / (x_max - x_min)</code>
+      </li>
+      <li><strong>Class Imbalance:</strong> SMOTE is applied to oversample minority classes for improved learning.</li>
+      <li><strong>Dimensionality Reduction:</strong> PCA is used to reduce feature space and remove redundancy.</li>
+    </ul>
+
+    <h4>ML Models</h4>
+    <p>The following ML models were trained and evaluated:</p>
+
+    <h5>Random Forest</h5>
+    <p>An ensemble model that combines multiple decision trees to improve accuracy and reduce variance. Each tree is trained on a random subset of data. Predictions are combined using weighted voting.</p>
+
+    <h5>Decision Trees</h5>
+    <p>A transparent model that splits data using feature thresholds based on metrics like Gini index or Information Gain. Simple but interpretable.</p>
+
+    <h5>Support Vector Classifier (SVC)</h5>
+    <p>Finds the hyperplane that maximizes class separation. Suitable for handling non-linear separable data. Solves the optimization problem:
+    <code>min (1/2) ||w||² subject to yᵢ(w·xᵢ + b) ≥ 1</code></p>
+
+    <h5>Extreme Gradient Boosting (XGBoost)</h5>
+    <p>Boosting method that builds trees sequentially to correct previous errors. The objective function balances classification loss and model complexity:
+    <code>L(θ) = Σ l(yᵢ, ŷᵢ) + Σ Ω(fₖ)</code></p>
+
+    <h5>Logistic Regression (Baseline)</h5>
+    <p>A classic model for binary classification, using the sigmoid function to estimate class probabilities. Used here for benchmarking more advanced models.</p>
+
+    <h4>Generating Explainability from LIME</h4>
+    <p>LIME (Local Interpretable Model-Agnostic Explanations) is applied to the best-performing model to explain individual predictions. It perturbs input features and fits a local, interpretable model (e.g., linear regression) to approximate the original black-box model’s decision boundary.</p>
+
+    <h5>Algorithm Workflow</h5>
+    <ol>
+      <li><strong>Data Collection:</strong> Collect sensor data and transmit to central system.</li>
+      <li><strong>Preprocessing:</strong> Perform cleaning, encoding, scaling, SMOTE, and PCA.</li>
+      <li><strong>Model Training:</strong> Train and tune ML models using cross-validation and evaluate using accuracy, precision, recall, and F1 score.</li>
+      <li><strong>Model Selection:</strong> Choose the top-performing model based on metrics.</li>
+      <li><strong>LIME Integration:</strong> Generate local explanations by perturbing inputs and fitting simple models to highlight important features.</li>
+      <li><strong>Deployment:</strong> Deploy the model into IoV systems and establish a feedback loop for continuous improvement.</li>
+    </ol>
+
+    <p>LIME works by minimizing the following objective:
+    <code>min₍g∈G₎ Σ πₓ(xᵢ') · L(f(xᵢ'), g(xᵢ')) + Ω(g)</code><br />
+    Here, <code>πₓ(xᵢ')</code> weights local instances, <code>L</code> measures loss, and <code>Ω(g)</code> penalizes complexity.</p>
+
+    <p>This technique identifies the most impactful features (e.g., RPM, steering angle) behind model decisions and improves transparency in classifying traffic as benign or malicious. It enables the system to identify patterns characteristic of various attacks like DoS or spoofing.</p>
+
+    <p>In summary, the methodology combines robust machine learning with explainable AI to offer both accurate and interpretable threat detection for IoV networks. The proposed system is designed to adapt dynamically to evolving threats while preserving stakeholder trust in the decision-making process.</p>
+    </section>
+    <section>
+    <h3>Results and Discussion</h3>
+
+    <p>An evaluation was conducted to assess the effectiveness of different ML models in the context of IoV security. This includes both multi-class and binary classification tasks for which the models applied were XGBoost (XGB), Random Forest Classifier (RFC), Support Vector Classifier (SVC), Decision Tree (DT), and Logistic Regression. Accuracy, Precision, Recall, and F1 Score were used as evaluation metrics.</p>
+
+    <h4>Binary Classification Results</h4>
+    <ul>
+      <li><strong>XGB:</strong> Achieved 0.98 accuracy, 0.99 precision, 0.9802 recall, and 0.9801 F1 score. Demonstrated effective separation of benign and malicious data.</li>
+      <li><strong>RFC:</strong> Outperformed all with 0.99 accuracy and F1 score of 0.9851. Excellent for real-time binary classification in IoV systems.</li>
+      <li><strong>SVC:</strong> Scored 0.95 accuracy, but lower recall at 0.8692 indicated occasional missed attacks.</li>
+      <li><strong>DT:</strong> 0.96 accuracy and 0.88 F1 score, but reduced recall suggested susceptibility to missing edge-case attacks.</li>
+      <li><strong>Logistic Regression:</strong> Lowest performance, with 0.90 accuracy and 0.84 F1 score, highlighting its limitations in complex threat contexts.</li>
+    </ul>
+
+    <h4>Multi-Class Classification Results</h4>
+    <ul>
+      <li><strong>XGB:</strong> Maintained high performance with 0.98 accuracy and 0.9801 F1 score across all attack types.</li>
+      <li><strong>RFC:</strong> Matched or exceeded XGB in performance, scoring 0.99 on most metrics—highly suitable for real-world deployment.</li>
+      <li><strong>SVC:</strong> Achieved 0.94 accuracy, with reduced F1 at 0.8749, indicating difficulty with nuanced attack classification.</li>
+      <li><strong>DT:</strong> Performed steadily with 0.95 accuracy and 0.8887 F1 score, though slightly weaker than RFC and XGB.</li>
+      <li><strong>Logistic Regression:</strong> Performed worst with 0.80 accuracy and 0.72 F1 score, unsuitable for fine-grained multi-class scenarios.</li>
+    </ul>
+
+    <h4>Model Comparisons and Observations</h4>
+    <p>RFC and XGB consistently outperformed other models in both binary and multi-class contexts, offering robust classification with high recall and precision. Logistic Regression's simplicity made it a poor fit for the complexity of IoV traffic. SVC and DT showed acceptable performance but lacked the robustness of ensemble methods.</p>
+
+    <h4>LIME-Based Explainability Insights</h4>
+    <p>Applying LIME to high-performing models like RFC and XGB provided interpretability crucial for trust in security systems. In binary classification, LIME highlighted <code>DATA_3</code>, <code>DATA_7</code>, <code>DATA_0</code>, <code>DATA_1</code>, and <code>DATA_2</code> as influential features. The model confidently predicted 'Attack' with probability 1.00, showing strong feature discrimination.</p>
+
+    <p>In multi-class scenarios, for instance, RPM spoofing, <code>DATA_0</code> had the highest contribution (value: 2.00), followed by <code>DATA_1</code>, <code>DATA_2</code>, and <code>DATA_5</code>. Predictions were accurate with probability 1.00 for the correct class, and 0.00 for others, demonstrating LIME’s value in local interpretability.</p>
+
+    <p>This interpretability enhances user confidence, ensures transparency in real-time decisions, and is essential for securing critical IoV applications.</p>
+
+    <h4>Summary Table of Results</h4>
+    <table border="1" style="width:100%; text-align:center; border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Classification Type</th>
+          <th>Accuracy</th>
+          <th>Precision</th>
+          <th>Recall</th>
+          <th>F1 Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>XGBoost</td><td>Binary</td><td>0.98</td><td>0.99</td><td>0.98</td><td>0.98</td></tr>
+        <tr><td>Random Forest</td><td>Binary</td><td>0.99</td><td>0.99</td><td>0.98</td><td>0.99</td></tr>
+        <tr><td>SVC</td><td>Binary</td><td>0.95</td><td>0.93</td><td>0.87</td><td>0.91</td></tr>
+        <tr><td>Decision Tree</td><td>Binary</td><td>0.96</td><td>0.90</td><td>0.82</td><td>0.88</td></tr>
+        <tr><td>Logistic Regression</td><td>Binary</td><td>0.90</td><td>0.88</td><td>0.79</td><td>0.84</td></tr>
+        <tr><td>XGBoost</td><td>Multi-Class</td><td>0.98</td><td>0.99</td><td>0.98</td><td>0.98</td></tr>
+        <tr><td>Random Forest</td><td>Multi-Class</td><td>0.99</td><td>0.99</td><td>0.98</td><td>0.99</td></tr>
+        <tr><td>SVC</td><td>Multi-Class</td><td>0.94</td><td>0.90</td><td>0.82</td><td>0.87</td></tr>
+        <tr><td>Decision Tree</td><td>Multi-Class</td><td>0.95</td><td>0.91</td><td>0.83</td><td>0.89</td></tr>
+        <tr><td>Logistic Regression</td><td>Multi-Class</td><td>0.80</td><td>0.79</td><td>0.65</td><td>0.72</td></tr>
+      </tbody>
+    </table>
+    </section>
+    <section>
+    <h3>Future Work &amp; Conclusion</h3>
+
+    <p>This study demonstrates that machine learning models, particularly Random Forest and XGBoost, when combined with Explainable AI (XAI) techniques such as LIME, can significantly enhance cybersecurity in Internet of Vehicles (IoV) systems. The models achieved high precision in distinguishing between valid and malicious traffic, but further calibration of predictive accuracy can improve overall resilience. The successful application of LIME highlights the growing demand for interpretability in cybersecurity solutions, especially in safety-critical environments where trust in model decisions is paramount.</p>
+
+    <p>Integrating explainability bridges the gap between black-box model performance and transparent decision-making, which is essential for stakeholder confidence and real-time deployment in IoV security frameworks.</p>
+
+    <p>Looking ahead, <strong>federated learning</strong> offers a transformative solution to privacy and data-sharing constraints in IoV ecosystems. By enabling decentralized model training across multiple vehicles, this approach avoids centralizing sensitive data, thereby minimizing risks of data breaches during transmission. Additionally, federated learning enhances system scalability and keeps critical information—such as location and vehicle identifiers—confined to edge nodes, improving both privacy and performance.</p>
+
+    <p>Moreover, the integration of <strong>federated learning with blockchain</strong> technologies can ensure tamper-proof aggregation and verifiable model updates through immutable ledgers. This combination can facilitate predictive modeling that detects anomalous IoV behavior in real time and automatically triggers alerts or countermeasures to mitigate potential cyber threats before they escalate.</p>
+
+    <p>However, future work is needed to explore the viability of these techniques in real-world deployments. Key research areas include:</p>
+    <ul>
+      <li>Evaluating communication overhead and synchronization latency in federated settings</li>
+      <li>Assessing robustness of decentralized models against adversarial attacks</li>
+      <li>Studying the trade-offs between computational efficiency and detection accuracy on resource-constrained vehicle nodes</li>
+    </ul>
+
+    <p>In conclusion, the integration of predictive ML models, federated learning, and blockchain represents a critical step forward in securing the rapidly evolving IoV landscape. These technologies together can ensure scalable, privacy-preserving, and trustworthy solutions that will enable safer autonomous and connected transportation systems in the future.</p>
+
+    </section>
+    `,
+    tags: ["Cybersecurity", "Internet of Vehicles", "Machine Learning", "Privacy-Preserving ML"],
+    pdf: "/assets/papers/acm-sac-paper.pdf",
+    bibtex: "@inproceedings{10.1145/3672608.3707769, author={Patel, Tanish and Jhaveri, Rutvij and Thakker, Dhavalkumar and Verma, Sandeep and Ingle, Palash}, title={Enhancing Cybersecurity in Internet of Vehicles: A Machine Learning Approach with Explainable AI for Real-Time Threat Detection}, booktitle={Proceedings of the 40th ACM/SIGAPP Symposium on Applied Computing}, year={2025}, pages={2024--2031}, publisher={Association for Computing Machinery}, address={New York, NY, USA}, isbn={9798400706295}, doi={10.1145/3672608.3707769}, url={https://doi.org/10.1145/3672608.3707769}, keywords={artificial intelligence, cybersecurity, explainable artificial intelligence, internet of vehicles, machine learning}, abstract={The proliferation of IoV technologies has revolutionized the use of transport systems to a great level of improvement in safety and efficiency, and convenience to users. On the other hand, increased connectivity has also brought new vulnerabilities, making IoV networks susceptible to a wide range of cyber-attacks. The contribution of this paper is the in-depth study of the development and evaluation of advanced machine learning (ML) models that detect and classify network anomalies in IoV ecosystems. Several classification models have been studied in our research to achieve high accuracy for discriminating between benign and malicious traffic. This work further harnesses Explainable AI (XAI) methodologies through the LIME framework for enhanced interpretability of models' decision-making processes. Experimental results strongly advocate the strength of Random Forest and XGBoost, proving to be better on the binary and multi-class classification tasks, respectively. Due to resilience, preciseness, and scalability these models are a practical choice in real-world IoV security frameworks. Explainability integrated not only strengthens model reliability but also closes the gap between performance and interoperability in vehicular networks.}, location={Catania International Airport, Catania, Italy}, numpages={8}, series={SAC '25} }",
+    authors: ["Tanish Patel", "Rutvij H Jhaveri", "Dhavalkumar Thakker", "Sandeep Verma", "Palash Ingle"],
+    methodology: [
+      "Collection of real-time vehicular telemetry data including speed, RPM, gas level, and steering angle from IoV systems",
+      "Preprocessing pipeline with data cleaning, one-hot encoding, min-max scaling, SMOTE for class balancing, and PCA for dimensionality reduction",
+      "Training and evaluation of multiple supervised learning models including Logistic Regression, Decision Tree, Support Vector Classifier, Random Forest, and XGBoost for binary and multi-class threat classification",
+      "Integration of Explainable AI using LIME to interpret model predictions and identify critical features influencing classification decisions"
+    ],
+    results:
+      "Random Forest and XGBoost achieved the highest performance, with up to 99% accuracy and F1 scores in both binary and multi-class tasks. The integration of LIME provided actionable interpretability, enabling identification of key sensor features such as RPM and gas level, thereby enhancing trust and transparency in real-time threat detection within IoV networks.",
+    links: {
+      DOI: "https://doi.org/10.1145/3672608.3707769",
+    },
+
+  },
 ];
