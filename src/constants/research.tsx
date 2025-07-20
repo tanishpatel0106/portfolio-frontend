@@ -202,9 +202,9 @@ export const research: ResearchItem[] = [
     ],
     results:
       "The XGBoost model achieved 98.35% R² for DTSS prediction and Random Forest reached 99.45% R² for burnout prediction, with SHAP-based explainability revealing workload, upskilling pressure, and emotional regulation as key stress drivers.",
-    links: {
-      DOI: "https://ieeexplore.ieee.org/document/10589388",
-    },
+    // links: {
+    //   DOI: "https://ieeexplore.ieee.org/document/10589388",
+    // },
     
   }
 ];
