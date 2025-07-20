@@ -206,5 +206,48 @@ export const research: ResearchItem[] = [
     //   DOI: "https://ieeexplore.ieee.org/document/10589388",
     // },
     
-  }
+  },
+    {
+    slug: "fed-soc-ev",
+    thumbnail: "/images/SOC_PHOTO_1.png",
+    images: ["/images/SOC_PHOTO_1.png", "/images/SOC_2.png"],
+    title: "Data-Driven SoC Forecasting in Electric Vehicles: A Federated Learning Perspective",
+    category: "Smart Grid and Electric Vehicles",
+    role: "Co-Author",
+    summary:
+      "A data-driven State of Charge forecasting framework for Electric Vehicles that leverages Federated Learning and ensemble machine learning to deliver privacy-preserving, accurate, and scalable battery state estimation across decentralized sources",
+    description: null,
+    descriptionHtml: `
+    <section>
+      <h3>Abstract</h3>
+      <p>
+      Electric vehicle (EV) adoption stands as a pivotal step in curbing carbon emissions and combating climate change. However, the persistent specter of range anxiety continues to impede widespread acceptance. Traditional State of Charge (SoC) estimation methods, coupled with basic machine learning models, grapple with accuracy and adaptability limitations. Yet, the advent of Federated Learning heralds a transformative era in the EV landscape, placing a premium on data security and privacy. This approach involves training models across a network of distributed sources, such as individual EVs, harnessing the wealth of diverse data streams. It continually refines models, ensuring SoC calculations maintain precision as the EV fleet evolves. Notably, it fortifies against cyberattacks by obviating centralized data storage. Embracing Federated Learning within the EV industry not only alleviates range anxiety but also fosters sustainable transportation, underscoring the role of EVs in shaping an ecologically conscious future. This paper concentrates on SoC estimation through the prism of Federated Learning. Techniques including Federated Averaging, Differential Privacy Techniques, and Ensemble Learning will be employed. To facilitate this research, a comprehensive vehicle model, encompassing the powertrain and heating circuit, was validated through real driving trips with a BMW i3 (60 Ah), yielding the requisite dataset. This dataset underwent meticulous extraction, cleansing, and exploratory data analysis involving numerous parameters. These preparatory steps lay the groundwork for the subsequent application of Federated Averaging, Differential Privacy Techniques, and Ensemble Learning to the dataset, aiming for precise SoC estimation.
+      </p>
+    </section>
+    <section>
+      <h3>Overview of the Work</h3>
+      <p>The evolution of electric vehicles (EVs) has brought forth a myriad of technological advancements and challenges. Among the most crucial aspects of EVs is the "State of Charge" (SoC), which refers to the current battery capacity as a percentage of its maximum capacity. Understanding the SoC is pivotal, not only for users who need to know when to recharge their vehicles but also for manufacturers and service providers aiming to optimize battery lifespan and vehicle performance.</p>
+      <p>However, the estimation of SoC is not a straightforward task. Traditional methods rely heavily on historical data and simplistic models, often leading to inaccuracies. Moreover, the dynamic nature of EV usage patterns adds another layer of complexity to SoC estimation. However, the mere recognition of SoC's importance isn't sufficient. The precision in its estimation is equally, if not more, crucial. Accurate estimation of the State of Charge ensures the safe operation of EVs, providing real-time data that can be pivotal for decisions related to charging, discharging, and overall vehicle operation. </p>
+      <p> In the quest for more accurate and efficient methods of data processing and analysis, the concept of Federated Learning emerges as a promising approach. Federated Learning is a machine learning technique where the model is trained across multiple decentralized devices or servers holding local data samples, without exchanging the data itself. This method stands in stark contrast to traditional centralized learning and offers significant advantages, especially in terms of data privacy and efficiency. </p>
+      <p>With the increasing integration of EVs into our daily lives, the datasets associated with them have become more comprehensive and valuable. This upsurge in data brings to light the indispensable need for robust cybersecurity measures. Any compromise in the EV dataset could lead to severe consequences, ranging from financial losses to potential threats to passenger safety.</p>
+      <p>This is where the beauty of Federated Learning truly shines. By allowing data to remain on local devices and only updating the model's parameters, Federated Learning inherently provides an added layer of cybersecurity. Not only does this approach enhance the protection of sensitive data, but it also paves the way for more collaborative and large-scale machine learning endeavors without the associated risks of data breaches.</p>
+    `,
+    tags: ["Federated Learning", "Electric Vehicles (EVs)", "State of Charge Estimation", "Privacy-Preserving ML"],
+    pdf: "/assets/papers/data-soc-ev.pdf",
+    bibtex: "@inproceedings{patel2023data, title={Data-Driven SoC Forecasting in Electric Vehicles: A Federated Learning Perspective}, author={Patel, Tanish and Gaikwad, Harshvardhan}, booktitle={International Conference on Computational Modeling and Sustainable Energy}, pages={667--686}, year={2023}, organization={Springer} }",
+    authors: ["Tanish Patel", "Harshvardhan Gaikwad"],
+    methodology: [
+      "Federated Model Training Across Electric Vehicle Nodes using Federated Averaging",
+      "Exploratory Data Analysis and Preprocessing on Real-World BMW i3 Drive Cycle Data",
+      "Application of Supervised ML Models including Lasso, Ridge, ElasticNet, SVR, Random Forest, and Gradient Boosting",
+      "Weighted Aggregation of Locally Trained Models Preserving Data Privacy"
+    ],
+    results:
+      "The Random Forest-based federated learning framework achieved the best performance with an RMSE of 0.232 and R² of 0.9996, surpassing traditional regression baselines and validating the feasibility of privacy-preserving, high-accuracy SoC estimation across distributed EV datasets.",
+    links: {
+      DOI: "https://doi.org/10.1007/978-981-97-6794-6_42",
+    },
+
+  },
+
 ];
