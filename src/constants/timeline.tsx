@@ -2,13 +2,13 @@
     {
       company: "Paperchase Inc.",
       title: "AI Engineer",
-      date: "May 2023 - Present",
+      date: "May 2024 - August 2025",
       description: "Predictive Analytics",
       responsibilities: [
-        "Developed and implemented advanced predictive models to enhance financial data analysis, supporting strategic decision-making in an accounting firm focused on the hospitality sector.",
-        "Spearheaded research initiatives to identify and integrate cutting-edge predictive modeling techniques, driving process efficiency and system optimization.",
-        "Collaborated with cross-functional teams to deploy analytics solutions, enhancing operational insights and client reporting within the firm.",
-        "Continuously improved predictive modeling frameworks, ensuring adaptability and relevance in evolving financial and market landscapes.",
+        "Engineered an end-to-end financial intelligence platform combining AutoML forecasting, multi-agent LLM commentary, and drill-through P&L/Balance Sheet analytics used by CFOs and finance leaders across 200+ hospitality clients.",
+        "Built scalable Azure-based microservices (FastAPI + Functions + SQL Server) to operationalize forecasting, KPI computation, and AI-generated variance analysis, reducing reporting latency by nearly 40%.",
+        "Led the development of a multi-agent reasoning workflow that produced account-wise financial insights, automated variance explanations, and executive-grade commentary for P&L and Balance Sheet statements.",
+        "Designed and deployed data pipelines and forecasting frameworks using SARIMA, LSTM, N-BEATS, AutoTS, and NeuralForecast, standardizing financial projections and saving 15–20 hours/month of manual effort per client.",
       ],
     },
     {
@@ -17,10 +17,10 @@
       date: "January 2021 - May 2025",
       description: "Involving in cutting edge research pertaining to CS Research Domains.",
       responsibilities: [
-        "Conducted in-depth research on emerging data science methodologies, contributing to academic publications and advancing the field of study",
-        "Assisted in the design and execution of experiments and simulations, analyzing results to draw meaningful conclusions for ongoing research projects.",
-        "Collaborated with faculty and fellow researchers to develop and refine innovative algorithms, supporting the advancement of university research initiatives.",
-        "Presented research findings at academic conferences and seminars, fostering knowledge exchange and promoting scholarly dialogue within the academic community.",
+        "Developed federated learning pipelines integrating CNN-based defect classification with LIME-driven interpretability, achieving publication-level performance improvements on wafer defect datasets.",
+        "Implemented machine learning models for real-time cybersecurity in Internet of Vehicles (IoV), incorporating SHAP and LIME explainability to enhance model transparency and threat diagnosis.",
+        "Designed and evaluated OcclusionNetPlusPlus, a multi-scale similarity network with adaptive occlusion detection for robust iris recognition under challenging visual conditions.",
+        "Collaborated with faculty to author peer-reviewed research papers, conducted rigorous experimentation, and produced reproducible ML/XAI workflows supporting academic dissemination.",
       ],
     },
     {
