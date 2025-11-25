@@ -2,6 +2,7 @@ import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
+import { EducationHistory } from "@/components/Education";
 import { Products } from "@/components/Products";
 import { WorkHistory } from "@/components/WorkHistory";
 import { LeadershipHistory } from "@/components/Leadership";
@@ -19,6 +20,13 @@ export default function Home() {
         millions of lives
       </Paragraph>
       <WorkHistory />
+      <span className="text-4xl">🎓</span>
+      <Heading className="font-black">Education</Heading>
+      <Paragraph className="max-w-xl">
+        Learning is a <Highlight>Continuous Journey</Highlight> and I am on my
+        way to master it.
+      </Paragraph>
+      <EducationHistory />
       <span className="text-4xl">🏆</span>
       <Heading className="font-black">Leadership</Heading>
       <Paragraph className="max-w-xl">
