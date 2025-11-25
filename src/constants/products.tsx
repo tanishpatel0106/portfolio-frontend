@@ -3,7 +3,7 @@ export const products = [
     href: "https://www.paperchase.ac/",
     title: "Paperchase AI — End-to-End Financial Intelligence Platform",
     description:
-      "Mitigating failures by using Federated Learning and Explainable AI",
+      "A comprehensive financial intelligence platform",
     thumbnail: "/images/paperchaseai1.png",
     images: [
       "/images/paperchaseai1.png",
