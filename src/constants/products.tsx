@@ -1,5 +1,46 @@
 export const products = [
   {
+    href: "https://www.paperchase.ac/",
+    title: "Paperchase AI — End-to-End Financial Intelligence Platform",
+    description:
+      "Mitigating failures by using Federated Learning and Explainable AI",
+    thumbnail: "/images/paperchaseai1.png",
+    images: [
+      "/images/paperchaseai1.png",
+      "/images/paperchaseai2.png",
+      "/images/paperchaseai3.png"
+    ],
+    stack: ["Time Series Analysis", "Power BI", "Agentic Systems", "Deep Learning", "Machine Learning"],
+    slug: "pmscania",
+    content: (
+      <div>
+        <p><strong>Detailed Tech Stack:</strong>  
+          AI & Forecasting: AutoTS, NeuralForecast, SARIMA, LSTM, N-BEATS  
+          LLM & Agents: Azure OpenAI (GPT-4o-mini), Multi-Agent Workflow, RAG  
+          Backend: Python, FastAPI, Azure Functions, Azure SQL Server  
+          Dashboards: React, Power BI Embedded, Streamlit  
+          Data & Pipelines: Azure Data Factory, SQL Server, Pandas, Async Jobs</p>
+        <p>
+        Paperchase AI is a comprehensive financial intelligence platform designed for 200+ restaurants and hospitality groups, built to unify forecasting, automated insights, executive dashboards, and drill-through financial analysis. As the Founding AI Engineer, I led the creation of the platform&apos;s intelligence layer—combining forecasting, multi-agent AI commentary, and granular P&L/Balance Sheet exploration into a single system used daily by CFOs and finance directors. The platform significantly improved reporting efficiency, decision-making speed, and the depth of financial visibility across all client businesses.
+        </p>
+        <p>
+        The platform offers a unified financial view by combining rich visual analytics with intelligent narrative insights. I built the core KPI dashboard that displays Revenue, COGS, Gross Profit, Operating Expense, and EBITDA across accounting periods, complete with automated MoM, YoY, and forecast-vs-actual comparisons. This allowed executives to instantly understand trends, margin movements, and cost structure shifts without manual spreadsheet work.</p>
+
+        <p>Beyond high-level KPIs, I engineered a detailed P&L and Balance Sheet explorer integrated with Power BI. Users can drill from summary accounts all the way down to individual GL transactions, with opening and closing balances tied directly to SQL-backed financial records. This eliminated the need for finance teams to manually trace anomalies and reduced deep-dive analysis time by more than half.</p>{" "}
+
+        <p>A major component of the product is the AutoML forecasting engine, which trains, compares, and selects models such as SARIMA, LSTM, N-BEATS, and AutoTS ensembles. The system automatically produces 12-month financial forecasts, evaluates model performance, and updates projections as new data arrives. This automation alone saved clients 15-20 hours per month and established a standardized forecasting framework across all sites.</p>
+
+        <p>On top of the financial and forecasting layers, I built a multi-agent AI commentary system that generates account-wise explanations, variance analysis, and actionable recommendations. This agentic workflow mirrors how senior finance analysts write reports—first quantifying changes, then interpreting them, and finally providing strategic reasoning. The commentary dynamically populates the AI Insight panel in the dashboard, giving decision-makers contextually rich interpretations that previously required a full finance team to produce.</p>
+
+        <p>All of this intelligence is powered by an Azure-based microservices architecture that I designed using FastAPI, SQL Server, and Azure Functions. Heavy workloads—such as multi-model training or generating multi-page commentary—run through asynchronous execution pipelines, ensuring responsiveness at scale and reducing reporting latency by nearly 40%.</p>
+
+        <p>The result is a fully integrated product that empowers CFOs and executives with real-time visibility, automated insights, and predictive analytics—making Paperchase AI one of the most advanced financial reporting platforms in the hospitality analytics space.</p>
+
+        <p><strong>Confidentiality Note:</strong> Certain Power BI balance sheet views, AI-generated financial reports, and internal templates cannot be shown publicly due to client confidentiality, but the features described reflect the actual system delivered.</p>
+      </div>
+    ),
+  },
+  {
     href: "https://drive.google.com/file/d/1ifI7p4PkfIVfg2vRjPw-sKFXm30l4Q8t/view?usp=drive_link",
     title: "Predictive Maintenance in SCANIA Trucks",
     description:
