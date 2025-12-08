@@ -8,7 +8,7 @@ export const products = [
     images: [
       "/images/paperchaseai1.png",
       "/images/paperchaseai2.png",
-      "/images/paperchaseai3.png"
+      // "/images/paperchaseai3.png"
     ],
     stack: ["Time Series Analysis", "Power BI", "Agentic Systems", "Deep Learning", "Machine Learning"],
     slug: "pmscania",
