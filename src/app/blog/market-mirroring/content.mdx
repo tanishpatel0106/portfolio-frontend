@@ -25,7 +25,7 @@ As one veteran trader once told me:
 
 > *“Markets have a sense of smell. The moment your footsteps repeat, someone will start tracking them.”*
 
-What looks like harmless oversight ends up reshaping the PM’s entire trading environment. It affects how the market responds to her trades, how liquidity providers perceive her signals, and even how execution algorithms behave around her flow. And once a PM realizes what’s happening, it opens the door to something far more interesting—and far more dangerous for the firm: **strategic exploitation**.
+What looks like harmless oversight ends up reshaping the PM’s entire trading environment. It affects how the market responds to their trades, how liquidity providers perceive their signals, and even how execution algorithms behave around their flow. And once a PM realizes what’s happening, it opens the door to something far more interesting—and far more dangerous for the firm: **strategic exploitation**.
 
 Let’s break this down.
 
@@ -33,7 +33,7 @@ Let’s break this down.
 
 ## How Mirroring Unintentionally Hurts the PM
 
-To understand the consequences, it helps to look at how modern markets actually behave. Markets don’t respond to motives—they respond to *orderflow*. Every buy order, every sell order, every adjustment to a quote contributes to the ecosystem of supply and demand. When you add a delayed duplicate of a PM’s trades into that ecosystem, you subtly but meaningfully distort how the market interprets and reacts to her actions.
+To understand the consequences, it helps to look at how modern markets actually behave. Markets don’t respond to motives—they respond to *orderflow*. Every buy order, every sell order, every adjustment to a quote contributes to the ecosystem of supply and demand. When you add a delayed duplicate of a PM’s trades into that ecosystem, you subtly but meaningfully distort how the market interprets and reacts to their actions.
 
 It’s a bit like driving on a highway and having your exact movements duplicated by a car behind you a few seconds later.  
 At first, it feels harmless.  
@@ -41,15 +41,15 @@ But soon you realize: every time you switch lanes, so does the other car. Every 
 
 That’s essentially what happens in orderflow.
 
-The most immediate problem comes from **amplified market impact**. When a PM sends an order, she already moves the price a bit by consuming liquidity. That’s unavoidable. But a few seconds later, the mirror book sends the same order again. It’s as if the PM is trading twice, even though she only wanted to trade once. The second trade pushes the price further in the same direction—raising costs if she’s buying, lowering proceeds if she’s selling. The PM ends up paying more or receiving less purely because the mirror book doubled the footprint of her activity.
+The most immediate problem comes from **amplified market impact**. When a PM sends an order, they already move the price a bit by consuming liquidity. That’s unavoidable. But a few seconds later, the mirror book sends the same order again. It’s as if the PM is trading twice, even though they only wanted to trade once. The second trade pushes the price further in the same direction—raising costs if they’re buying, lowering proceeds if they're selling. The PM ends up paying more or receiving less purely because the mirror book doubled the footprint of their activity.
 
-Then there’s **the information problem**. Market makers and high-frequency trading firms are exceptionally good at detecting patterns in orderflow. If they notice that trades from this PM are consistently followed by another burst of volume a few seconds later, they start treating her initial trades as *informative*. Her flow looks predictive of future price pressure, even though that pressure isn’t informational—it's just the mirror book copying her.
+Then there’s **the information problem**. Market makers and high-frequency trading firms are exceptionally good at detecting patterns in orderflow. If they notice that trades from this PM are consistently followed by another burst of volume a few seconds later, they start treating their initial trades as *informative*. their flow looks predictive of future price pressure, even though that pressure isn’t informational—it's just the mirror book copying them.
 
 One execution researcher put it perfectly:
 
 > *“Predictability is taxation. The moment you become predictable, the market starts charging you rent.”*
 
-Once liquidity providers perceive you as “informed,” everything gets more expensive. They widen spreads. They quote smaller sizes. They pull back when they see you coming. The PM begins to look like a bigger, more sophisticated trader than she actually is—and she pays the price for that illusion.
+Once liquidity providers perceive you as “informed,” everything gets more expensive. They widen spreads. They quote smaller sizes. They pull back when they see you coming. The PM begins to look like a bigger, more sophisticated trader than they actually are—and they pay the price for that illusion.
 
 Finally, trade mirroring makes the PM’s execution more predictable. In modern execution, unpredictability is a virtue. The moment a trading pattern becomes machine-detectable, high-frequency firms adjust their behavior in advance. They position ahead of the PM, fade liquidity, and generally worsen execution conditions. The PM’s trades get filled at worse prices, even before the mirror book fires its next shot.
 
@@ -57,7 +57,7 @@ As one algorithmic trader jokingly said:
 
 > *“If I can set my watch by your flow, you’re not trading—you’re donating.”*
 
-In short, mirroring is not neutral. It changes the PM’s environment, often in ways that reduce her performance even if her underlying alpha remains unchanged.
+In short, mirroring is not neutral. It changes the PM’s environment, often in ways that reduce their performance even if their underlying alpha remains unchanged.
 
 ---
 
@@ -65,26 +65,26 @@ In short, mirroring is not neutral. It changes the PM’s environment, often in 
 
 But the story doesn’t end with degraded execution. There’s a deeper irony here.
 
-If a PM is sharp—and most are—she’ll eventually notice the pattern. Her trades get followed by a delayed echo. Sometimes the CIO mirrors a fixed percentage of her size. Sometimes the delay is nearly constant. Sometimes the execution style is straightforward enough that the pattern becomes predictable.
+If a PM is sharp—and most are—they’ll eventually notice the pattern. their trades get followed by a delayed echo. Sometimes the CIO mirrors a fixed percentage of their size. Sometimes the delay is nearly constant. Sometimes the execution style is straightforward enough that the pattern becomes predictable.
 
 Once the PM sees this, the mirror book stops being a monitoring tool. It becomes a **second wave of deterministic orderflow**—and predictable orderflow is incredibly valuable.
 
 Think of the mirror book like a tide:  
 If you know exactly when the wave is coming and how strong it will be, you can position yourself right at the edge and let it carry you forward.
 
-One common tactic is called “fading.” The PM places a small buy order—not because she truly wants the position yet, but because she knows the mirror book will follow shortly. When the mirror buy pushes the price up a bit more, the PM sells into the strength. The profit has nothing to do with fundamentals or alpha; it's extracted from the mechanical behavior of the mirror book itself.
+One common tactic is called “fading.” The PM places a small buy order—not because they truly wants the position yet, but because they know the mirror book will follow shortly. When the mirror buy pushes the price up a bit more, the PM sells into the strength. The profit has nothing to do with fundamentals or alpha; it's extracted from the mechanical behavior of the mirror book itself.
 
-Another tactic is **oversizing starter trades**. If a PM knows the CIO will mirror half her size, she can buy slightly more than she needs, let the mirror book push the price further up, and then sell back down to her desired holding. She captures the price impact the mirror book creates—impact she didn’t have to pay for.
+Another tactic is **oversizing starter trades**. If a PM knows the CIO will mirror half their size, they can buy slightly more than they need, let the mirror book push the price further up, and then sell back down to their desired holding. they captures the price impact the mirror book creates—impact they didn’t have to pay for.
 
-More sophisticated PMs might experiment with **probe trades**—tiny trades designed to learn the mirror book’s exact timing and aggressiveness. Once the PM knows the mirror’s “algorithm,” she can orchestrate trades to profit from the predictable second wave of liquidity.
+More sophisticated PMs might experiment with **probe trades**—tiny trades designed to learn the mirror book’s exact timing and aggressiveness. Once the PM knows the mirror’s “algorithm,” they can orchestrate trades to profit from the predictable second wave of liquidity.
 
-And then there’s the more subtle form of exploitation: **letting the mirror book absorb slippage**. By adjusting her execution style—using iceberg orders, slower clips, or transient liquidity pockets—the PM can set up situations where the CIO’s mirrored trades collide with thin markets while she herself waits safely on the sidelines. She effectively shifts her own execution costs onto the mirror book.
+And then there’s the more subtle form of exploitation: **letting the mirror book absorb slippage**. By adjusting their execution style—using iceberg orders, slower clips, or transient liquidity pockets—the PM can set up situations where the CIO’s mirrored trades collide with thin markets while they herself waits safely on the sidelines. they effectively shifts their own execution costs onto the mirror book.
 
 One execution PM once described it like this:
 
 > *“If someone insists on walking behind me, fine—but they’re stepping on all the rakes, not me.”*
 
-In the most extreme cases, the PM may not even care about the underlying position. The mirror book becomes a *tradable pattern*, and she begins constructing trades designed to profit purely from the CIO’s mechanical shadowing.
+In the most extreme cases, the PM may not even care about the underlying position. The mirror book becomes a *tradable pattern*, and they begins constructing trades designed to profit purely from the CIO’s mechanical shadowing.
 
 ---
 
@@ -99,9 +99,9 @@ It is *orderflow with consequences*.
 It changes:
 
 - how the market perceives the PM  
-- how liquidity providers react to her  
-- how much slippage she incurs  
-- and even the incentives she faces  
+- how liquidity providers react to them  
+- how much slippage they incurs  
+- and even the incentives they faces  
 
 In a world where milliseconds matter and execution quality can make or break a strategy, the addition of a deterministic second trade is far from trivial.
 
