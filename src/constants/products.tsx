@@ -4,12 +4,12 @@ export const products = [
     title: "FX-Cross: Machine Learning–Driven Trading Signal Generation",
     description:
       "Probabilistic FX trading strategies using time series smoothing, machine learning, and deep learning models",
-    thumbnail: "/images/fx2.png",
+    thumbnail: "/images/fx2.jpeg",
     images: [
-      "/images/fx1.png",
-      "/images/fx2.png",
-      "/images/fx3.png",
-      "/images/fx4.png",
+      "/images/fx1.jpeg",
+      "/images/fx2.jpeg",
+      "/images/fx3.jpeg",
+      "/images/fx4.jpeg",
     ],
     stack: [
     "Time Series Analysis",
