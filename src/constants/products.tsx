@@ -1,5 +1,89 @@
 export const products = [
   {
+    href: "https://github.com/tanishpatel0106/IEOR4571-FX-Cross",
+    title: "FX-Cross: Machine Learning–Driven Trading Signal Generation",
+    description:
+      "Probabilistic FX trading strategies using time series smoothing, machine learning, and deep learning models",
+    thumbnail: "/images/fx2.png",
+    images: [
+      "/images/fx1.png",
+      "/images/fx2.png",
+      "/images/fx3.png",
+      "/images/fx4.png",
+    ],
+    stack: [
+    "Time Series Analysis",
+    "Algorithmic Trading",
+    "Machine Learning",
+    "Deep Learning",
+    "Quantitative Finance"
+  ],
+    slug: "fx-cross",
+    content: (
+    <div>
+      <p>
+        This project focuses on the development of a quantitative FX trading
+        framework for major currency crosses, combining classical time series
+        techniques with modern machine learning and deep learning models to
+        generate probabilistic trading signals. The objective is to estimate the
+        likelihood of favorable intraday price movements and construct
+        rule-based trading decisions grounded in statistical and predictive
+        rigor.
+      </p>
+
+      <p>
+        The baseline strategy is built using Exponential Smoothing models,
+        including optimized α–β formulations, to capture short-term momentum and
+        trend dynamics in FX price series. These models serve both as standalone
+        signal generators and as benchmarks against which more advanced learning
+        approaches are evaluated. Parameter optimization is performed to balance
+        responsiveness and noise reduction, ensuring robustness across varying
+        market regimes.
+      </p>
+
+      <p>
+        On top of the classical framework, multiple machine learning classifiers
+        are implemented to estimate the probability that the High price exceeds
+        a predefined profit-taking threshold relative to the Open price. These
+        models include Random Forests, XGBoost, Long Short-Term Memory (LSTM)
+        networks, and Temporal Convolutional Networks (TCN). Feature sets are
+        constructed from lagged OHLC data, engineered technical indicators, and
+        rolling statistical measures, allowing the models to learn nonlinear
+        relationships and temporal dependencies inherent in FX markets.
+      </p>
+
+      <p>
+        The trading rule is defined in probabilistic terms: a position is entered
+        only when the predicted probability of achieving the target return
+        exceeds a configurable confidence threshold. This formulation enables
+        explicit control over risk–reward trade-offs and facilitates systematic
+        evaluation of model performance beyond raw classification accuracy. The
+        comparative analysis highlights that while traditional smoothing methods
+        perform well in stable regimes, deep learning models such as LSTM and TCN
+        demonstrate superior adaptability under complex and volatile market
+        conditions.
+      </p>
+
+      <p>
+        The entire system is deployed as an interactive Streamlit application,
+        allowing users to select FX pairs, adjust model parameters, visualize
+        signals, and compare strategy performance across models in real time.
+        This deployment bridges research and practice, transforming experimental
+        models into a usable decision-support tool for FX trading analysis.
+      </p>
+
+      <p>
+        The project concludes that integrating probabilistic machine learning
+        models with classical time series techniques provides a powerful and
+        flexible framework for FX signal generation. Future extensions include
+        the incorporation of macroeconomic exogenous variables, regime detection,
+        transaction cost modeling, and portfolio-level optimization across
+        multiple currency pairs.
+      </p>
+    </div>
+    ),
+  },
+  {
     href: "https://www.paperchase.ac/",
     title: "Paperchase AI — End-to-End Financial Intelligence Platform",
     description:
@@ -11,7 +95,7 @@ export const products = [
       // "/images/paperchaseai3.png"
     ],
     stack: ["Time Series Analysis", "Power BI", "Agentic Systems", "Deep Learning", "Machine Learning"],
-    slug: "pmscania",
+    slug: "paperchaseai",
     content: (
       <div>
         <p><strong>Detailed Tech Stack:</strong>  
