@@ -1,6 +1,6 @@
 export const products = [
   {
-    href: "https://github.com/your-repo/stat-arb", // update if needed
+    href: "https://github.com/tanishpatel0106/IEOR4576-Project", // update if needed
   title: "Statistical Arbitrage: Factor-Based Mean Reversion Trading System",
   description:
     "A multi-factor statistical arbitrage framework using PCA-based factor models, residual mean reversion, and systematic trade analytics",
