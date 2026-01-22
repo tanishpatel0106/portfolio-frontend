@@ -4,12 +4,9 @@ export const products = [
   title: "Agentic NLP-to-SQL: Secure Multi-Agent Analytics Copilot",
   description:
     "A security-first, multi-agent natural language to SQL system with clarification, schema grounding, accounting-aware query generation, and safe execution across SQL backends",
-  thumbnail: "/images/nlp2sql-4.jpeg",
+  thumbnail: "/images/nlp2sql-4.png",
   images: [
-    "/images/nlp2sql-1.jpeg",
-    "/images/nlp2sql-2.jpeg",
-    "/images/nlp2sql-3.jpeg",
-    "/images/nlp2sql-4.jpeg",
+    "/images/nlp2sql-1.png",
   ],
   stack: [
     "LLM Agents",
