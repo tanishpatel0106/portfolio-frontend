@@ -1,5 +1,92 @@
 export const products = [
   {
+  href: "", // update if needed
+  title: "Agentic NLP-to-SQL: Secure Multi-Agent Analytics Copilot",
+  description:
+    "A security-first, multi-agent natural language to SQL system with clarification, schema grounding, accounting-aware query generation, and safe execution across SQL backends",
+  thumbnail: "/images/nlp2sql-4.jpeg",
+  images: [
+    "/images/nlp2sql-1.jpeg",
+    "/images/nlp2sql-2.jpeg",
+    "/images/nlp2sql-3.jpeg",
+    "/images/nlp2sql-4.jpeg",
+  ],
+  stack: [
+    "LLM Agents",
+    "NLP-to-SQL",
+    "SQL Validation & Governance",
+    "Accounting Analytics",
+    "Retrieval / Schema Grounding",
+    "Backend APIs",
+    "Security Engineering"
+  ],
+  slug: "nlp2sql-agentic",
+  content: (
+    <div>
+      <p>
+        This project is an agentic NLP-to-SQL analytics copilot designed to
+        convert natural-language business questions into safe, executable SQL
+        while maintaining strict governance over what data can be accessed and
+        how queries are formed. Instead of relying on a single prompt-to-SQL
+        step, the system uses a multi-agent workflow that explicitly separates
+        interpretation, clarification, query synthesis, validation, and
+        execution—making it significantly more robust for real-world analytics
+        use cases.
+      </p>
+
+      <p>
+        The pipeline begins with an intent and constraint extraction phase that
+        interprets user questions into a structured representation (metrics,
+        filters, grouping, time windows, and entity scope). When queries are
+        ambiguous (e.g., missing date ranges, unclear grain, conflicting
+        filters), a clarification agent triggers targeted follow-up questions
+        rather than guessing—improving correctness and preventing silent
+        semantic errors in downstream SQL.
+      </p>
+
+      <p>
+        A SQL generation agent then produces database-compliant SQL using
+        schema-grounded mappings (table/column allow-lists and usage rules) to
+        avoid hallucinated fields. For financial and operational analytics, an
+        accounting-aware agent handles domain semantics such as period logic,
+        aggregation rules, and common reporting patterns (e.g., revenue vs.
+        expense rollups, variance-style comparisons, and grouping at the correct
+        reporting level), enabling reliable “business logic aware” query
+        generation.
+      </p>
+
+      <p>
+        Safety is treated as a first-class requirement. A dedicated validation
+        layer enforces read-only constraints, blocks dangerous statements,
+        prevents SQL injection patterns, restricts schema exposure, and rejects
+        overly broad queries. This ensures the system can be used in
+        enterprise-like contexts where compliance, least-privilege access, and
+        auditability matter as much as raw query accuracy.
+      </p>
+
+      <p>
+        The backend is organized as modular APIs that orchestrate the multi-agent
+        flow and support execution across multiple SQL backends (e.g., SQL
+        Server, SQLite). The design also anticipates production deployment and
+        evolution—capturing operational notes (including Kubernetes/AKS-related
+        deployment considerations) and a forward path for integrating modern
+        agent interoperability standards (e.g., MCP-style migration).
+      </p>
+
+      <p>
+        Overall, the project demonstrates how agentic decomposition improves
+        reliability and governance for NLP-driven analytics: users get a
+        conversational interface for querying data, while the system enforces
+        guardrails that keep the output correct, safe, and aligned with the
+        underlying schema and business rules. Future extensions include richer
+        semantic retrieval over data dictionaries, policy-based row-level access
+        control, and automated evaluation harnesses for query accuracy and
+        security regressions.
+      </p>
+    </div>
+  ),
+},
+  {
     href: "https://github.com/tanishpatel0106/IEOR4576-Project", // update if needed
   title: "Statistical Arbitrage: Factor-Based Mean Reversion Trading System",
   description:
