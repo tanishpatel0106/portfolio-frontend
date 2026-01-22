@@ -6,7 +6,7 @@ export const products = [
     "A security-first, multi-agent natural language to SQL system with clarification, schema grounding, accounting-aware query generation, and safe execution across SQL backends",
   thumbnail: "/images/nlp2sql-4.png",
   images: [
-    "/images/nlp2sql-1.png",
+    "/images/nlp2sql-4.png",
   ],
   stack: [
     "LLM Agents",
