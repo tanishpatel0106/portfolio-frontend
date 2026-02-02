@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "rag:build": "tsx scripts/build-rag-index.ts",
+    "prebuild": "npm run rag:build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.18",
     "@mapbox/rehype-prism": "^0.8.0",
     "@mdx-js/loader": "^2.3.0",
     "@next/mdx": "^13.4.19",
@@ -17,10 +20,13 @@
     "@types/node": "20.5.3",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "ai": "^3.4.1",
     "autoprefixer": "10.4.15",
+    "cheerio": "^1.0.0-rc.12",
     "clsx": "^2.0.0",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "fast-xml-parser": "^4.4.1",
     "framer-motion": "^10.16.1",
     "next": "13.4.19",
     "postcss": "8.4.28",
@@ -31,5 +37,8 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1"
   }
 }
