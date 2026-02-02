@@ -14,7 +14,7 @@ import {
   retrieveChunks,
   formatChunksAsContext,
   createCitation,
-  RetrievedChunk,
+  type RetrievedChunk,
 } from '@/lib/rag/retriever'
 
 export const maxDuration = 30

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useChat } from "@ai-sdk/react"
-import { DefaultChatTransport, UIMessage } from "ai"
+import { DefaultChatTransport } from "ai"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   IconMessageCircle,
@@ -94,10 +94,10 @@ export function AskMeChat() {
   }, [])
 
   // Extract text from message parts
-  const getMessageText = useCallback((message: UIMessage): string => {
+  const getMessageText = useCallback((message: { parts?: Array<{ type: string; text?: string }> }): string => {
     if (!message.parts || !Array.isArray(message.parts)) return ""
     return message.parts
-      .filter((p): p is { type: "text"; text: string } => p.type === "text")
+      .filter((p): p is { type: "text"; text: string } => p.type === "text" && typeof p.text === "string")
       .map((p) => p.text)
       .join("")
   }, [])
