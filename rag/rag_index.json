@@ -1,0 +1,158 @@
+{
+  "siteUrl": "https://tanishpatel.vercel.app",
+  "builtAt": "2026-02-02T00:00:00.000Z",
+  "chunks": [
+    {
+      "chunk_id": "chunk_0",
+      "url": "/about",
+      "title": "About | Tanish Patel",
+      "section_heading": "About Me",
+      "text": "Hey there! I'm Tanish Patel, a passionate tech enthusiast and emerging researcher in the fascinating world of Computer Engineering. My expertise spans Machine Learning, Computer Vision, Robotics, and Cloud Computing. I'm proficient in several programming languages and love diving deep into frameworks like TensorFlow and OpenCV. Whether it's crafting intricate algorithms or developing robust applications, I thrive on the challenge of solving complex problems through innovative tech solutions.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_1",
+      "url": "/about",
+      "title": "About | Tanish Patel",
+      "section_heading": "Projects and Work",
+      "text": "Throughout my academic and professional journey, I've had the opportunity to work on some truly groundbreaking projects. From developing posture correction systems that help improve ergonomics to building explainable AI (xAI) models that make complex decisions more transparent and understandable, I've always aimed to push the boundaries of what's possible. One of my most exciting projects involved leveraging Federated Learning to classify semiconductor defects, a task that required not just technical prowess but also a deep understanding of the manufacturing process. Additionally, I've worked on predicting the State of Charge (SoC) for Electric Vehicles, ensuring that these green machines run efficiently and reliably. I've also built AI assistants for the underprivileged and illiterate people because it is important to give back to community we are growing in!",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_2",
+      "url": "/about",
+      "title": "About | Tanish Patel",
+      "section_heading": "Community Involvement",
+      "text": "Beyond the technical nitty-gritty, I'm deeply involved in the tech community. You'll often find me at technical symposiums, soaking up the latest research and innovations, or hacking away at hackathons, where the fast-paced environment fuels my creativity and problem-solving skills. I also hold leadership positions in several student technical organizations, where I mentor peers, lead projects, and help foster a community of like-minded tech enthusiasts. For me, technology is not just about individual achievements but also about collective growth and innovation.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_3",
+      "url": "/about",
+      "title": "About | Tanish Patel",
+      "section_heading": "Hobbies and Interests",
+      "text": "But let's not forget the creative side of me! I believe that my technical skills don't just make me a better professional—they make me a better person. In my free time, I love to immerse myself in creative hobbies such as reading, painting, and photography. Whether it's getting lost in a captivating novel, bringing a blank canvas to life with colors, or capturing the world through my camera lens, these activities keep me grounded. They offer me a fresh perspective on problem-solving and inspire innovative thinking.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_4",
+      "url": "/",
+      "title": "Tanish Patel - AI Developer",
+      "section_heading": "Introduction",
+      "text": "Hello there! I'm Tanish. I'm an AI Developer that loves building products and solutions that can impact a solution to the community. I'm a Junior AI Engineer with 2 years of experience building scalable AI and ML based solutions for all kinds of organisations and needs.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_5",
+      "url": "/resume",
+      "title": "Work Experience",
+      "section_heading": "Paperchase Inc. - AI Engineer",
+      "text": "AI Engineer at Paperchase Inc. (May 2024 - August 2025). Engineered an end-to-end financial intelligence platform combining AutoML forecasting, multi-agent LLM commentary, and drill-through P&L/Balance Sheet analytics used by CFOs and finance leaders across 200+ hospitality clients. Built scalable Azure-based microservices (FastAPI + Functions + SQL Server) to operationalize forecasting, KPI computation, and AI-generated variance analysis, reducing reporting latency by nearly 40%. Led the development of a multi-agent reasoning workflow that produced account-wise financial insights, automated variance explanations, and executive-grade commentary for P&L and Balance Sheet statements. Designed and deployed data pipelines and forecasting frameworks using SARIMA, LSTM, N-BEATS, AutoTS, and NeuralForecast, standardizing financial projections and saving 15-20 hours/month of manual effort per client.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_6",
+      "url": "/resume",
+      "title": "Work Experience",
+      "section_heading": "Student Researcher - PDEU",
+      "text": "Student Researcher at Dept. of CSE, PDEU (January 2021 - May 2025). Developed federated learning pipelines integrating CNN-based defect classification with LIME-driven interpretability, achieving publication-level performance improvements on wafer defect datasets. Implemented machine learning models for real-time cybersecurity in Internet of Vehicles (IoV), incorporating SHAP and LIME explainability to enhance model transparency and threat diagnosis. Designed and evaluated OcclusionNetPlusPlus, a multi-scale similarity network with adaptive occlusion detection for robust iris recognition under challenging visual conditions. Collaborated with faculty to author peer-reviewed research papers, conducted rigorous experimentation, and produced reproducible ML/XAI workflows supporting academic dissemination.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_7",
+      "url": "/resume",
+      "title": "Work Experience",
+      "section_heading": "Forensics Research Intern - NFSU",
+      "text": "Forensics Research Intern at National Forensic Sciences University (April 2024 - June 2024). Developed and optimized forensic analysis models leveraging Deep Learning and Explainable AI (XAI) to enhance the precision of DeepFake detection and the categorization of dark web sites. Contributed significantly to pioneering research efforts, integrating AI technologies into forensic science to elevate the effectiveness of intricate forensic investigations. Designed and implemented advanced AI solutions, facilitating breakthroughs in the detection and analysis of digital forensics, and contributing to the resolution of complex cases.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_8",
+      "url": "/resume",
+      "title": "Work Experience",
+      "section_heading": "AI and Cloud Intern - Ridgeant Technologies",
+      "text": "AI and Cloud Intern at Ridgeant Technologies (May 2023 - August 2023). Assisted in AI and cloud computing projects on Microsoft Azure, contributing to the development and deployment of AI models and NLP solutions that streamlined data management and optimized model development workflows. Led research on emerging AI techniques and innovative cloud architectures, facilitating the adoption of advanced models that significantly enhanced overall system performance.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_9",
+      "url": "/education",
+      "title": "Education",
+      "section_heading": "Columbia University",
+      "text": "Master of Science in Data Science at Columbia University in the City of New York (2022 - 2024), Data Science Institute, Fu Foundation School of Engineering and Applied Science. Courses: Exploratory Data Analysis and Visualization, Data Driven Methods in Finance, Applied Deep Learning, Finance and Structuring for Data Science, Machine Learning for Data Science, Statistical Inference and Modelling.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_10",
+      "url": "/education",
+      "title": "Education",
+      "section_heading": "PDEU",
+      "text": "Bachelor of Technology in Computer Science and Engineering at Pandit Deendayal Energy University (October 2021 - May 2025), Department of Computer Science and Engineering, School of Technology. Courses: Data Structures and Algorithms, Database Management Systems, Operating Systems, Computer Networks, Artificial Intelligence, Machine Learning, Pattern Recognition, Internet of Things, Big Data Analytics, Computer Vision, Information Retrieval, Digital Image Processing.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_11",
+      "url": "/projects/nlp2sql-agentic",
+      "title": "Agentic NLP-to-SQL",
+      "section_heading": "Project Overview",
+      "text": "Agentic NLP-to-SQL: Secure Multi-Agent Analytics Copilot. A security-first, multi-agent natural language to SQL system with clarification, schema grounding, accounting-aware query generation, and safe execution across SQL backends. Tech stack: LLM Agents, NLP-to-SQL, SQL Validation & Governance, Accounting Analytics, Retrieval/Schema Grounding, Backend APIs, Security Engineering. The system uses a multi-agent workflow that explicitly separates interpretation, clarification, query synthesis, validation, and execution—making it significantly more robust for real-world analytics use cases.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_12",
+      "url": "/projects/stat-arb",
+      "title": "Statistical Arbitrage",
+      "section_heading": "Project Overview",
+      "text": "Statistical Arbitrage: Factor-Based Mean Reversion Trading System. A multi-factor statistical arbitrage framework using PCA-based factor models, residual mean reversion, and systematic trade analytics. Tech stack: Quantitative Finance, Statistical Arbitrage, Factor Models, Time Series Analysis, Algorithmic Trading. The system is built around the core hypothesis that asset returns can be decomposed into systematic factor components and idiosyncratic residuals, with the latter exhibiting statistically predictable reversion behavior over time.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_13",
+      "url": "/projects/fx-cross",
+      "title": "FX-Cross",
+      "section_heading": "Project Overview",
+      "text": "FX-Cross: Machine Learning–Driven Trading Signal Generation. Probabilistic FX trading strategies using time series smoothing, machine learning, and deep learning models. Tech stack: Time Series Analysis, Algorithmic Trading, Machine Learning, Deep Learning, Quantitative Finance. Models include Random Forests, XGBoost, Long Short-Term Memory (LSTM) networks, and Temporal Convolutional Networks (TCN). The entire system is deployed as an interactive Streamlit application.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_14",
+      "url": "/projects/paperchaseai",
+      "title": "Paperchase AI",
+      "section_heading": "Project Overview",
+      "text": "Paperchase AI — End-to-End Financial Intelligence Platform. A comprehensive financial intelligence platform for 200+ restaurants and hospitality groups. Tech Stack: AI & Forecasting: AutoTS, NeuralForecast, SARIMA, LSTM, N-BEATS. LLM & Agents: Azure OpenAI (GPT-4o-mini), Multi-Agent Workflow, RAG. Backend: Python, FastAPI, Azure Functions, Azure SQL Server. Dashboards: React, Power BI Embedded, Streamlit. Data & Pipelines: Azure Data Factory, SQL Server, Pandas, Async Jobs. The platform significantly improved reporting efficiency, decision-making speed, and the depth of financial visibility across all client businesses.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_15",
+      "url": "/projects/pmscania",
+      "title": "Predictive Maintenance in SCANIA Trucks",
+      "section_heading": "Project Overview",
+      "text": "Predictive Maintenance in SCANIA Trucks: Mitigating failures by using Federated Learning and Explainable AI. The framework leverages federated learning to aggregate insights from decentralized data across multiple clients. Three survival models—Random Survival Forest (RSF), Gradient Boosting Survival Analysis (GBSA), and Support Survival Vector Machines (SSVM)—were evaluated across 10 federated clients over 10 rounds. RSF outperformed the others with global training and testing C-index values of 0.7577 and 0.7376, respectively. Explainability was achieved through SHAP (SHapley Additive exPlanations).",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_16",
+      "url": "/research/demystifying-defects-fl-xai",
+      "title": "Demystifying Defects",
+      "section_heading": "Research Overview",
+      "text": "Demystifying Defects: Federated Learning and Explainable AI for Semiconductor Fault Detection. A novel semiconductor fault detection framework that combines Federated Learning and Explainable AI to enable high-accuracy, privacy-preserving, and interpretable defect classification across decentralized datasets. Role: Lead Author. Tags: Federated Learning, Explainable AI, Fault Detection, Edge Intelligence. The FL-based fault detection model permits stakeholders to train ML models on node-specific data without centralizing sensitive information. Empirical results demonstrate a significant improvement in defect identification precision, achieving an exceptional test accuracy of 98.78%.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_17",
+      "url": "/skills",
+      "title": "Skills and Technologies",
+      "section_heading": "Technical Skills",
+      "text": "Technical Skills: Python, C++, C, Machine Learning, Deep Learning, TensorFlow, OpenCV, Explainable AI (XAI), Federated Learning, Computer Vision, NLP, Azure, Databricks, Power BI, MySQL, Django, Flask, React, Pandas, NumPy, Matplotlib, Seaborn, Plotly, Scikit-learn. Specializations: AI/ML Engineering, Data Science, Quantitative Finance, Time Series Analysis, Cloud Computing.",
+      "embedding": []
+    },
+    {
+      "chunk_id": "chunk_18",
+      "url": "/contact",
+      "title": "Contact",
+      "section_heading": "Get in Touch",
+      "text": "Contact Tanish Patel for collaborations, opportunities, or questions. Available for AI/ML engineering roles, research collaborations, and consulting projects. Connect via the contact form on the portfolio website or through social media links provided.",
+      "embedding": []
+    }
+  ]
+}
