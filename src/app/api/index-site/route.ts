@@ -3,8 +3,6 @@ import { chunkPages } from "@/lib/rag/chunker";
 import { indexChunks } from "@/lib/rag/embeddings";
 import { getChunkCount } from "@/lib/db";
 
-export const maxDuration = 300;
-
 export async function POST(req: Request) {
   // Protect with secret
   const authHeader = req.headers.get("authorization");

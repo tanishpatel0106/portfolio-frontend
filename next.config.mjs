@@ -9,7 +9,6 @@ const nextConfig = {
   },
   experimental: {
     mdxRs: true,
-    serverComponentsExternalPackages: ["@neondatabase/serverless"],
   },
 };
 

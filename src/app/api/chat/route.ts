@@ -3,8 +3,6 @@ import { openai } from "@ai-sdk/openai";
 import { retrieveRelevantChunks, buildContextFromChunks } from "@/lib/rag/retrieval";
 import { buildSystemPrompt } from "@/lib/rag/prompts";
 
-export const maxDuration = 30;
-
 // Simple in-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 20;
@@ -59,20 +57,5 @@ export async function POST(req: Request) {
     messages,
   });
 
-  // Return streaming response with sources metadata in headers
-  const response = result.toDataStreamResponse();
-
-  // Append sources as a custom header so the client can parse them
-  const sourcesHeader = JSON.stringify(
-    sources.map((s, i) => ({
-      index: i + 1,
-      url: s.url,
-      title: s.title,
-      snippet: s.snippet,
-    }))
-  );
-
-  response.headers.set("X-Sources", encodeURIComponent(sourcesHeader));
-
-  return response;
+  return result.toDataStreamResponse();
 }
