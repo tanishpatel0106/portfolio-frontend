@@ -1,10 +1,16 @@
 import { neon } from "@neondatabase/serverless";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL environment variable is not set");
-}
+let _sql: ReturnType<typeof neon> | null = null;
 
-export const sql = neon(process.env.DATABASE_URL);
+export function getDb() {
+  if (!_sql) {
+    if (!process.env.DATABASE_URL) {
+      throw new Error("DATABASE_URL environment variable is not set");
+    }
+    _sql = neon(process.env.DATABASE_URL);
+  }
+  return _sql;
+}
 
 export interface SiteChunk {
   id: string;
@@ -22,6 +28,7 @@ export interface RetrievedChunk extends SiteChunk {
 }
 
 export async function getChunksByUrl(url: string): Promise<SiteChunk[]> {
+  const sql = getDb();
   const rows = await sql`
     SELECT id, url, title, heading_path, content, content_hash, updated_at
     FROM site_chunks
@@ -38,6 +45,7 @@ export async function upsertChunk(chunk: {
   contentHash: string;
   embedding: number[];
 }): Promise<void> {
+  const sql = getDb();
   const embeddingStr = `[${chunk.embedding.join(",")}]`;
   await sql`
     INSERT INTO site_chunks (url, title, heading_path, content, content_hash, embedding, updated_at)
@@ -56,6 +64,7 @@ export async function deleteStaleChunks(
   url: string,
   currentHashes: string[]
 ): Promise<number> {
+  const sql = getDb();
   if (currentHashes.length === 0) {
     const result = await sql`
       DELETE FROM site_chunks WHERE url = ${url}
@@ -75,6 +84,7 @@ export async function searchChunks(
   queryEmbedding: number[],
   topK: number = 10
 ): Promise<RetrievedChunk[]> {
+  const sql = getDb();
   const embeddingStr = `[${queryEmbedding.join(",")}]`;
   const rows = await sql`
     SELECT
@@ -89,6 +99,7 @@ export async function searchChunks(
 }
 
 export async function getChunkCount(): Promise<number> {
+  const sql = getDb();
   const result = await sql`SELECT COUNT(*) as count FROM site_chunks`;
   return parseInt(result[0].count as string, 10);
 }

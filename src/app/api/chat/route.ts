@@ -1,4 +1,5 @@
 import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
 import { retrieveRelevantChunks, buildContextFromChunks } from "@/lib/rag/retrieval";
 import { buildSystemPrompt } from "@/lib/rag/prompts";
 
@@ -53,7 +54,7 @@ export async function POST(req: Request) {
   const systemPrompt = buildSystemPrompt(context);
 
   const result = streamText({
-    model: "openai/gpt-4o-mini",
+    model: openai("gpt-4o-mini"),
     system: systemPrompt,
     messages,
   });
