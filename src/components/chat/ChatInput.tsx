@@ -6,17 +6,15 @@ import { twMerge } from "tailwind-merge";
 
 interface ChatInputProps {
   input: string;
-  handleInputChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onInputChange: (value: string) => void;
+  onSend: (text: string) => void;
   isLoading: boolean;
 }
 
 export function ChatInput({
   input,
-  handleInputChange,
-  handleSubmit,
+  onInputChange,
+  onSend,
   isLoading,
 }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -33,11 +31,15 @@ export function ChatInput({
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (input.trim() && !isLoading) {
-        const form = e.currentTarget.closest("form");
-        if (form) {
-          form.requestSubmit();
-        }
+        onSend(input);
       }
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (input.trim() && !isLoading) {
+      onSend(input);
     }
   };
 
@@ -50,7 +52,7 @@ export function ChatInput({
         <textarea
           ref={textareaRef}
           value={input}
-          onChange={handleInputChange}
+          onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask about Tanish..."
           rows={1}

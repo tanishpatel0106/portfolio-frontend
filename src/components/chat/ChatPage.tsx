@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
 import { SourcesPanel } from "./SourcesPanel";
@@ -10,23 +11,27 @@ import { SUGGESTED_QUESTIONS } from "@/lib/rag/prompts";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconMessageChatbot, IconSparkles } from "@tabler/icons-react";
 
+// Helper to extract text from a message's parts
+function getMessageText(message: { parts?: Array<{ type: string; text?: string }> }): string {
+  if (!message.parts || !Array.isArray(message.parts)) return "";
+  return message.parts
+    .filter((p): p is { type: "text"; text: string } => p.type === "text")
+    .map((p) => p.text)
+    .join("");
+}
+
 export function ChatPage() {
   const [sources, setSources] = useState<SourceData[]>([]);
   const [sourcesLoading, setSourcesLoading] = useState(false);
   const [showMobileSources, setShowMobileSources] = useState(false);
+  const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      api: "/api/chat",
-      onResponse: async (response) => {
-        // After the response starts, fetch sources for the last user query
-        const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
-        if (lastUserMsg?.content) {
-          fetchSources(lastUserMsg.content);
-        }
-      },
-    });
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({ api: "/api/chat" }),
+  });
+
+  const isLoading = status === "streaming" || status === "submitted";
 
   const fetchSources = useCallback(async (query: string) => {
     setSourcesLoading(true);
@@ -47,23 +52,21 @@ export function ChatPage() {
     }
   }, []);
 
+  const handleSend = useCallback(
+    (text: string) => {
+      if (!text.trim() || isLoading) return;
+      sendMessage({ text: text.trim() });
+      setInput("");
+      fetchSources(text.trim());
+    },
+    [sendMessage, isLoading, fetchSources]
+  );
+
   const handleSuggestedQuestion = useCallback(
     (question: string) => {
-      // Programmatically set the input and submit
-      const fakeEvent = {
-        target: { value: question },
-      } as React.ChangeEvent<HTMLTextAreaElement>;
-      handleInputChange(fakeEvent);
-
-      // Small delay to let the state update, then submit
-      setTimeout(() => {
-        const form = document.querySelector(
-          "[data-chat-form]"
-        ) as HTMLFormElement;
-        if (form) form.requestSubmit();
-      }, 50);
+      handleSend(question);
     },
-    [handleInputChange]
+    [handleSend]
   );
 
   // Scroll to bottom on new messages
@@ -76,7 +79,8 @@ export function ChatPage() {
     if (messages.length > 0) {
       const lastMsg = messages[messages.length - 1];
       if (lastMsg.role === "user") {
-        fetchSources(lastMsg.content);
+        const text = getMessageText(lastMsg);
+        if (text) fetchSources(text);
       }
     }
   }, [messages, fetchSources]);
@@ -95,7 +99,7 @@ export function ChatPage() {
             </div>
             <div>
               <h1 className="text-sm font-semibold text-primary">
-                Chat with Tanish&apos;s Site
+                {"Chat with Tanish's Site"}
               </h1>
               <p className="text-[11px] text-secondary">
                 Ask anything about his work, projects, and experience
@@ -147,8 +151,7 @@ export function ChatPage() {
                   Chat about Tanish
                 </h2>
                 <p className="text-sm text-secondary mb-6 leading-relaxed">
-                  Ask me anything about Tanish&apos;s projects, skills, experience,
-                  or research. All answers are grounded in his portfolio site content.
+                  {"Ask me anything about Tanish's projects, skills, experience, or research. All answers are grounded in his portfolio site content."}
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center">
@@ -170,7 +173,7 @@ export function ChatPage() {
                 <ChatMessage
                   key={message.id}
                   role={message.role as "user" | "assistant"}
-                  content={message.content}
+                  content={getMessageText(message)}
                   isStreaming={
                     isLoading &&
                     message.id === messages[messages.length - 1]?.id &&
@@ -210,14 +213,12 @@ export function ChatPage() {
         </div>
 
         {/* Input */}
-        <div data-chat-form="">
-          <ChatInput
-            input={input}
-            handleInputChange={handleInputChange as any}
-            handleSubmit={handleSubmit}
-            isLoading={isLoading}
-          />
-        </div>
+        <ChatInput
+          input={input}
+          onInputChange={setInput}
+          onSend={handleSend}
+          isLoading={isLoading}
+        />
       </div>
 
       {/* Desktop sources panel */}

@@ -1,5 +1,8 @@
-import { streamText } from "ai";
-import { retrieveRelevantChunks, buildContextFromChunks } from "@/lib/rag/retrieval";
+import { streamText, convertToModelMessages, UIMessage } from "ai";
+import {
+  retrieveRelevantChunks,
+  buildContextFromChunks,
+} from "@/lib/rag/retrieval";
 import { buildSystemPrompt } from "@/lib/rag/prompts";
 
 // Simple in-memory rate limiter
@@ -20,6 +23,15 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT;
 }
 
+// Helper to extract text from UIMessage parts
+function getTextFromMessage(message: UIMessage): string {
+  if (!message.parts || !Array.isArray(message.parts)) return "";
+  return message.parts
+    .filter((p): p is { type: "text"; text: string } => p.type === "text")
+    .map((p) => p.text)
+    .join("");
+}
+
 export async function POST(req: Request) {
   // Rate limiting
   const ip =
@@ -34,14 +46,14 @@ export async function POST(req: Request) {
     );
   }
 
-  const { messages } = await req.json();
+  const { messages }: { messages: UIMessage[] } = await req.json();
 
   // Extract the latest user message for retrieval
   const lastUserMessage = [...messages]
     .reverse()
-    .find((m: { role: string }) => m.role === "user");
+    .find((m) => m.role === "user");
 
-  const query = lastUserMessage?.content || "";
+  const query = lastUserMessage ? getTextFromMessage(lastUserMessage) : "";
 
   // Retrieve relevant chunks from the portfolio site
   const { chunks, sources } = await retrieveRelevantChunks(query, 8);
@@ -50,11 +62,14 @@ export async function POST(req: Request) {
   const context = buildContextFromChunks(chunks, sources);
   const systemPrompt = buildSystemPrompt(context);
 
+  // Convert UIMessages to model messages for streamText
+  const modelMessages = convertToModelMessages(messages);
+
   const result = streamText({
     model: "openai/gpt-4o-mini",
     system: systemPrompt,
-    messages,
+    messages: modelMessages,
   });
 
-  return result.toDataStreamResponse();
+  return result.toUIMessageStreamResponse();
 }
