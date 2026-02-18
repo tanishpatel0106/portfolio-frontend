@@ -1,9 +1,8 @@
-import { openai } from "@ai-sdk/openai";
 import { embed, embedMany } from "ai";
 import { upsertChunk, deleteStaleChunks } from "@/lib/db";
 import type { ContentChunk } from "./chunker";
 
-const EMBEDDING_MODEL = openai.embedding("text-embedding-3-small");
+const EMBEDDING_MODEL = "openai/text-embedding-3-small";
 const BATCH_SIZE = 96;
 
 export async function embedText(text: string): Promise<number[]> {
