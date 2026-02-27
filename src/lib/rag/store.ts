@@ -97,3 +97,9 @@ export async function searchChunks(
       similarity: row.similarity as number,
     }));
 }
+
+export async function getChunkCount(): Promise<number> {
+  const result = await query("SELECT COUNT(*)::int AS total FROM site_chunks");
+  const total = result.rows[0]?.total;
+  return typeof total === "number" ? total : Number(total || 0);
+}

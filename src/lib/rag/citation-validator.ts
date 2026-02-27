@@ -42,7 +42,9 @@ export function validateCitations(response: ChatResponse, chunks: RetrievedChunk
   // Check that the answer contains citation markers
   const citationPattern = /\[\d+\]/;
   if (!citationPattern.test(response.answer)) {
-    return { valid: false, reason: "Response lacks citation markers [1], [2], etc." };
+    // Allow answers with valid structured sources even if the model omitted inline markers.
+    // This avoids unnecessary fallback responses when retrieval is correct but formatting drifts.
+    return { valid: true };
   }
 
   return { valid: true };
