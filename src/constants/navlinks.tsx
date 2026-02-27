@@ -5,6 +5,7 @@ import {
   IconFlask,
   IconMail,
   IconMessage2,
+  IconMessageChatbot,
 } from "@tabler/icons-react";
 
 export const navlinks = [
@@ -32,6 +33,11 @@ export const navlinks = [
     href: "/blog",
     label: "Articles",
     icon: IconArticle,
+  },
+  {
+    href: "/chat",
+    label: "Chat",
+    icon: IconMessageChatbot,
   },
   // {
   //   href: "/contact",
