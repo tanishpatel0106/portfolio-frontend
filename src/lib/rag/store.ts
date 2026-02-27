@@ -68,7 +68,7 @@ export async function removeStaleChunks(activeUrls: string[]): Promise<number> {
 export async function searchChunks(
   embedding: number[],
   topK: number = 10,
-  similarityThreshold: number = 0.3
+  similarityThreshold?: number
 ): Promise<RetrievedChunk[]> {
   const embeddingStr = toVectorString(embedding);
   const result = await query(
@@ -83,7 +83,11 @@ export async function searchChunks(
   );
 
   return result.rows
-    .filter((row) => (row.similarity as number) >= similarityThreshold)
+    .filter((row) =>
+      typeof similarityThreshold === "number"
+        ? (row.similarity as number) >= similarityThreshold
+        : true
+    )
     .map((row) => ({
       id: row.id as string,
       url: row.url as string,
