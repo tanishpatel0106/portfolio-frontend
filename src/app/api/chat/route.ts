@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { openai } from "@ai-sdk/openai";
-import { generateText } from "ai";
+import { gateway, generateText } from "ai";
 import { retrieveRelevantChunks } from "@/lib/rag/retrieval";
 import { buildSystemPrompt, buildUserPrompt } from "@/lib/rag/prompts";
 import {
@@ -97,7 +96,7 @@ export async function POST(request: NextRequest) {
 
     // Call LLM
     const { text } = await generateText({
-      model: openai("gpt-4o-mini"),
+      model: gateway("openai/gpt-4o-mini"),
       system: systemPrompt,
       prompt: userPrompt,
       maxOutputTokens: 2000,
@@ -113,7 +112,7 @@ export async function POST(request: NextRequest) {
       const retryPrompt = `${userPrompt}\n\nIMPORTANT: Your previous response failed citation validation (${validation.reason}). You MUST include citation markers [1], [2], etc. and populate the sources array. If you cannot answer from the sources, say you don't have that information.`;
 
       const { text: retryText } = await generateText({
-        model: openai("gpt-4o-mini"),
+        model: gateway("openai/gpt-4o-mini"),
         system: systemPrompt,
         prompt: retryPrompt,
         maxOutputTokens: 2000,
@@ -137,7 +136,7 @@ export async function POST(request: NextRequest) {
     const message = error instanceof Error ? error.message : "Unknown error";
 
     // Don't expose internal errors to client
-    if (message.includes("API key") || message.includes("DATABASE_URL")) {
+    if (message.includes("API key") || message.includes("DATABASE_URL") || message.includes("gateway")) {
       return NextResponse.json(
         { error: "Service configuration error. Please try again later." },
         { status: 500 }

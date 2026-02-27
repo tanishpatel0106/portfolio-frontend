@@ -13,7 +13,7 @@ A production-ready "Chat About Me" feature that lets visitors ask questions abou
   ├── crawler.ts                → Sitemap + link crawling
   ├── extractor.ts              → HTML → clean text (cheerio)
   ├── chunker.ts                → Heading-based chunking with overlap
-  ├── embeddings.ts             → OpenAI embedding generation
+  ├── embeddings.ts             → Embedding generation via Vercel AI Gateway
   ├── store.ts                  → pgvector upsert + similarity search
   ├── retrieval.ts              → Top-K retrieval with keyword reranking
   ├── prompts.ts                → System prompts (strict citation enforcement)
@@ -32,8 +32,10 @@ Create a `.env.local` file with:
 # PostgreSQL with pgvector extension enabled
 DATABASE_URL=postgresql://user:password@localhost:5432/portfolio?sslmode=disable
 
-# OpenAI API key for embeddings + chat completion
-OPENAI_API_KEY=sk-...
+# Vercel AI Gateway API key (get from Vercel dashboard → AI Gateway)
+# On Vercel deployments, OIDC auth is used automatically — no key needed.
+# For local dev, set this or use `vercel dev` for automatic OIDC tokens.
+AI_GATEWAY_API_KEY=your-gateway-api-key
 
 # Secret token to protect the indexing endpoint
 INDEXING_SECRET=your-random-secret-here
@@ -93,7 +95,7 @@ The indexer:
 1. Crawls all pages (prefers `/sitemap.xml`, falls back to link crawling)
 2. Extracts clean content (removes nav/footer/boilerplate)
 3. Chunks by headings with 200-char overlap
-4. Generates embeddings via OpenAI `text-embedding-3-small`
+4. Generates embeddings via Vercel AI Gateway (`openai/text-embedding-3-small`)
 5. Upserts into pgvector with content-hash change detection
 6. Removes stale chunks from deleted pages
 
@@ -105,7 +107,7 @@ Run the same POST request anytime you update your site. The indexer uses content
 
 1. User sends a question
 2. `/api/chat` embeds the question and retrieves top-10 similar chunks
-3. Chunks are passed as context to GPT-4o-mini with a strict citation prompt
+3. Chunks are passed as context to `openai/gpt-4o-mini` (via Vercel AI Gateway) with a strict citation prompt
 4. Response is validated for citations; if invalid, regenerated once
 5. UI renders the answer with numbered footnotes and source cards
 
@@ -115,9 +117,10 @@ Run the same POST request anytime you update your site. The indexer uses content
 2. Connect the repo to Vercel
 3. Add environment variables in Vercel project settings:
    - `DATABASE_URL`
-   - `OPENAI_API_KEY`
    - `INDEXING_SECRET`
    - `SITE_BASE_URL`
+   - (AI Gateway auth is automatic on Vercel via OIDC — no key needed)
+   - Optionally configure BYOK credentials in Vercel AI Gateway settings
 4. Deploy
 5. Run the indexer once via curl (see above)
 6. Visit `/chat` on your deployed site
