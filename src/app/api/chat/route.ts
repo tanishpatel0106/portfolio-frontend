@@ -9,6 +9,7 @@ import {
 } from "@/lib/rag/citation-validator";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { ChatMessage } from "@/lib/rag/types";
+import { initializeDatabase } from "@/lib/db/connection";
 
 export const maxDuration = 30;
 
@@ -81,6 +82,9 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // Ensure required RAG tables/extensions exist before querying.
+    await initializeDatabase();
+
     // Retrieve relevant chunks
     const chunks = await retrieveRelevantChunks(sanitizedQuestion, 10);
 
