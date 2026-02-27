@@ -1,7 +1,11 @@
 import { query } from "@/lib/db/connection";
 import { Chunk } from "./chunker";
 import { RetrievedChunk } from "./types";
-import pgvector from "pgvector/pg";
+
+/** Convert a number array to pgvector text format: [0.1,0.2,...] */
+function toVectorString(embedding: number[]): string {
+  return `[${embedding.join(",")}]`;
+}
 
 export async function upsertChunks(
   chunks: Chunk[],
@@ -14,7 +18,7 @@ export async function upsertChunks(
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
     const embedding = embeddings[i];
-    const embeddingStr = pgvector.toSql(embedding);
+    const embeddingStr = toVectorString(embedding);
 
     // Check if a chunk with this URL and heading_path exists
     const existing = await query(
@@ -34,7 +38,7 @@ export async function upsertChunks(
         `UPDATE site_chunks
          SET content = $1, content_hash = $2, title = $3, embedding = $4, updated_at = NOW()
          WHERE id = $5`,
-        [chunk.content, chunk.contentHash, chunk.title, embeddingStr, existing.rows[0].id]
+        [chunk.content, chunk.contentHash, chunk.title, embeddingStr, existing.rows[0].id as string]
       );
       updated++;
     } else {
@@ -66,7 +70,7 @@ export async function searchChunks(
   topK: number = 10,
   similarityThreshold: number = 0.3
 ): Promise<RetrievedChunk[]> {
-  const embeddingStr = pgvector.toSql(embedding);
+  const embeddingStr = toVectorString(embedding);
   const result = await query(
     `SELECT
        id, url, title, heading_path, content,
@@ -79,13 +83,13 @@ export async function searchChunks(
   );
 
   return result.rows
-    .filter((row: { similarity: number }) => row.similarity >= similarityThreshold)
-    .map((row: { id: string; url: string; title: string; heading_path: string; content: string; similarity: number }) => ({
-      id: row.id,
-      url: row.url,
-      title: row.title,
-      headingPath: row.heading_path,
-      content: row.content,
-      similarity: row.similarity,
+    .filter((row) => (row.similarity as number) >= similarityThreshold)
+    .map((row) => ({
+      id: row.id as string,
+      url: row.url as string,
+      title: row.title as string,
+      headingPath: row.heading_path as string,
+      content: row.content as string,
+      similarity: row.similarity as number,
     }));
 }

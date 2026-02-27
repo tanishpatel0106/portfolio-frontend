@@ -9,7 +9,7 @@ const nextConfig = {
   },
   experimental: {
     mdxRs: true,
-    serverComponentsExternalPackages: ["cheerio", "pg", "pgvector"],
+    serverComponentsExternalPackages: ["cheerio"],
   },
 };
 
