@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gateway, generateText } from "ai";
 import { retrieveRelevantChunks } from "@/lib/rag/retrieval";
+import { getChunkCount } from "@/lib/rag/store";
 import { buildSystemPrompt, buildUserPrompt } from "@/lib/rag/prompts";
 import {
   parseLLMResponse,
@@ -81,8 +82,18 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const totalIndexedChunks = await getChunkCount();
+    if (totalIndexedChunks === 0) {
+      return NextResponse.json({
+        answer:
+          "I don't have any indexed website content yet, so I can't answer reliably. Please run the site indexing job first, then try again.",
+        sources: [],
+        usedChunkIds: [],
+      });
+    }
+
     // Retrieve relevant chunks
-    const chunks = await retrieveRelevantChunks(sanitizedQuestion, 10);
+    const chunks = await retrieveRelevantChunks(sanitizedQuestion, 40);
 
     // If no chunks at all, return fallback immediately
     if (chunks.length === 0) {

@@ -68,7 +68,7 @@ export async function removeStaleChunks(activeUrls: string[]): Promise<number> {
 export async function searchChunks(
   embedding: number[],
   topK: number = 10,
-  similarityThreshold: number = 0.3
+  similarityThreshold?: number
 ): Promise<RetrievedChunk[]> {
   const embeddingStr = toVectorString(embedding);
   const result = await query(
@@ -83,7 +83,11 @@ export async function searchChunks(
   );
 
   return result.rows
-    .filter((row) => (row.similarity as number) >= similarityThreshold)
+    .filter((row) =>
+      typeof similarityThreshold === "number"
+        ? (row.similarity as number) >= similarityThreshold
+        : true
+    )
     .map((row) => ({
       id: row.id as string,
       url: row.url as string,
@@ -92,4 +96,46 @@ export async function searchChunks(
       content: row.content as string,
       similarity: row.similarity as number,
     }));
+}
+
+export async function searchChunksByTerms(
+  queryText: string,
+  limit: number = 40
+): Promise<RetrievedChunk[]> {
+  const normalized = queryText.trim();
+  if (!normalized) {
+    return [];
+  }
+
+  const result = await query(
+    `SELECT
+       id, url, title, heading_path, content,
+       LEAST(
+         1.0,
+         0.2 + ts_rank_cd(
+           to_tsvector('english', coalesce(title, '') || ' ' || coalesce(heading_path, '') || ' ' || coalesce(content, '')),
+           plainto_tsquery('english', $1)
+         )
+       ) AS similarity
+     FROM site_chunks
+     WHERE to_tsvector('english', coalesce(title, '') || ' ' || coalesce(heading_path, '') || ' ' || coalesce(content, '')) @@ plainto_tsquery('english', $1)
+     ORDER BY similarity DESC, updated_at DESC
+     LIMIT $2`,
+    [normalized, limit]
+  );
+
+  return result.rows.map((row) => ({
+    id: row.id as string,
+    url: row.url as string,
+    title: row.title as string,
+    headingPath: row.heading_path as string,
+    content: row.content as string,
+    similarity: Number(row.similarity) || 0.2,
+  }));
+}
+
+export async function getChunkCount(): Promise<number> {
+  const result = await query("SELECT COUNT(*)::int AS total FROM site_chunks");
+  const total = result.rows[0]?.total;
+  return typeof total === "number" ? total : Number(total || 0);
 }
