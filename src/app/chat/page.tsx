@@ -83,7 +83,7 @@ function CitationBadge({
         {index + 1}
       </a>
 
-      <div className="pointer-events-none absolute left-0 top-full mt-2 z-20 w-[320px] rounded-lg border border-neutral-200 bg-white p-2 shadow-lg opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-150">
+      <div className="absolute left-0 top-full mt-2 z-20 w-[320px] rounded-lg border border-neutral-200 bg-white p-2 shadow-lg opacity-0 -translate-y-1 invisible pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:visible group-focus-within:pointer-events-auto transition-all duration-150">
         <div className="mb-1 flex items-center justify-between gap-2">
           <p className="text-xs font-medium text-neutral-800 truncate">{source.title}</p>
           <a
@@ -373,8 +373,9 @@ export default function ChatPage() {
   const hasMessages = messages.length > 0;
 
   return (
-    <div className="h-[90vh] max-h-[90vh] overflow-hidden flex flex-col max-w-6xl mx-auto">
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden border border-neutral-200 rounded-xl bg-white">
+    <div className="min-h-[calc(100vh-1rem)] flex items-center">
+      <div className="h-[95vh] max-h-[95vh] w-full overflow-hidden flex flex-col max-w-6xl mx-auto">
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden border border-neutral-200 rounded-xl bg-white">
         <div className="flex items-center gap-3 px-4 md:px-6 py-4 border-b border-neutral-200">
           <div className="flex items-center justify-center w-8 h-8 rounded-full bg-sky-100">
             <IconMessageChatbot className="w-4 h-4 text-sky-600" />
@@ -498,6 +499,7 @@ export default function ChatPage() {
           <p className="text-[10px] text-neutral-400 mt-1.5 text-center">
             Answers are generated only from content on this website. Always check the cited sources.
           </p>
+          </div>
         </div>
       </div>
     </div>
