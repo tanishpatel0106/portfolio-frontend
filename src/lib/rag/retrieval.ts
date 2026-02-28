@@ -1,12 +1,13 @@
 import { embedQuery } from "./embeddings";
-import { searchChunks } from "./store";
+import { searchChunks, searchChunksByTerms } from "./store";
 import { RetrievedChunk } from "./types";
 
-const DEFAULT_TOP_K = 20;
+const DEFAULT_TOP_K = 28;
 const PRIMARY_SIMILARITY_THRESHOLD = 0.25;
 const MIN_RESULTS_BEFORE_FALLBACK = 8;
-const FALLBACK_TOP_K = 30;
-const MAX_QUERY_VARIANTS = 4;
+const FALLBACK_TOP_K = 48;
+const KEYWORD_TOP_K = 48;
+const MAX_QUERY_VARIANTS = 5;
 
 function buildSearchQueries(userQuery: string): string[] {
   const normalized = userQuery.trim();
@@ -21,6 +22,9 @@ function buildSearchQueries(userQuery: string): string[] {
 
   // Broader personal summary retrieval can help answer biography-style questions.
   queries.push(`about Tanish Patel background achievements`);
+
+  // Explicit website-wide phrasing increases recall for broad category questions.
+  queries.push(`all portfolio pages ${normalized}`);
 
   return Array.from(new Set(queries)).slice(0, MAX_QUERY_VARIANTS);
 }
@@ -57,7 +61,7 @@ export async function retrieveRelevantChunks(
 ): Promise<RetrievedChunk[]> {
   const queryVariants = buildSearchQueries(userQuery);
 
-  const allResults = await Promise.all(
+  const semanticResults = await Promise.all(
     queryVariants.map(async (queryVariant) => {
       const queryEmbedding = await embedQuery(queryVariant);
       let chunks = await searchChunks(queryEmbedding, topK, PRIMARY_SIMILARITY_THRESHOLD);
@@ -71,9 +75,13 @@ export async function retrieveRelevantChunks(
     })
   );
 
+  const keywordResults = await Promise.all(
+    queryVariants.map((queryVariant) => searchChunksByTerms(queryVariant, Math.max(KEYWORD_TOP_K, topK)))
+  );
+
   // Deduplicate by chunk id and keep the highest similarity score observed across variants.
   const mergedById = new Map<string, RetrievedChunk>();
-  for (const resultSet of allResults) {
+  for (const resultSet of [...semanticResults, ...keywordResults]) {
     for (const chunk of resultSet) {
       const existing = mergedById.get(chunk.id);
       if (!existing || chunk.similarity > existing.similarity) {

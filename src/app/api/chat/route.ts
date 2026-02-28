@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Retrieve relevant chunks
-    const chunks = await retrieveRelevantChunks(sanitizedQuestion, 20);
+    const chunks = await retrieveRelevantChunks(sanitizedQuestion, 40);
 
     // If no chunks at all, return fallback immediately
     if (chunks.length === 0) {
