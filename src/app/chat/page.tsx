@@ -63,18 +63,18 @@ function CitationBadge({
   index,
   compact = false,
 }: {
-  source: Source;
+  source?: Source;
   index: number;
   compact?: boolean;
 }) {
-  const previewUrl = buildHighlightedSourceUrl(source);
+  const previewUrl = source ? buildHighlightedSourceUrl(source) : "";
 
   return (
     <div className="relative inline-flex group align-middle">
       <a
-        href={source.url}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={source?.url || "#"}
+        target={source ? "_blank" : undefined}
+        rel={source ? "noopener noreferrer" : undefined}
         className={twMerge(
           "inline-flex items-center justify-center font-bold bg-sky-100 text-sky-700 rounded-full hover:bg-sky-200 transition-colors",
           compact ? "w-4 h-4 text-[10px] ml-0.5" : "w-5 h-5 text-[10px]"
@@ -85,29 +85,39 @@ function CitationBadge({
 
       <div className="absolute left-0 top-full mt-2 z-20 w-[320px] rounded-lg border border-neutral-200 bg-white p-2 shadow-lg opacity-0 -translate-y-1 invisible pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:visible group-focus-within:pointer-events-auto transition-all duration-150">
         <div className="mb-1 flex items-center justify-between gap-2">
-          <p className="text-xs font-medium text-neutral-800 truncate">{source.title}</p>
-          <a
-            href={source.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pointer-events-auto text-neutral-400 hover:text-sky-600"
-          >
-            <IconExternalLink className="w-3.5 h-3.5" />
-          </a>
+          <p className="text-xs font-medium text-neutral-800 truncate">{source?.title || `Source ${index + 1}`}</p>
+          {source && (
+            <a
+              href={source.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pointer-events-auto text-neutral-400 hover:text-sky-600"
+            >
+              <IconExternalLink className="w-3.5 h-3.5" />
+            </a>
+          )}
         </div>
 
-        <div className="h-36 w-full rounded border border-neutral-200 overflow-hidden bg-neutral-50">
-          <iframe
-            src={previewUrl}
-            title={`Source preview ${index + 1}`}
-            className="w-full h-full"
-            loading="lazy"
-          />
-        </div>
+        {source ? (
+          <>
+            <div className="h-36 w-full rounded border border-neutral-200 overflow-hidden bg-neutral-50">
+              <iframe
+                src={previewUrl}
+                title={`Source preview ${index + 1}`}
+                className="w-full h-full"
+                loading="lazy"
+              />
+            </div>
 
-        <p className="mt-1 text-[11px] text-neutral-500">
-          Highlight target from cited snippet: <span className="font-medium">{source.snippet}</span>
-        </p>
+            <p className="mt-1 text-[11px] text-neutral-500">
+              Highlight target from cited snippet: <span className="font-medium">{source.snippet}</span>
+            </p>
+          </>
+        ) : (
+          <p className="mt-1 text-[11px] text-neutral-500">
+            No mapped source was returned for this citation, but the marker is preserved for consistency.
+          </p>
+        )}
       </div>
     </div>
   );
@@ -139,21 +149,12 @@ function renderInline(
       const source = sources[citationNumber - 1];
 
       parts.push(
-        source ? (
-          <CitationBadge
-            key={`${keyPrefix}-c-${match.index}`}
-            source={source}
-            index={citationNumber - 1}
-            compact
-          />
-        ) : (
-          <sup
-            key={`${keyPrefix}-c-${match.index}`}
-            className="inline-flex items-center justify-center text-[10px] font-bold bg-sky-100 text-sky-700 rounded-full w-4 h-4 ml-0.5"
-          >
-            {citationNumber}
-          </sup>
-        )
+        <CitationBadge
+          key={`${keyPrefix}-c-${match.index}`}
+          source={source}
+          index={citationNumber - 1}
+          compact
+        />
       );
     } else if (match[5]) {
       parts.push(
@@ -222,9 +223,10 @@ function MessageCitations({
   sources: Source[];
   citationNumbers: number[];
 }) {
-  const matchedCitations = citationNumbers
-    .map((number) => ({ number, source: sources[number - 1] }))
-    .filter((item): item is { number: number; source: Source } => !!item.source);
+  const matchedCitations = citationNumbers.map((number) => ({
+    number,
+    source: sources[number - 1],
+  }));
 
   if (matchedCitations.length === 0) {
     return null;
@@ -235,7 +237,11 @@ function MessageCitations({
       <p className="text-[11px] text-neutral-500 mb-1">Citations</p>
       <div className="flex flex-wrap gap-1.5">
         {matchedCitations.map(({ source, number }) => (
-          <CitationBadge key={`${source.url}-${number}`} source={source} index={number - 1} />
+          <CitationBadge
+            key={`${source?.url || `source-${number}`}-${number}`}
+            source={source}
+            index={number - 1}
+          />
         ))}
       </div>
     </div>
