@@ -12,7 +12,7 @@ export const timeline = [
     title: "Master of Science - Data Sciene",
     date: "2022 - 2024",
     description: "Data Science Institute, Fu Foundation School of Engineering and Applied Science",
-    courses: "Exploratory Data Analysis and Visualization, Data Driven Methods in Finance, Applied Deep Learning, Finance and Structuring for Data Science, Machine Learning for Data Science, Statistical Inference and Modelling",
+    courses: "Advanced Reinforcement Learning, Generative AI using LLMs, Data Driven Methods in Finance, Applied Deep Learning, Finance and Structuring for Data Science, Machine Learning for Data Science, Statistical Inference and Modelling",
     transcript: "/assets/transcripts/columbia_transcript.pdf"
   },
 ];
