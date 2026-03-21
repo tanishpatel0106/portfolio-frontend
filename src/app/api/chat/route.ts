@@ -1,12 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { SYSTEM_PROMPT } from "@/constants/system-prompt";
 
-interface ChatMessageInput {
-  role: string;
-  content: string;
-  thinking?: string;
-}
-
 export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -35,7 +29,7 @@ export async function POST(req: Request) {
   }
 
   const formattedMessages = messages.slice(-20).map(
-    (m: ChatMessageInput) => ({
+    (m: { role: string; content: string }) => ({
       role: m.role as "user" | "assistant",
       content: m.content,
     })
@@ -49,7 +43,7 @@ export async function POST(req: Request) {
       try {
         const response = anthropic.messages.stream({
           model: "claude-sonnet-4-20250514",
-          max_tokens: 16000,
+          max_tokens: 32000,
           thinking: {
             type: "enabled",
             budget_tokens: 10000,

@@ -27,53 +27,6 @@ export function ChatInterface() {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
-  const processSSELine = (line: string) => {
-    const dataMatch = line.match(/^data: (.+)$/s);
-    if (!dataMatch) return;
-
-    try {
-      const event = JSON.parse(dataMatch[1]);
-
-      if (event.type === "thinking") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.thinking = (last.thinking || "") + event.content;
-          }
-          return updated;
-        });
-      } else if (event.type === "text") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.content = (last.content || "") + event.content;
-          }
-          return updated;
-        });
-      } else if (event.type === "done") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.isStreaming = false;
-          }
-          return updated;
-        });
-      } else if (event.type === "error") {
-        throw new Error(event.content);
-      }
-    } catch (parseErr) {
-      if (
-        parseErr instanceof Error &&
-        parseErr.message !== "Unexpected end of JSON input"
-      ) {
-        throw parseErr;
-      }
-    }
-  };
-
   const sendMessage = async (content: string) => {
     setError(null);
 
@@ -95,11 +48,9 @@ export function ChatInterface() {
     setIsLoading(true);
 
     try {
-      // Include thinking in history for conversation context awareness
       const allMessages = [...messages, userMessage].map((m) => ({
         role: m.role,
         content: m.content,
-        ...(m.thinking ? { thinking: m.thinking } : {}),
       }));
 
       const response = await fetch("/api/chat", {
@@ -130,24 +81,52 @@ export function ChatInterface() {
         buffer = lines.pop() || "";
 
         for (const line of lines) {
-          processSSELine(line);
+          const dataMatch = line.match(/^data: (.+)$/);
+          if (!dataMatch) continue;
+
+          try {
+            const event = JSON.parse(dataMatch[1]);
+
+            if (event.type === "thinking") {
+              setMessages((prev) => {
+                const updated = [...prev];
+                const last = updated[updated.length - 1];
+                if (last.role === "assistant") {
+                  last.thinking = (last.thinking || "") + event.content;
+                }
+                return updated;
+              });
+            } else if (event.type === "text") {
+              setMessages((prev) => {
+                const updated = [...prev];
+                const last = updated[updated.length - 1];
+                if (last.role === "assistant") {
+                  last.content = (last.content || "") + event.content;
+                }
+                return updated;
+              });
+            } else if (event.type === "done") {
+              setMessages((prev) => {
+                const updated = [...prev];
+                const last = updated[updated.length - 1];
+                if (last.role === "assistant") {
+                  last.isStreaming = false;
+                }
+                return updated;
+              });
+            } else if (event.type === "error") {
+              throw new Error(event.content);
+            }
+          } catch (parseErr) {
+            if (
+              parseErr instanceof Error &&
+              parseErr.message !== "Unexpected end of JSON input"
+            ) {
+              throw parseErr;
+            }
+          }
         }
       }
-
-      // Process any remaining data in the buffer after stream ends
-      if (buffer.trim()) {
-        processSSELine(buffer.trim());
-      }
-
-      // Ensure streaming flag is cleared even if no "done" event was received
-      setMessages((prev) => {
-        const updated = [...prev];
-        const last = updated[updated.length - 1];
-        if (last.role === "assistant" && last.isStreaming) {
-          last.isStreaming = false;
-        }
-        return updated;
-      });
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Something went wrong";
