@@ -10,3 +10,67 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Chat scroll area - thin, elegant scrollbar */
+.chat-scroll-area::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+}
+.chat-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+.chat-scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+/* Blinking cursor animation for streaming */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 0.8s ease-in-out infinite;
+}
+
+/* Wave dots animation */
+@keyframes wave {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-4px); opacity: 1; }
+}
+.animate-wave {
+  animation: wave 1s ease-in-out infinite;
+}
+
+/* Animated gradient border */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 3s ease infinite;
+}
+
+/* Chat markdown styles */
+.chat-markdown p {
+  margin-bottom: 0.25rem;
+}
+.chat-markdown p:last-child {
+  margin-bottom: 0;
+}
+.chat-markdown ul,
+.chat-markdown ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.chat-markdown pre {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
