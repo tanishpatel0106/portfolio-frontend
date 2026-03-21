@@ -1,5 +1,13 @@
 export const timeline = [
   {
+    company: "Columbia University in the City of New York",
+    title: "Master of Science - Data Sciene",
+    date: "August 2025 - December 2026",
+    description: "Data Science Institute, Fu Foundation School of Engineering and Applied Science",
+    courses: "Advanced Reinforcement Learning, Generative AI using LLMs, Data Driven Methods in Finance, Applied Deep Learning, Finance and Structuring for Data Science, Machine Learning for Data Science, Statistical Inference and Modelling",
+    transcript: "/assets/transcripts/columbia_transcript_Spring.pdf"
+  },
+  {
     company: "Pandit Deendayal Energy University",
     title: "Bachelor of Technology - Computer Science and Engineering",
     date: "October 2021 - May 2025",
@@ -7,12 +15,5 @@ export const timeline = [
     courses:"Data Structures and Algorithms, Database Management Systems, Operating Systems, Computer Networks, Artificial Intelligence, Machine Learning, Pattern Recognition, Internet of Things, Big Data Analytics, Computer Vision, Information Retrieval, Digital Image Processing",
     transcript: "/assets/transcripts/pdeu_transcript.pdf"
   },
-  {
-    company: "Columbia University in the City of New York",
-    title: "Master of Science - Data Sciene",
-    date: "2022 - 2024",
-    description: "Data Science Institute, Fu Foundation School of Engineering and Applied Science",
-    courses: "Advanced Reinforcement Learning, Generative AI using LLMs, Data Driven Methods in Finance, Applied Deep Learning, Finance and Structuring for Data Science, Machine Learning for Data Science, Statistical Inference and Modelling",
-    transcript: "/assets/transcripts/columbia_transcript.pdf"
-  },
+  
 ];
