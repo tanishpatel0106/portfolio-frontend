@@ -1,5 +1,76 @@
 export const products = [
   {
+  href: "https://stress-tester-five.vercel.app",
+  title: "StressTester: AI-Assisted Financial Stress Testing Engine",
+  description:
+    "An end-to-end Next.js application that combines deterministic financial simulations with a 4-stage AI pipeline to extract assumptions, generate stress scenarios, compute KPI deltas, and produce mitigation playbooks for enterprise finance teams.",
+  thumbnail: "/images/stress-tester.png",
+  images: [
+    "/images/stress-tester.png",
+  ],
+  stack: [
+    "Next.js",
+    "TypeScript",
+    "LLM Pipelines",
+    "Financial Modeling",
+    "Stress Testing",
+    "Deterministic Simulation",
+    "Schema Validation",
+    "Vercel",
+  ],
+  slug: "stress-tester",
+  content: (
+    <div>
+      <p>
+        StressTester is a financial stress testing platform that lets finance
+        teams explore how operating plans, cash flow, and KPIs behave under
+        real-world shocks. It replaces brittle spreadsheet-based models with a
+        repeatable pipeline that maintains clear lineage from structured inputs
+        through shock propagation to outcome dashboards and actionable
+        mitigations.
+      </p>
+
+      <p>
+        The core of the system is a deterministic stress engine that ingests
+        structured financial data — P&L, balance sheet, cash flow, and operating
+        metrics — and applies shock vectors (revenue declines, cost increases,
+        liquidity compression) to propagate KPI deltas across baseline vs.
+        stressed trajectories. This engine is the source of truth and is never
+        mutated by AI outputs, enforcing a strict separation between
+        deterministic calculations and generative workflows.
+      </p>
+
+      <p>
+        Layered on top is a 4-stage AI pipeline: assumption extraction pulls
+        business drivers (pricing, churn, utilization, margin) from uploaded
+        operating plans; scenario generation produces risk-aligned stressors
+        across market, revenue, cost, and liquidity dimensions; mitigation
+        playbooks draft actionable responses tied to specific stress drivers;
+        and an executive summary stage produces decision-ready narratives. Each
+        AI output is forced through validated schemas before ingestion — invalid
+        responses are rejected and re-requested.
+      </p>
+
+      <p>
+        Safety and governance are first-class concerns. The system prohibits the
+        AI from generating "recovery" scenarios as stress outputs — mitigations
+        are the only approved improvement pathway. Determinism and AI remain
+        cleanly separated so that core KPI calculations are always auditable and
+        reproducible regardless of whether the AI workflow is enabled.
+      </p>
+
+      <p>
+        The frontend is built in Next.js with TypeScript and provides
+        dashboards for KPI trajectories, scenario timelines, mitigation
+        playbooks, and detailed data tables. The project is deployed on Vercel
+        and designed with a forward roadmap toward ERP/CRM data connectors,
+        industry-specific scenario packs, audit trails for compliance, and
+        policy controls for AI workflow governance.
+      </p>
+    </div>
+  ),
+},
+  {
   href: "", // update if needed
   title: "Agentic NLP-to-SQL: Secure Multi-Agent Analytics Copilot",
   description:
