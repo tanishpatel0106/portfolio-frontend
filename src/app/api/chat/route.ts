@@ -1,6 +1,12 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { SYSTEM_PROMPT } from "@/constants/system-prompt";
 
+interface ChatMessageInput {
+  role: string;
+  content: string;
+  thinking?: string;
+}
+
 export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -29,7 +35,7 @@ export async function POST(req: Request) {
   }
 
   const formattedMessages = messages.slice(-20).map(
-    (m: { role: string; content: string }) => ({
+    (m: ChatMessageInput) => ({
       role: m.role as "user" | "assistant",
       content: m.content,
     })
