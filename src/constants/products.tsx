@@ -4,9 +4,13 @@ export const products = [
   title: "StressTester: AI-Assisted Financial Stress Testing Engine",
   description:
     "An end-to-end Next.js application that combines deterministic financial simulations with a 4-stage AI pipeline to extract assumptions, generate stress scenarios, compute KPI deltas, and produce mitigation playbooks for enterprise finance teams.",
-  thumbnail: "/images/stress-tester.png",
+  thumbnail: "/images/stress-tester-1.png",
   images: [
-    "/images/stress-tester.png",
+    "/images/stress-tester-1.png",
+    "/images/stress-tester-2.png",
+    "/images/stress-tester-3.png",
+    "/images/stress-tester-4.png",
+    "/images/stress-tester-5.png",
   ],
   stack: [
     "Next.js",
