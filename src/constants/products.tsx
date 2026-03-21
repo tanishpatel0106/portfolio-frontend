@@ -57,7 +57,7 @@ export const products = [
 
       <p>
         Safety and governance are first-class concerns. The system prohibits the
-        AI from generating "recovery" scenarios as stress outputs — mitigations
+        AI from generating &ldquo;recovery&rdquo; scenarios as stress outputs — mitigations        
         are the only approved improvement pathway. Determinism and AI remain
         cleanly separated so that core KPI calculations are always auditable and
         reproducible regardless of whether the AI workflow is enabled.
