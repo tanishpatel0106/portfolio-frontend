@@ -1,6 +1,6 @@
   export const timeline = [
     {
-      company: "Columbia University",
+      company: "Columbia University - Lamont-Doherty Earth Observatory",
       title: "Research Assistant — Data Valuation for Ocean fCO₂ Prediction",
       date: "January 2026 - Present",
       description: "Cooperative Game Theory & ML",
@@ -9,6 +9,16 @@
         "Implemented 8+ valuation methodologies — exact Shapley, Banzhaf, Beta Shapley, Least Core (LP-based), Complement Shapley, Weighted Banzhaf, Shapley-Taylor order-3 interactions, and Weighted Shapley with geographic weighting schemes — to quantify individual and joint source contributions.",
         "Developed a novel Interaction-Aware Two-Phase Valuation framework that captures higher-order synergy and redundancy effects missed by standard marginal-contribution methods, with detailed negative source removal impact analysis.",
         "Built a reproducible research pipeline with resumable .npz coalition caching, joblib parallelism, and Cartopy Robinson projection geospatial visualizations, producing 51+ analytical graphs across two notebooks and a full research report.",
+      ],
+    },
+    {
+      company: "Columbia University — IEOR Department",
+      title: "Teaching Assistant — Algorithmic Trading (IEOR E4733)",
+      date: "January 2026 - Present",
+      description: "Market Microstructure & Trading Systems",
+      responsibilities: [
+        "Supporting graduate-level instruction in algorithmic trading covering market microstructure theory, optimal market-making (Avellaneda-Stoikov), optimal execution (GLFT), and high-frequency trading system design.",
+        "Guided students through hands-on implementation of HDF5 data pipelines, event-driven trading architectures, and statistical signal construction for systematic strategies.",
       ],
     },
     {
