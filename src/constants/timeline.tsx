@@ -1,9 +1,21 @@
   export const timeline = [
     {
+      company: "Columbia University",
+      title: "Research Assistant — Data Valuation for Ocean fCO₂ Prediction",
+      date: "January 2026 - Present",
+      description: "Cooperative Game Theory & ML",
+      responsibilities: [
+        "Conducting a data valuation study for ocean fCO₂ prediction using cooperative game theory, exhaustively enumerating all 2¹³ = 8,192 source coalitions across 13 observational datasets (~300K samples) and training XGBRegressor models per coalition against a held-out North American Subtropical task set.",
+        "Implemented 8+ valuation methodologies — exact Shapley, Banzhaf, Beta Shapley, Least Core (LP-based), Complement Shapley, Weighted Banzhaf, Shapley-Taylor order-3 interactions, and Weighted Shapley with geographic weighting schemes — to quantify individual and joint source contributions.",
+        "Developed a novel Interaction-Aware Two-Phase Valuation framework that captures higher-order synergy and redundancy effects missed by standard marginal-contribution methods, with detailed negative source removal impact analysis.",
+        "Built a reproducible research pipeline with resumable .npz coalition caching, joblib parallelism, and Cartopy Robinson projection geospatial visualizations, producing 51+ analytical graphs across two notebooks and a full research report.",
+      ],
+    },
+    {
       company: "Paperchase Inc.",
       title: "AI Engineer",
       date: "May 2024 - August 2025",
-      description: "Predictive Analytics",
+      description: "Predictive Analytics and Product Development for Hospitality Finance",
       responsibilities: [
         "Engineered an end-to-end financial intelligence platform combining AutoML forecasting, multi-agent LLM commentary, and drill-through P&L/Balance Sheet analytics used by CFOs and finance leaders across 200+ hospitality clients.",
         "Built scalable Azure-based microservices (FastAPI + Functions + SQL Server) to operationalize forecasting, KPI computation, and AI-generated variance analysis, reducing reporting latency by nearly 40%.",
