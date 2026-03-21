@@ -34,24 +34,11 @@ export async function POST(req: Request) {
     );
   }
 
-  // Format messages for Anthropic API - assistant messages with thinking
-  // need content arrays to maintain conversation context
   const formattedMessages = messages.slice(-20).map(
-    (m: ChatMessageInput) => {
-      if (m.role === "assistant" && m.thinking) {
-        return {
-          role: "assistant" as const,
-          content: [
-            { type: "thinking" as const, thinking: m.thinking },
-            { type: "text" as const, text: m.content },
-          ],
-        };
-      }
-      return {
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      };
-    }
+    (m: ChatMessageInput) => ({
+      role: m.role as "user" | "assistant",
+      content: m.content,
+    })
   );
 
   const anthropic = new Anthropic({ apiKey });
