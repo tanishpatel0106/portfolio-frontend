@@ -182,7 +182,7 @@ Run the same POST request anytime you update your site. The indexer uses content
 
 1. User sends a question
 2. `/api/chat` embeds the question and retrieves top-10 similar chunks via cosine similarity
-3. Chunks are passed as context to `openai/gpt-4o-mini` (via Vercel AI Gateway) with a strict citation prompt
+3. Chunks are passed as context to `openai/gpt-4.1-nano` (via Vercel AI Gateway) with a strict citation prompt
 4. Response is validated for citations; if invalid, regenerated once
 5. UI renders the answer with numbered footnotes and source cards
 
