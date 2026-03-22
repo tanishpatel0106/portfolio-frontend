@@ -93,8 +93,7 @@ export function ChatInterface() {
           }
 
           const jsonStr = line.slice(6);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          let event: any;
+          let event: { type: string; content?: string };
           try {
             event = JSON.parse(jsonStr);
           } catch {
