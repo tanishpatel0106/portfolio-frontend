@@ -27,38 +27,6 @@ export function ChatInterface() {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
-  const streamText = useCallback(
-    (
-      fullText: string,
-      field: "content" | "thinking",
-      chunkSize: number,
-      intervalMs: number
-    ): Promise<void> => {
-      return new Promise((resolve) => {
-        let i = 0;
-        const timer = setInterval(() => {
-          if (i >= fullText.length) {
-            clearInterval(timer);
-            resolve();
-            return;
-          }
-          const end = Math.min(i + chunkSize, fullText.length);
-          const chunk = fullText.slice(i, end);
-          i = end;
-          setMessages((prev) => {
-            const updated = [...prev];
-            const last = updated[updated.length - 1];
-            if (last.role === "assistant") {
-              last[field] = (last[field] || "") + chunk;
-            }
-            return updated;
-          });
-        }, intervalMs);
-      });
-    },
-    []
-  );
-
   const sendMessage = async (content: string) => {
     setError(null);
 
@@ -99,24 +67,111 @@ export function ChatInterface() {
         );
       }
 
-      const data = await response.json();
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error("No response stream");
 
-      if (data.error) {
-        throw new Error(data.error);
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+
+        // Process all complete SSE messages (delimited by \n\n)
+        let boundary = buffer.indexOf("\n\n");
+        while (boundary !== -1) {
+          const rawLine = buffer.slice(0, boundary);
+          buffer = buffer.slice(boundary + 2);
+
+          // Extract JSON after "data: " prefix
+          const line = rawLine.trim();
+          if (!line.startsWith("data: ")) {
+            boundary = buffer.indexOf("\n\n");
+            continue;
+          }
+
+          const jsonStr = line.slice(6);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          let event: any;
+          try {
+            event = JSON.parse(jsonStr);
+          } catch {
+            // Incomplete JSON — put it back and wait for more data
+            buffer = rawLine + "\n\n" + buffer;
+            break;
+          }
+
+          if (event.type === "thinking") {
+            setMessages((prev) => {
+              const updated = [...prev];
+              const last = updated[updated.length - 1];
+              if (last.role === "assistant") {
+                last.thinking = (last.thinking || "") + event.content;
+              }
+              return updated;
+            });
+          } else if (event.type === "text") {
+            setMessages((prev) => {
+              const updated = [...prev];
+              const last = updated[updated.length - 1];
+              if (last.role === "assistant") {
+                last.content = (last.content || "") + event.content;
+              }
+              return updated;
+            });
+          } else if (event.type === "done") {
+            setMessages((prev) => {
+              const updated = [...prev];
+              const last = updated[updated.length - 1];
+              if (last.role === "assistant") {
+                last.isStreaming = false;
+              }
+              return updated;
+            });
+          } else if (event.type === "error") {
+            throw new Error(event.content);
+          }
+
+          boundary = buffer.indexOf("\n\n");
+        }
       }
 
-      // Stream thinking first, then text — simulated for smooth UX
-      if (data.thinking) {
-        await streamText(data.thinking, "thinking", 20, 5);
-      }
-      if (data.text) {
-        await streamText(data.text, "content", 3, 10);
+      // Process any remaining complete message in the buffer
+      const remaining = buffer.trim();
+      if (remaining.startsWith("data: ")) {
+        try {
+          const event = JSON.parse(remaining.slice(6));
+          if (event.type === "text") {
+            setMessages((prev) => {
+              const updated = [...prev];
+              const last = updated[updated.length - 1];
+              if (last.role === "assistant") {
+                last.content = (last.content || "") + event.content;
+              }
+              return updated;
+            });
+          } else if (event.type === "thinking") {
+            setMessages((prev) => {
+              const updated = [...prev];
+              const last = updated[updated.length - 1];
+              if (last.role === "assistant") {
+                last.thinking = (last.thinking || "") + event.content;
+              }
+              return updated;
+            });
+          }
+        } catch {
+          // Ignore incomplete trailing data
+        }
       }
 
+      // Ensure streaming flag is always cleared
       setMessages((prev) => {
         const updated = [...prev];
         const last = updated[updated.length - 1];
-        if (last.role === "assistant") {
+        if (last.role === "assistant" && last.isStreaming) {
           last.isStreaming = false;
         }
         return updated;

@@ -1,5 +1,4 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { NextResponse } from "next/server";
 import { SYSTEM_PROMPT } from "@/constants/system-prompt";
 
 interface ChatMessageInput {
@@ -11,9 +10,9 @@ interface ChatMessageInput {
 export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return NextResponse.json(
-      { error: "API key not configured" },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ error: "API key not configured" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 
@@ -21,17 +20,17 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json(
-      { error: "Invalid request body" },
-      { status: 400 }
+    return new Response(
+      JSON.stringify({ error: "Invalid request body" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
 
   const { messages } = body;
   if (!messages || !Array.isArray(messages)) {
-    return NextResponse.json(
-      { error: "Messages array is required" },
-      { status: 400 }
+    return new Response(
+      JSON.stringify({ error: "Messages array is required" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
 
@@ -43,38 +42,70 @@ export async function POST(req: Request) {
   );
 
   const anthropic = new Anthropic({ apiKey });
+  const encoder = new TextEncoder();
 
-  try {
-    // Use streaming server-side to avoid SDK timeout on long requests,
-    // but collect the full response before returning to the client
-    const stream = anthropic.messages.stream({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 32000,
-      thinking: {
-        type: "enabled",
-        budget_tokens: 10000,
-      },
-      system: SYSTEM_PROMPT,
-      messages: formattedMessages,
-    });
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        const response = anthropic.messages.stream({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 32000,
+          thinking: {
+            type: "enabled",
+            budget_tokens: 10000,
+          },
+          system: SYSTEM_PROMPT,
+          messages: formattedMessages,
+        });
 
-    let thinking = "";
-    let text = "";
+        response.on("thinking", (thinkingDelta) => {
+          const payload = JSON.stringify({
+            type: "thinking",
+            content: thinkingDelta,
+          });
+          controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
+        });
 
-    stream.on("thinking", (delta) => {
-      thinking += delta;
-    });
+        response.on("text", (textDelta) => {
+          const payload = JSON.stringify({
+            type: "text",
+            content: textDelta,
+          });
+          controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
+        });
 
-    stream.on("text", (delta) => {
-      text += delta;
-    });
+        response.on("end", () => {
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ type: "done" })}\n\n`)
+          );
+          controller.close();
+        });
 
-    await stream.finalMessage();
+        response.on("error", (err: Error) => {
+          const payload = JSON.stringify({
+            type: "error",
+            content: err.message,
+          });
+          controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
+          controller.close();
+        });
 
-    return NextResponse.json({ thinking, text });
-  } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to get response";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
+        await response.finalMessage();
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : "Failed to get response";
+        const payload = JSON.stringify({ type: "error", content: message });
+        controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
+    },
+  });
 }
