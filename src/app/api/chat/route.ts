@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       try {
         const response = anthropic.messages.stream({
           model: "claude-sonnet-4-20250514",
-          max_tokens: 32000,
+          max_tokens: 56000,
           thinking: {
             type: "enabled",
             budget_tokens: 10000,
