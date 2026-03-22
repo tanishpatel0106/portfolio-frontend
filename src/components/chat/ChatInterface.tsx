@@ -27,52 +27,37 @@ export function ChatInterface() {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
-  const processSSELine = (line: string) => {
-    const dataMatch = line.match(/^data: (.+)$/s);
-    if (!dataMatch) return;
-
-    try {
-      const event = JSON.parse(dataMatch[1]);
-
-      if (event.type === "thinking") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.thinking = (last.thinking || "") + event.content;
+  const streamText = useCallback(
+    (
+      fullText: string,
+      field: "content" | "thinking",
+      chunkSize: number,
+      intervalMs: number
+    ): Promise<void> => {
+      return new Promise((resolve) => {
+        let i = 0;
+        const timer = setInterval(() => {
+          if (i >= fullText.length) {
+            clearInterval(timer);
+            resolve();
+            return;
           }
-          return updated;
-        });
-      } else if (event.type === "text") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.content = (last.content || "") + event.content;
-          }
-          return updated;
-        });
-      } else if (event.type === "done") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.isStreaming = false;
-          }
-          return updated;
-        });
-      } else if (event.type === "error") {
-        throw new Error(event.content);
-      }
-    } catch (parseErr) {
-      if (
-        parseErr instanceof Error &&
-        parseErr.message !== "Unexpected end of JSON input"
-      ) {
-        throw parseErr;
-      }
-    }
-  };
+          const end = Math.min(i + chunkSize, fullText.length);
+          const chunk = fullText.slice(i, end);
+          i = end;
+          setMessages((prev) => {
+            const updated = [...prev];
+            const last = updated[updated.length - 1];
+            if (last.role === "assistant") {
+              last[field] = (last[field] || "") + chunk;
+            }
+            return updated;
+          });
+        }, intervalMs);
+      });
+    },
+    []
+  );
 
   const sendMessage = async (content: string) => {
     setError(null);
@@ -95,7 +80,6 @@ export function ChatInterface() {
     setIsLoading(true);
 
     try {
-      // Include thinking in history for conversation context awareness
       const allMessages = [...messages, userMessage].map((m) => ({
         role: m.role,
         content: m.content,
@@ -115,35 +99,24 @@ export function ChatInterface() {
         );
       }
 
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error("No response stream");
+      const data = await response.json();
 
-      const decoder = new TextDecoder();
-      let buffer = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n\n");
-        buffer = lines.pop() || "";
-
-        for (const line of lines) {
-          processSSELine(line);
-        }
+      if (data.error) {
+        throw new Error(data.error);
       }
 
-      // Process any remaining data in the buffer after stream ends
-      if (buffer.trim()) {
-        processSSELine(buffer.trim());
+      // Stream thinking first, then text — simulated for smooth UX
+      if (data.thinking) {
+        await streamText(data.thinking, "thinking", 20, 5);
+      }
+      if (data.text) {
+        await streamText(data.text, "content", 3, 10);
       }
 
-      // Ensure streaming flag is cleared even if no "done" event was received
       setMessages((prev) => {
         const updated = [...prev];
         const last = updated[updated.length - 1];
-        if (last.role === "assistant" && last.isStreaming) {
+        if (last.role === "assistant") {
           last.isStreaming = false;
         }
         return updated;
