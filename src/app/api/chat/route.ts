@@ -45,7 +45,9 @@ export async function POST(req: Request) {
   const anthropic = new Anthropic({ apiKey });
 
   try {
-    const response = await anthropic.messages.create({
+    // Use streaming server-side to avoid SDK timeout on long requests,
+    // but collect the full response before returning to the client
+    const stream = anthropic.messages.stream({
       model: "claude-sonnet-4-20250514",
       max_tokens: 32000,
       thinking: {
@@ -59,13 +61,15 @@ export async function POST(req: Request) {
     let thinking = "";
     let text = "";
 
-    for (const block of response.content) {
-      if (block.type === "thinking") {
-        thinking += block.thinking;
-      } else if (block.type === "text") {
-        text += block.text;
-      }
-    }
+    stream.on("thinking", (delta) => {
+      thinking += delta;
+    });
+
+    stream.on("text", (delta) => {
+      text += delta;
+    });
+
+    await stream.finalMessage();
 
     return NextResponse.json({ thinking, text });
   } catch (err) {
