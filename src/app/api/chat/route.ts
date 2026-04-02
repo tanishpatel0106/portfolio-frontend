@@ -59,45 +59,34 @@ export async function POST(req: Request) {
         });
 
         response.on("thinking", (thinkingDelta) => {
-          controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({
-                type: "thinking",
-                content: thinkingDelta,
-              })}\n\n`
-            )
-          );
+          const payload = JSON.stringify({
+            type: "thinking",
+            content: thinkingDelta,
+          });
+          controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
         });
 
         response.on("text", (textDelta) => {
-          controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({
-                type: "text",
-                content: textDelta,
-              })}\n\n`
-            )
-          );
+          const payload = JSON.stringify({
+            type: "text",
+            content: textDelta,
+          });
+          controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
         });
 
         response.on("end", () => {
           controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({ type: "done" })}\n\n`
-            )
+            encoder.encode(`data: ${JSON.stringify({ type: "done" })}\n\n`)
           );
           controller.close();
         });
 
         response.on("error", (err: Error) => {
-          controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({
-                type: "error",
-                content: err.message,
-              })}\n\n`
-            )
-          );
+          const payload = JSON.stringify({
+            type: "error",
+            content: err.message,
+          });
+          controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
           controller.close();
         });
 
@@ -105,11 +94,8 @@ export async function POST(req: Request) {
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Failed to get response";
-        controller.enqueue(
-          encoder.encode(
-            `data: ${JSON.stringify({ type: "error", content: message })}\n\n`
-          )
-        );
+        const payload = JSON.stringify({ type: "error", content: message });
+        controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
         controller.close();
       }
     },
