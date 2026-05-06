@@ -1,6 +1,6 @@
 export const products = [
   {
-  href: "/projects/data-valuation-ocean-carbon",
+  href: "https://docs.google.com/presentation/d/1G7gwhbNBzrtuOHRz2x5eNaSgxluANCQH5tDbGcE5lro/edit?usp=sharing",
   title: "Data Valuation for Sparse Surface Ocean Carbon Data",
   description:
     "A Shapley-based data valuation pipeline for sparse surface ocean carbon prediction, ranking climate and Earth system data sources by their marginal contribution to regional fCO₂ prediction performance.",
