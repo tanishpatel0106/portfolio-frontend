@@ -1,5 +1,86 @@
 export const products = [
   {
+  href: "/projects/data-valuation-ocean-carbon",
+  title: "Data Valuation for Sparse Surface Ocean Carbon Data",
+  description:
+    "A Shapley-based data valuation pipeline for sparse surface ocean carbon prediction, ranking climate and Earth system data sources by their marginal contribution to regional fCO₂ prediction performance.",
+  thumbnail: "/images/data-valuation-1.jpg",
+  images: [
+    "/images/data-valuation-1.jpg"
+  ],
+  stack: [
+    "Data Valuation",
+    "Geospatial ML",
+    "Ocean Carbon Modeling",
+    "Pandas",
+    "NumPy",
+    "Joblib",
+  ],
+  slug: "data-valuation-ocean-carbon",
+  content: (
+    <div>
+      <p>
+        This project explores data valuation for sparse surface ocean carbon
+        prediction. The ocean surface is vast, but direct surface carbon
+        observations cover only a small fraction of the full ocean domain. This
+        sparsity creates an important modeling question: when training machine
+        learning models with multiple climate and Earth system data sources,
+        which sources are actually helping prediction, and which may be weak,
+        redundant, or harmful?
+      </p>
+
+      <p>
+        I developed an end-to-end source-level valuation pipeline that treats
+        each data source as a player in a cooperative game. The pipeline builds
+        source-labeled training pools, generates fixed regional task sets using
+        ocean-region masks, trains models on different source coalitions, and
+        evaluates each coalition using negative RMSE on the target task set.
+        This makes it possible to measure how much each source contributes to
+        regional fCO₂ prediction performance.
+      </p>
+
+      <p>
+        The core modeling engine uses an XGBoost regressor trained repeatedly on
+        coalitions of sources. For each coalition S, the utility function is
+        defined as v(S) = -RMSE on a fixed regional evaluation set. Higher
+        utility therefore corresponds to lower prediction error. This setup
+        allows source contribution to be measured in terms of actual downstream
+        predictive value rather than simple data volume.
+      </p>
+
+      <p>
+        To assign credit fairly, I implemented both exact and approximate
+        Shapley valuation. Exact Shapley evaluates all 2ⁿ possible source
+        coalitions, while approximate Shapley uses Monte Carlo permutation
+        sampling to estimate average marginal contribution more scalably. A
+        positive Shapley value indicates that a source improves prediction
+        performance, a near-zero value suggests weak or redundant contribution,
+        and a negative value indicates that the source may introduce noise,
+        mismatch, or poor transfer to the selected target region.
+      </p>
+
+      <p>
+        The project also includes a full visualization workflow. It generates
+        spatial source valuation maps, cumulative contribution curves,
+        coalition-size utility diagnostics, source-ranking plots, and
+        interpretation figures. These visualizations show that data value is
+        not uniformly distributed: a small number of sources can contribute
+        strongly to regional prediction, while others may add little value or
+        reduce performance.
+      </p>
+
+      <p>
+        Overall, this project demonstrates how Shapley-based data valuation can
+        make geoscientific machine learning pipelines more interpretable and
+        selective. Instead of treating all available training data as equally
+        useful, the framework provides a principled way to rank, diagnose, and
+        visualize which data sources matter most for sparse ocean carbon
+        prediction.
+      </p>
+    </div>
+  ),
+},
+  {
   href: "https://stress-tester-five.vercel.app",
   title: "StressTester: AI-Assisted Financial Stress Testing Engine",
   description:
