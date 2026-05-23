@@ -1,5 +1,113 @@
 export const products = [
   {
+  href: "https://github.com/tanishpatel0106/DynamicResourceAllocation",
+  title: "Dynamic Resource Allocation in Cloud Computing",
+  description:
+    "A power-aware, SLA-bound deep reinforcement learning scheduler for cloud computing, built with a custom Gymnasium simulator, PyTorch RL agents, FastAPI orchestration, and a React monitoring dashboard.",
+  thumbnail: "/images/DR-Thumb.png",
+  images: [
+    "/images/DR-Thumb.png",
+    "/images/DRA-1.png",
+    "/images/DRA-2.png",
+    "/images/DRA-3.png",
+  ],
+  stack: [
+    "Deep Reinforcement Learning",
+    "Cloud Scheduling",
+    "Gymnasium",
+    "PyTorch",
+    "Double DQN",
+    "PPO",
+    "Hierarchical Agentic RL",
+    "Lagrangian CMDP",
+    "FastAPI",
+    "WandB"
+  ],
+  slug: "dynamic-resource-allocation-cloud-rl",
+  content: (
+    <div>
+      <p>
+        This project explores dynamic resource allocation in cloud computing,
+        where queued jobs must be assigned to heterogeneous servers while
+        balancing two competing objectives: reducing cluster power consumption
+        and satisfying SLA latency deadlines. Since server power is non-linear
+        with respect to utilization, simple scheduling heuristics can miss
+        important long-horizon trade-offs between energy efficiency, queue
+        pressure, and deadline violations.
+      </p>
+
+      <p>
+        I built an end-to-end reinforcement learning system that models the
+        cloud cluster as a discrete-time Markov Decision Process. The custom
+        Gymnasium environment represents server utilization, memory usage,
+        power capacity, queued job requirements, job duration, and wait time.
+        At each step, the scheduler decides which queued job should run on
+        which server, or whether the system should wait when no valid placement
+        exists.
+      </p>
+
+      <p>
+        The core environment uses a heterogeneous server fleet with efficient,
+        standard, and power-hungry machine tiers. The action space jointly
+        combines queue-slot selection and server placement, while invalid-action
+        masking ensures that infeasible job-server assignments are blocked both
+        during action selection and during value-target computation. The reward
+        function combines normalized active power with SLA violation signals
+        and continuous queue-pressure shaping, allowing the agent to learn
+        before deadlines are actually missed.
+      </p>
+
+      <p>
+        I implemented and compared multiple scheduling agents across different
+        reinforcement learning paradigms. The system includes a Double DQN
+        agent for discrete off-policy control, a PPO actor-critic agent for
+        stable on-policy learning, a hierarchical agentic-RL scheduler with
+        separate power and SLA sub-agents supervised by a learned arbitrator,
+        and a Lagrangian CMDP-style offline agent that treats SLA violations as
+        a constrained cost rather than only a soft reward penalty.
+      </p>
+
+      <p>
+        The project also extends the baseline scheduler with sleep and wake
+        server actions. In this setting, servers can be placed into a low-power
+        standby state and later reactivated with a wake-up delay. This changes
+        the scheduling problem from pure placement into true power-aware control:
+        the agent must decide not only where to place jobs, but also when to
+        keep capacity active, when to save energy, and how to avoid violating
+        SLA constraints during workload bursts.
+      </p>
+
+      <p>
+        To make experiments reproducible, I designed a full evaluation harness
+        with train/test seed splits, deterministic heterogeneous fleets,
+        synthetic Poisson workloads, Google trace-sampled workloads, baseline
+        heuristics, logging, and held-out greedy evaluation. The system reports
+        reward, power consumption, SLA violation rate, and power-SLA trade-offs
+        across learned agents and classical baselines such as Shortest Job
+        First, First-Fit Decreasing, and Round Robin.
+      </p>
+
+      <p>
+        Beyond the RL engine, the project includes a full-stack experimentation
+        interface. A FastAPI backend orchestrates training jobs, a SQLite store
+        persists run metadata and metrics, WebSockets stream live training
+        updates, and a React dashboard visualizes training curves, power usage,
+        SLA violations, and model comparisons through interactive Recharts
+        components.
+      </p>
+
+      <p>
+        Overall, this project demonstrates how deep reinforcement learning can
+        be used to build a practical, monitorable, and extensible cloud
+        scheduling system. Instead of treating resource allocation as a static
+        heuristic problem, the framework learns policies that adapt to bursty
+        workloads, heterogeneous infrastructure, non-linear power behavior, and
+        explicit SLA constraints.
+      </p>
+    </div>
+  ),
+},
+  {
   href: "https://docs.google.com/presentation/d/1G7gwhbNBzrtuOHRz2x5eNaSgxluANCQH5tDbGcE5lro/edit?usp=sharing",
   title: "Data Valuation for Sparse Surface Ocean Carbon Data",
   description:
