@@ -6,6 +6,7 @@ import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { SkillRoller } from "./ui/skill-roller";
 
 export const SingleProduct = ({ product }: { product: Product }) => {
   const [activeImage, setActiveImage] = useState(product.thumbnail);
@@ -53,16 +54,11 @@ export const SingleProduct = ({ product }: { product: Product }) => {
       </div>
       <div className="flex lg:flex-row justify-between items-center flex-col mt-20">
         <Heading className="font-black mb-2 pb-1"> {product.title}</Heading>
-        <div className="flex space-x-2 md:mb-1 mt-2 md:mt-0">
-          {product.stack?.map((stack: string) => (
-            <span
-              key={stack}
-              className="text-xs  md:text-xs lg:text-xs bg-gray-50 px-2 py-1 rounded-sm text-secondary"
-            >
-              {stack}
-            </span>
-          ))}
-        </div>
+        <SkillRoller
+          skills={product.stack ?? []}
+          className="mt-2 md:mb-1 md:mt-0"
+          pillClassName="text-base px-3 py-1.5"
+        />
       </div>
       <div>
         <Paragraph className="max-w-xl mt-4">{product.description}</Paragraph>
