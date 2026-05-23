@@ -1,5 +1,111 @@
 export const products = [
   {
+  href: "https://github.com/tanishpatel0106/MatchOdds-AI",
+  title: "MatchOdds AI",
+  description:
+    "An agentic RAG system for NBA pre-game betting analysis that aggregates statistics, injuries, odds, historical matchups, news, and sentiment signals, then compares CoT, ReAct, and multi-agent reasoning strategies for calibrated game prediction.",
+  thumbnail: "/images/MathOdds1.png",
+  images: [
+    "/images/MathOdds1.png",
+    "/images/MathOdds2.png",
+    "/images/MathOdds3.png",
+    "/images/MathOdds4.png"
+  ],
+  stack: [
+    "Agentic RAG",
+    "Sports Analytics",
+    "LLM Agents",
+    "Chain-of-Thought",
+    "Multi-Agent Debate",
+    "ChromaDB",
+    "FastAPI",
+    "React",
+    "Python",
+    "NBA API",
+  ],
+  slug: "matchodds-ai",
+  content: (
+    <div>
+      <p>
+        This project explores agentic retrieval-augmented generation for NBA
+        pre-game betting analysis. Before tip-off, useful information is spread
+        across fragmented sources such as injury reports, team statistics,
+        head-to-head records, bookmaker odds, news coverage, and fan sentiment.
+        MatchOdds AI was built to unify these signals into a structured
+        analysis workflow that can produce evidence-grounded game predictions.
+      </p>
+
+      <p>
+        I developed an end-to-end sports intelligence system that collects,
+        organizes, retrieves, and reasons over NBA pre-game data. The system
+        aggregates team performance statistics, historical matchups, injury
+        reports, odds data, news sentiment, social signals, and semantically
+        similar historical games. These sources form a shared evidence layer
+        that can be passed into different reasoning backends for controlled
+        comparison.
+      </p>
+
+      <p>
+        The core retrieval layer uses a ChromaDB vector store containing
+        embedded historical NBA game records with metadata such as team,
+        season, home/away status, rest context, and back-to-back indicators.
+        Given an upcoming matchup, the system retrieves similar historical
+        games and combines them with structured tools for team stats,
+        head-to-head records, injuries, odds, and sentiment signals.
+      </p>
+
+      <p>
+        To study how different LLM reasoning strategies behave on the same
+        forecasting task, I implemented three interchangeable analysis methods.
+        The chain-of-thought baseline gathers all evidence deterministically
+        before a single structured reasoning pass. The ReAct agent decides
+        which tools to call step by step, observes intermediate results, and
+        then produces a final report. The multi-agent debate system separates
+        reasoning across specialized agents, including a stats agent, matchup
+        agent, and market agent, before synthesizing their views into a
+        consensus prediction.
+      </p>
+
+      <p>
+        The evaluation framework backtests the system on historical NBA games
+        using proper scoring and calibration metrics. Each method is evaluated
+        with Brier score, log loss, expected calibration error, accuracy,
+        precision, recall, and F1. The project also studies whether information
+        density improves prediction quality and uses ablation experiments to
+        measure which data sources contribute the most predictive signal.
+      </p>
+
+      <p>
+        The main empirical finding is that the simpler chain-of-thought
+        baseline outperforms both the single ReAct agent and the multi-agent
+        debate system across the measured metrics. This result highlights an
+        important design lesson for agentic systems: when all relevant evidence
+        can be gathered reliably upfront, a single structured reasoning pass may
+        be more stable than iterative tool-calling or multi-agent coordination.
+      </p>
+
+      <p>
+        The project also includes a user-facing application for generating NBA
+        matchup reports. The interface allows users to select a game, choose a
+        reasoning method, and view structured outputs such as win probability,
+        key factors, similar historical games, reasoning traces, calibration
+        results, and evaluation charts. This makes the system both a practical
+        betting-analysis assistant and a research platform for comparing LLM
+        reasoning architectures.
+      </p>
+
+      <p>
+        Overall, MatchOdds AI demonstrates how retrieval, structured sports
+        data, vector search, and LLM reasoning can be combined into an
+        interpretable pre-game analytics system. Beyond predicting winners, the
+        project shows how agent design, evidence availability, calibration, and
+        output consistency affect the reliability of LLM-powered decision
+        systems in high-noise forecasting tasks.
+      </p>
+    </div>
+  ),
+},
+  {
   href: "https://github.com/tanishpatel0106/DynamicResourceAllocation",
   title: "Dynamic Resource Allocation in Cloud Computing",
   description:
