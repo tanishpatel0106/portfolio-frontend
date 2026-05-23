@@ -4,12 +4,12 @@ export const products = [
   title: "MatchOdds AI",
   description:
     "An agentic RAG system for NBA pre-game betting analysis that aggregates statistics, injuries, odds, historical matchups, news, and sentiment signals, then compares CoT, ReAct, and multi-agent reasoning strategies for calibrated game prediction.",
-  thumbnail: "/images/MathOdds1.png",
+  thumbnail: "/images/MatchOdds1.png",
   images: [
-    "/images/MathOdds1.png",
-    "/images/MathOdds2.png",
-    "/images/MathOdds3.png",
-    "/images/MathOdds4.png"
+    "/images/MatchOdds1.png",
+    "/images/MatchOdds2.png",
+    "/images/MatchOdds3.png",
+    "/images/MatchOdds4.png"
   ],
   stack: [
     "Agentic RAG",
