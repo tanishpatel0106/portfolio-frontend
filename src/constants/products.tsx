@@ -1,5 +1,112 @@
 export const products = [
   {
+  href: "https://github.com/tanishpatel0106/DSI_AI_Adoption",
+  title: "AI Adoption Value Realization Dashboard",
+  description:
+    "An executive Power BI system that turns a two-year, $4M enterprise AI adoption strategy into a tracked value-realization layer — modeling spend, revenue uplift, payback, KPI gates, roadmap progress, scenario NPV, and program risk for a $75M CPG e-commerce business.",
+  thumbnail: "/images/DS-1.png",
+  images: [
+    "/images/DSI-1.png",
+    "/images/DSI-2.png",
+    "/images/DSI-3.png",
+    "/images/DSI-4.png",
+    "/images/DSI-5.png",
+    "/images/DSI-6.png"
+  ],
+  stack: [
+    "Power BI",
+    "DAX",
+    "TMDL Semantic Modeling",
+    "Financial Modeling",
+    "Synthetic Data Generation",
+    "Scenario & NPV Analysis",
+    "KPI Frameworks",
+    "Python",
+    "pandas",
+    "Data Visualization",
+  ],
+  slug: "ai-value-realization-dashboard",
+  content: (
+    <div>
+      <p>
+        For a $75M CPG e-commerce business, a two-year, $4M AI adoption
+        program promised roughly $16.5M in incremental revenue across four
+        workstreams: forecasting and pricing, trend detection,
+        personalization, and customer experience. The difficult part is not
+        proposing the strategy but proving that value is actually being
+        realized as the money is spent. I built this dashboard to convert a
+        static strategy deck into a living value-realization system that an
+        executive team can steer with quarter by quarter.
+      </p>
+
+      <p>
+        I developed the solution end to end. First I generated a
+        case-aligned synthetic dataset engineered to reconcile exactly to the
+        program's headline economics, then I built a Power BI semantic model
+        and a six-page executive report on top of it. Every program-level
+        total ties out by construction — $4.0M spend, $16.5M revenue uplift,
+        $6.6M gross-profit uplift at a 40% margin, and a net contribution of
+        $2.6M — so the narrative in the boardroom and the numbers in the
+        model never drift apart.
+      </p>
+
+      <p>
+        The core of the system is a star-schema semantic model with seven
+        tables organized around a shared quarter dimension, authored in TMDL
+        and delivered as a Power BI Project (PBIP) with thirty-four DAX
+        measures. Revenue is modeled on a realized-in-period basis and
+        allocated across workstreams using an iterative proportional
+        (RAS-style) fit, so that cumulative gross profit overtakes cumulative
+        spend at precisely the program's payback quarter. This makes the
+        payback point an emergent property of the data rather than a number
+        asserted on a slide.
+      </p>
+
+      <p>
+        The report is organized as six analytical surfaces. An Executive
+        Control Tower summarizes spend, uplift, ROI, and the cumulative
+        payback crossover; a Workstream Value Bridge decomposes the $16.5M
+        into a waterfall of contributions and contrasts Year 1 versus Year 2
+        ramp; a KPI Gate Dashboard tracks every metric against a glide-path
+        target; a 24-Month Roadmap Tracker monitors initiative delivery; a
+        Financial Scenario Simulator flexes the outcome across cases; and a
+        Risk and Governance page maintains the program's risk register.
+      </p>
+
+      <p>
+        On the financial-modeling side, I reconciled the program's headline
+        3.2x figure into a defensible net-revenue ROI and separated it
+        cleanly from the gross multiple and the gross-profit ROI, so each
+        number means exactly one thing. The scenario engine reprices the full
+        program under Bear, Base, and Bull cases by applying per-workstream
+        uplift multipliers and flexing gross margin and discount rate, then
+        rolls the result into a three-year NPV — all driven live by DAX
+        measures behind a single scenario slicer.
+      </p>
+
+      <p>
+        The KPI gates are direction-aware, evaluating each metric against its
+        own glide path and resolving to a red, amber, or green status rather
+        than a single global threshold. I deliberately let two KPIs read red
+        and wired them to the specific governance risks they trace back to, so
+        the dashboard functions as an accountability and interpretability
+        layer: a leader can move from a red cell straight to the risk that
+        explains it and the owner accountable for resolving it before the next
+        funding gate.
+      </p>
+
+      <p>
+        Overall, the project demonstrates how financial modeling, dimensional
+        data design, and BI engineering combine to make an AI investment
+        auditable. Rather than stopping at "we shipped models," it reframes
+        the entire program in P&L terms and exposes realized impact on a
+        gate-by-gate basis — the difference between a strategy that is
+        presented once and a value case that is continuously defended.
+      </p>
+    </div>
+  ),
+},
+  {
   href: "https://github.com/tanishpatel0106/MatchOdds-AI",
   title: "MatchOdds AI",
   description:
