@@ -1,64 +1,59 @@
 "use client";
 import React from "react";
-import { Heading } from "./Heading";
-import { Product } from "@/types/products";
-import { products } from "@/constants/products";
 import Link from "next/link";
 import Image from "next/image";
-import { Paragraph } from "./Paragraph";
 import { motion } from "framer-motion";
-import { SkillRoller } from "./ui/skill-roller";
+import { cn } from "@/lib/utils";
+import { products } from "@/constants/products";
+import { Product } from "@/types/products";
+import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
+
+const ProjectHeader = ({ product }: { product: Product }) => (
+  <div className="relative flex flex-1 w-full min-h-[10rem] overflow-hidden rounded-xl bg-gray-100">
+    <Image
+      src={product.thumbnail}
+      alt={product.title}
+      fill
+      sizes="(min-width: 768px) 50vw, 100vw"
+      className="object-cover object-top transition duration-300 group-hover/bento:scale-105"
+    />
+  </div>
+);
 
 export const Products = () => {
   return (
-    <div>
-      <div className="grid grid-cols-1  gap-10">
-        {products.map((product: Product, idx: number) => (
+    <BentoGrid className="max-w-4xl md:auto-rows-[20rem]">
+      {products.map((product: Product, i: number) => {
+        const isExternal = !product.slug;
+        const href = product.slug ? `/projects/${product.slug}` : product.href;
+        const featured = i % 7 === 0 || i % 7 === 3;
+        return (
           <motion.div
-            key={product.href}
-            initial={{
-              opacity: 0,
-              x: -50,
-            }}
-            animate={{
-              opacity: 1,
-              x: 0,
-            }}
-            transition={{ duration: 0.2, delay: idx * 0.1 }}
+            key={product.slug || product.href || i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.3, delay: (i % 3) * 0.05 }}
+            className={cn(featured && "md:col-span-2")}
           >
             <Link
-              href={product.slug ? `/projects/${product.slug}` : product.href}
-              key={product.href}
-              className="group flex flex-col gap-4 overflow-hidden rounded-2xl p-2 transition duration-200 hover:bg-gray-50 md:h-48 md:flex-row"
+              href={href || "#"}
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              className="block h-full focus:outline-none"
             >
-              <Image
-                src={product.thumbnail}
-                alt={product.title}
-                height="400"
-                width="400"
-                className="h-48 w-full flex-shrink-0 rounded-md object-cover object-top md:h-full md:w-64"
+              <BentoGridItem
+                className="h-full"
+                header={<ProjectHeader product={product} />}
+                title={<span className="line-clamp-2">{product.title}</span>}
+                description={
+                  <span className="line-clamp-2">{product.description}</span>
+                }
               />
-              <div className="flex min-w-0 flex-1 flex-col justify-between">
-                <div className="min-w-0">
-                  <Heading
-                    as="h4"
-                    className="font-black text-lg md:text-lg lg:text-lg truncate"
-                  >
-                    {product.title}
-                  </Heading>
-                  <Paragraph className="text-sm md:text-sm lg:text-sm mt-2 line-clamp-2 md:line-clamp-3">
-                    {product.description}
-                  </Paragraph>
-                </div>
-                <SkillRoller
-                  skills={product.stack ?? []}
-                  className="mt-3 md:mb-1 md:mt-0"
-                />
-              </div>
             </Link>
           </motion.div>
-        ))}
-      </div>
-    </div>
+        );
+      })}
+    </BentoGrid>
   );
 };

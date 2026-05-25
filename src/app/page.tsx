@@ -2,9 +2,8 @@ import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
-import { FeatureGrid } from "@/components/FeatureGrid";
+import { Products } from "@/components/Products";
 import { TechStack } from "@/components/TechStack";
-import Image from "next/image";
 import { ResearchCarousel } from "@/components/ResearchCarousel";
 
 export default function Home() {
@@ -24,16 +23,16 @@ export default function Home() {
         as="h2"
         className="font-black text-lg md:text-lg lg:text-lg mt-20 mb-4"
       >
-        Explore My Research
+        What I&apos;ve been working on
       </Heading>
-      <ResearchCarousel />
+      <Products />
       <Heading
         as="h2"
         className="font-black text-lg md:text-lg lg:text-lg mt-20 mb-4"
       >
-        What I&apos;ve been working on
+        Explore My Research
       </Heading>
-      <FeatureGrid />
+      <ResearchCarousel />
       <TechStack />
     </Container>
   );
