@@ -48,7 +48,7 @@ export const products = [
 
       <p>
         I developed the solution end to end, starting with a case-aligned
-        synthetic dataset engineered to reconcile exactly to the program's
+        synthetic dataset engineered to reconcile exactly to the program&apos;s
         headline economics. The model ties out to $4.0M in total spend, $16.5M
         in incremental revenue uplift, $6.6M in gross-profit uplift at a 40%
         margin, and $2.6M in net contribution. This ensures that the strategic
@@ -78,7 +78,7 @@ export const products = [
       </p>
 
       <p>
-        On the financial-modeling side, I separated the program's headline
+        On the financial-modeling side, I separated the program&apos;s headline
         multiple into distinct measures for gross revenue multiple, gross-profit
         ROI, and net-revenue ROI. This makes the financial interpretation more
         defensible because each number answers a different executive question.
