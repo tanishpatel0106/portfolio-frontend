@@ -63,9 +63,11 @@ The thinking budget controls how much reasoning the AI does before responding. I
 ```typescript
 thinking: {
   type: "enabled",
-  budget_tokens: 10000,  // Increase for more detailed reasoning, decrease for speed
+  budget_tokens: 3000,  // Increase for more detailed reasoning, decrease for speed
 },
 ```
+
+Thinking tokens stream at roughly the same speed as the answer, so a large budget can consume most of the request's time before the answer begins. If responses get cut off mid-sentence on your host, lower this value and/or raise `maxDuration` in the same file (it's capped by your hosting plan — e.g. 60s on Vercel Hobby).
 
 ### Updating Your Information
 
@@ -80,7 +82,7 @@ The empty-state question pills and the rotating placeholders in the input are al
 ## Cost Considerations
 
 - The chat uses **Claude Sonnet** with extended thinking enabled
-- Extended thinking adds to token usage (budget capped at 10,000 tokens per request)
+- Extended thinking adds to token usage (budget capped at 3,000 tokens per request)
 - Each conversation turn sends the full message history (capped at last 20 messages)
 - For a portfolio site with light traffic, costs should be minimal (a few cents per conversation)
 - Monitor usage at [https://console.anthropic.com/usage](https://console.anthropic.com/usage)

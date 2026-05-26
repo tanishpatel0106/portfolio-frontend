@@ -1,6 +1,12 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { buildSystemPrompt } from "@/lib/portfolio-knowledge";
 
+// Streamed responses with extended thinking can run well past the platform's
+// default function timeout (~10-15s on Vercel), which silently cuts the answer
+// off mid-sentence. Give the function room to finish streaming.
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
 interface ChatMessageInput {
   role: string;
   content: string;
@@ -49,12 +55,23 @@ export async function POST(req: Request) {
       try {
         const response = anthropic.messages.stream({
           model: "claude-sonnet-4-20250514",
-          max_tokens: 56000,
+          max_tokens: 16000,
           thinking: {
             type: "enabled",
-            budget_tokens: 10000,
+            // Thinking tokens stream at roughly answer speed, so a large budget
+            // can eat the whole time window before the answer starts. Keep it
+            // modest so thinking + answer reliably finish within maxDuration.
+            budget_tokens: 3000,
           },
-          system: buildSystemPrompt(),
+          // Cache the (large, content-derived) system prompt so repeat turns
+          // skip re-processing it — faster first token, lower cost.
+          system: [
+            {
+              type: "text",
+              text: buildSystemPrompt(),
+              cache_control: { type: "ephemeral" },
+            },
+          ],
           messages: formattedMessages,
         });
 

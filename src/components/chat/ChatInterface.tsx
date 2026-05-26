@@ -19,6 +19,7 @@ export function ChatInterface({
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [interrupted, setInterrupted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -36,60 +37,62 @@ export function ChatInterface({
   }, [messages, scrollToBottom]);
 
   const processSSELine = (line: string) => {
-    const dataMatch = line.match(/^data: (.+)$/s);
-    if (!dataMatch) return;
+    const trimmed = line.trim();
+    if (!trimmed.startsWith("data:")) return;
 
+    const payload = trimmed.slice(5).trim();
+    if (!payload) return;
+
+    let event: { type?: string; content?: string };
     try {
-      const event = JSON.parse(dataMatch[1]);
-
-      if (event.type === "thinking") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.thinking = (last.thinking || "") + event.content;
-          }
-          return updated;
-        });
-      } else if (event.type === "text") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.content = (last.content || "") + event.content;
-          }
-          return updated;
-        });
-      } else if (event.type === "done") {
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            last.isStreaming = false;
-          }
-          return updated;
-        });
-      } else if (event.type === "error") {
-        throw new Error(event.content);
-      }
-    } catch (parseErr) {
-      if (
-        parseErr instanceof Error &&
-        parseErr.message !== "Unexpected end of JSON input"
-      ) {
-        throw parseErr;
-      }
+      event = JSON.parse(payload);
+    } catch {
+      // Skip partial/malformed lines instead of aborting the whole stream.
+      return;
     }
+
+    if (event.type === "thinking") {
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last.role === "assistant") {
+          last.thinking = (last.thinking || "") + (event.content ?? "");
+        }
+        return updated;
+      });
+    } else if (event.type === "text") {
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last.role === "assistant") {
+          last.content = (last.content || "") + (event.content ?? "");
+        }
+        return updated;
+      });
+    } else if (event.type === "done") {
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last.role === "assistant") {
+          last.isStreaming = false;
+        }
+        return updated;
+      });
+    } else if (event.type === "error") {
+      throw new Error(event.content || "Stream error");
+    }
+
+    return event.type;
   };
 
-  const sendMessage = async (content: string) => {
+  // Core streaming routine. `apiMessages` is the full history to answer,
+  // ending with the user turn we want a response to. Used by both a fresh send
+  // and a retry, so they share identical completion/error handling.
+  const streamResponse = async (
+    apiMessages: { role: string; content: string }[]
+  ) => {
     setError(null);
-
-    const userMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
-      role: "user",
-      content,
-    };
+    setInterrupted(false);
 
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
@@ -99,21 +102,14 @@ export function ChatInterface({
       isStreaming: true,
     };
 
-    setMessages((prev) => [...prev, userMessage, assistantMessage]);
+    setMessages((prev) => [...prev, assistantMessage]);
     setIsLoading(true);
 
     try {
-      // Include thinking in history for conversation context awareness
-      const allMessages = [...messages, userMessage].map((m) => ({
-        role: m.role,
-        content: m.content,
-        ...(m.thinking ? { thinking: m.thinking } : {}),
-      }));
-
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: allMessages }),
+        body: JSON.stringify({ messages: apiMessages }),
       });
 
       if (!response.ok) {
@@ -128,6 +124,7 @@ export function ChatInterface({
 
       const decoder = new TextDecoder();
       let buffer = "";
+      let doneReceived = false;
 
       while (true) {
         const { done, value } = await reader.read();
@@ -138,24 +135,31 @@ export function ChatInterface({
         buffer = lines.pop() || "";
 
         for (const line of lines) {
-          processSSELine(line);
+          if (processSSELine(line) === "done") doneReceived = true;
         }
       }
 
       // Process any remaining data in the buffer after stream ends
-      if (buffer.trim()) {
-        processSSELine(buffer.trim());
+      if (buffer.trim() && processSSELine(buffer.trim()) === "done") {
+        doneReceived = true;
       }
 
-      // Ensure streaming flag is cleared even if no "done" event was received
+      // A finished stream always ends with a "done" event. If it didn't, the
+      // response was cut off mid-flight (e.g. a serverless timeout) — flag it
+      // so the user can retry instead of seeing a silent truncation.
       setMessages((prev) => {
         const updated = [...prev];
         const last = updated[updated.length - 1];
-        if (last.role === "assistant" && last.isStreaming) {
+        if (last.role === "assistant") {
           last.isStreaming = false;
+          // Nothing streamed at all — drop the empty bubble; the notice covers it.
+          if (!doneReceived && !last.content && !last.thinking) {
+            updated.pop();
+          }
         }
         return updated;
       });
+      if (!doneReceived) setInterrupted(true);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Something went wrong";
@@ -163,11 +167,7 @@ export function ChatInterface({
       setMessages((prev) => {
         const updated = [...prev];
         const last = updated[updated.length - 1];
-        if (
-          last.role === "assistant" &&
-          !last.content &&
-          !last.thinking
-        ) {
+        if (last.role === "assistant" && !last.content && !last.thinking) {
           updated.pop();
         } else if (last.role === "assistant") {
           last.isStreaming = false;
@@ -177,6 +177,33 @@ export function ChatInterface({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const sendMessage = (content: string) => {
+    const userMessage: ChatMessage = {
+      id: `user-${Date.now()}`,
+      role: "user",
+      content,
+    };
+    const apiMessages = [...messages, userMessage].map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
+    setMessages((prev) => [...prev, userMessage]);
+    streamResponse(apiMessages);
+  };
+
+  const retryLast = () => {
+    // Drop the trailing (interrupted) assistant turn, then regenerate in place
+    // without duplicating the user's question.
+    const history =
+      messages[messages.length - 1]?.role === "assistant"
+        ? messages.slice(0, -1)
+        : messages;
+    setMessages(history);
+    streamResponse(
+      history.map((m) => ({ role: m.role, content: m.content }))
+    );
   };
 
   const hasMessages = messages.length > 0;
@@ -237,6 +264,24 @@ export function ChatInterface({
                   <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-2.5 shadow-sm">
                     {error}
                   </p>
+                </motion.div>
+              )}
+              {interrupted && !error && (
+                <motion.div
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex justify-center py-3"
+                >
+                  <div className="flex items-center gap-3 text-sm text-amber-700 bg-amber-50 border border-amber-100 rounded-xl px-4 py-2.5 shadow-sm">
+                    <span>The response was interrupted before it finished.</span>
+                    <button
+                      onClick={retryLast}
+                      disabled={isLoading}
+                      className="flex-shrink-0 font-medium text-amber-800 underline decoration-amber-300 underline-offset-2 hover:decoration-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Try again
+                    </button>
+                  </div>
                 </motion.div>
               )}
               <div ref={messagesEndRef} />
