@@ -11,7 +11,7 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 
-const questions = [
+const QUESTION_STYLES = [
   {
     text: "What are you currently working on at Columbia?",
     icon: IconSchool,
@@ -72,9 +72,23 @@ const questions = [
 
 interface SuggestedQuestionsProps {
   onSelect: (question: string) => void;
+  /** Dynamic question text derived from live site content. Falls back to defaults. */
+  questions?: string[];
 }
 
-export function SuggestedQuestions({ onSelect }: SuggestedQuestionsProps) {
+export function SuggestedQuestions({
+  onSelect,
+  questions,
+}: SuggestedQuestionsProps) {
+  // Map dynamic question text onto the visual palette, cycling through styles.
+  const items =
+    questions && questions.length > 0
+      ? questions.map((text, i) => ({
+          ...QUESTION_STYLES[i % QUESTION_STYLES.length],
+          text,
+        }))
+      : QUESTION_STYLES;
+
   return (
     <div className="flex flex-col items-center justify-center h-full px-4 md:px-8 py-8">
       <motion.div
@@ -96,7 +110,7 @@ export function SuggestedQuestions({ onSelect }: SuggestedQuestionsProps) {
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-2xl w-full">
-        {questions.map((q, index) => (
+        {items.map((q, index) => (
           <motion.button
             key={q.text}
             initial={{ opacity: 0, y: 12 }}

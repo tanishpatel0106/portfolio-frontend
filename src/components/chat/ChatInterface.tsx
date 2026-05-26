@@ -7,7 +7,15 @@ import { SuggestedQuestions } from "./SuggestedQuestions";
 import { ChatInput } from "./ChatInput";
 import { IconSparkles } from "@tabler/icons-react";
 
-export function ChatInterface() {
+interface ChatInterfaceProps {
+  placeholders: string[];
+  suggestedQuestions: string[];
+}
+
+export function ChatInterface({
+  placeholders,
+  suggestedQuestions,
+}: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -205,7 +213,11 @@ export function ChatInterface() {
       >
         <AnimatePresence mode="wait">
           {!hasMessages ? (
-            <SuggestedQuestions key="suggestions" onSelect={sendMessage} />
+            <SuggestedQuestions
+              key="suggestions"
+              onSelect={sendMessage}
+              questions={suggestedQuestions}
+            />
           ) : (
             <motion.div
               key="messages"
@@ -239,6 +251,7 @@ export function ChatInterface() {
           onSend={sendMessage}
           isLoading={isLoading}
           hasMessages={hasMessages}
+          placeholders={placeholders}
         />
       </div>
     </div>

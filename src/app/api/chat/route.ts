@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { SYSTEM_PROMPT } from "@/constants/system-prompt";
+import { buildSystemPrompt } from "@/lib/portfolio-knowledge";
 
 interface ChatMessageInput {
   role: string;
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
             type: "enabled",
             budget_tokens: 10000,
           },
-          system: SYSTEM_PROMPT,
+          system: buildSystemPrompt(),
           messages: formattedMessages,
         });
 

@@ -69,14 +69,13 @@ thinking: {
 
 ### Updating Your Information
 
-All the AI's knowledge about you lives in `src/constants/system-prompt.ts`. Update this file whenever you:
-- Add new projects or research
-- Change roles or positions
-- Want to add new information the AI should know
+The AI's knowledge is **generated automatically** from the same content that powers the rest of the site. When you add a project to `src/constants/products.tsx`, a paper to `src/constants/research.tsx`, or a role to `src/constants/timeline.tsx` (and education/leadership/co-curricular), the chat picks it up on the next build — there is no separate copy to maintain.
+
+`src/lib/portfolio-knowledge.ts` assembles the system prompt from those constants. `src/constants/system-prompt.ts` now only holds the AI's **voice** — persona, a short bio, hobbies, and response guidelines. Edit it only to change tone or behavior, not facts.
 
 ### Customizing Suggested Questions
 
-Edit the `questions` array in `src/components/chat/SuggestedQuestions.tsx` to change the pre-built question pills.
+The empty-state question pills and the rotating placeholders in the input are also generated from your content by `getSuggestedQuestions()` and `getChatPlaceholders()` in `src/lib/portfolio-knowledge.ts`. Adjust the logic there to change how they are phrased or which content they draw from. The icon/color styling for the pills lives in `src/components/chat/SuggestedQuestions.tsx`.
 
 ## Cost Considerations
 
@@ -99,13 +98,15 @@ Edit the `questions` array in `src/components/chat/SuggestedQuestions.tsx` to ch
 
 | File | Purpose |
 |------|---------|
-| `src/app/chat/page.tsx` | Chat page (server component) |
+| `src/app/chat/page.tsx` | Chat page (server component); computes dynamic placeholders + suggestions |
 | `src/app/api/chat/route.ts` | API route — proxies Claude API calls |
-| `src/constants/system-prompt.ts` | All knowledge about you (edit this!) |
+| `src/lib/portfolio-knowledge.ts` | Builds the system prompt + chat suggestions from live site content |
+| `src/constants/system-prompt.ts` | AI voice only — persona, bio, hobbies, guidelines |
 | `src/components/chat/ChatInterface.tsx` | Main chat orchestrator |
-| `src/components/chat/ChatInput.tsx` | Input textarea + send button |
+| `src/components/chat/ChatInput.tsx` | Wraps the vanishing-placeholder input |
+| `src/components/ui/placeholders-and-vanish-input.tsx` | Animated input with vanishing placeholders |
 | `src/components/chat/MessageBubble.tsx` | Message rendering with markdown |
 | `src/components/chat/ThinkingBlock.tsx` | Expandable thinking display |
-| `src/components/chat/SuggestedQuestions.tsx` | Pre-built question pills |
+| `src/components/chat/SuggestedQuestions.tsx` | Question pill styling (text supplied dynamically) |
 | `src/types/chat.ts` | TypeScript types |
 | `.env.example` | Environment variable template |
