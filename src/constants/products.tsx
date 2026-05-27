@@ -1,5 +1,109 @@
 export const products = [
   {
+  href: "https://github.com/tanishpatel0106/Visualiser-IMC",
+  title: "Prosperity Trading Terminal",
+  description:
+    "A Bloomberg-style trading terminal and research platform for the IMC Prosperity algorithmic trading competition, supporting tick-by-tick market replay, strategy backtesting, order book visualization, execution simulation, and real-time performance analytics.",
+  thumbnail: "/images/IMC-1.jpg",
+  images: [
+    "/images/IMC-1.jpg"
+  ],
+  stack: [
+    "Algorithmic Trading",
+    "Market Microstructure",
+    "Backtesting",
+    "FastAPI",
+    "React",
+    "TypeScript",
+    "Zustand",
+    "WebSockets",
+    "TradingView Lightweight Charts",
+    "SQLite",
+    "Pandas",
+    "NumPy",
+  ],
+  slug: "prosperity-trading-terminal",
+  content: (
+    <div>
+      <p>
+        This project explores the design of a professional-grade trading
+        terminal for algorithmic strategy research in the IMC Prosperity
+        competition. The platform is built to replay historical market data
+        tick by tick, visualize order book dynamics, test trading strategies,
+        and analyze execution quality from a single interactive workspace.
+      </p>
+
+      <p>
+        I developed a full-stack trading research system with a FastAPI backend
+        and a React TypeScript frontend. The backend handles market data
+        loading, CSV normalization, replay orchestration, strategy execution,
+        fill simulation, backtesting, and persistence. The frontend provides a
+        Bloomberg-style interface with resizable panels, keyboard-driven replay
+        controls, real-time charts, strategy configuration, and live PnL
+        tracking.
+      </p>
+
+      <p>
+        The core replay engine reconstructs historical order book states from
+        IMC Prosperity price snapshots and trade prints. Users can select a
+        product and trading day, step forward or backward through market events,
+        adjust playback speed, and observe how the bid-ask ladder, depth chart,
+        trade tape, candlestick chart, positions, fills, and PnL evolve over
+        time.
+      </p>
+
+      <p>
+        The strategy engine supports both built-in and user-uploaded trading
+        strategies. It includes market-making, mean-reversion, momentum, and
+        microstructure-based strategies, along with a sandbox runner that
+        executes custom Python strategy files through the IMC Prosperity
+        Trader interface. This makes it possible to test strategy logic against
+        realistic historical market states without manually wiring replay,
+        orders, fills, and position accounting.
+      </p>
+
+      <p>
+        A major component of the project is the execution simulation layer.
+        Because the competition data provides periodic order book snapshots
+        rather than full Level 3 queue-level events, the platform implements
+        multiple execution models. Conservative, balanced, and optimistic fill
+        assumptions allow users to evaluate how sensitive a strategy is to
+        passive fill uncertainty, book movement, and trade-print evidence.
+      </p>
+
+      <p>
+        The terminal also includes a rich analytics and visualization workflow.
+        The frontend supports candlestick, line, step, and OHLC chart modes,
+        fill markers, volume bars, technical overlays, and more than 200
+        configurable technical indicators. Backtest results are summarized
+        through metrics such as total PnL, realized and unrealized PnL, Sharpe
+        ratio, max drawdown, win rate, profit factor, trade count, and execution
+        history.
+      </p>
+
+      <p>
+        To support live strategy debugging, the platform streams replay updates
+        through WebSockets and exposes detailed per-tick traces. Users can
+        inspect submitted orders, fills, positions, strategy notes, and running
+        PnL at each market event. The terminal also provides multiple workspace
+        layouts for trading, analysis, strategy development, and debugging,
+        making it easier to move from high-level performance review to
+        tick-level diagnosis.
+      </p>
+
+      <p>
+        Overall, Prosperity Trading Terminal demonstrates how market
+        microstructure visualization, strategy backtesting, execution modeling,
+        and full-stack engineering can be combined into a practical research
+        environment for algorithmic trading. Instead of relying only on offline
+        scripts, the system gives traders an interactive way to replay markets,
+        understand strategy behavior, and diagnose performance under different
+        execution assumptions.
+      </p>
+    </div>
+  ),
+},
+  {
   href: "https://github.com/tanishpatel0106/DSI_AI_Adoption",
   title: "AI Adoption Value Realization Dashboard",
   description:
