@@ -4,9 +4,9 @@ export const products = [
   title: "Prosperity Trading Terminal",
   description:
     "A Bloomberg-style trading terminal and research platform for the IMC Prosperity algorithmic trading competition, supporting tick-by-tick market replay, strategy backtesting, order book visualization, execution simulation, and real-time performance analytics.",
-  thumbnail: "/images/IMC-1.jpg",
+  thumbnail: "/images/IMC-1.png",
   images: [
-    "/images/IMC-1.jpg"
+    "/images/IMC-1.png"
   ],
   stack: [
     "Algorithmic Trading",
