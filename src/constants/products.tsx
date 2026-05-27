@@ -358,7 +358,7 @@ export const products = [
     "FastAPI",
     "WandB"
   ],
-  slug: "dynamic-resource-allocation-cloud-rl",
+  slug: "cloud-rl",
   content: (
     <div>
       <p>
