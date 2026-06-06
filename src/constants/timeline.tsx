@@ -2,7 +2,7 @@
     {
       company: "Jain Global",
       title: "Data Management & Vendor Operations Intern",
-      date: "June 2026 - August 2026",
+      date: "June 2026 - Present",
       description: "AI-Enabled Data Operations & Vendor Management",
       responsibilities: [
         "Designing AI-enabled automation across data sourcing, procurement, and vendor-management workflows to reduce manual cycle time and accelerate delivery of alpha-generating data to investment professionals across asset classes.",
@@ -14,7 +14,7 @@
     {
       company: "Columbia University - Lamont-Doherty Earth Observatory",
       title: "Research Assistant — Data Valuation for Ocean fCO₂ Prediction",
-      date: "January 2026 - Present",
+      date: "January 2026 - May 2026",
       description: "Cooperative Game Theory & ML",
       responsibilities: [
         "Conducting a data valuation study for ocean fCO₂ prediction using cooperative game theory, exhaustively enumerating all 2¹³ = 8,192 source coalitions across 13 observational datasets (~300K samples) and training XGBRegressor models per coalition against a held-out North American Subtropical task set.",
@@ -26,7 +26,7 @@
     {
       company: "Columbia University — IEOR Department",
       title: "Teaching Assistant — Algorithmic Trading (IEOR E4733)",
-      date: "January 2026 - Present",
+      date: "January 2026 - May 2026",
       description: "Market Microstructure & Trading Systems",
       responsibilities: [
         "Supporting graduate-level instruction in algorithmic trading covering market microstructure theory, optimal market-making (Avellaneda-Stoikov), optimal execution (GLFT), and high-frequency trading system design.",
