@@ -12,12 +12,15 @@ export default function Home() {
       <span className="text-4xl">👋</span>
       <Heading className="font-black">Hello there! I&apos;m Tanish</Heading>
       <Paragraph className="max-w-xl mt-4">
-        I&apos;m an AI Developer that loves{" "}
-        <Highlight>building products</Highlight> and solutions that can impact a solution to the community.
+        I&apos;m a Data Scientist and Applied AI Engineer building{" "} 
+        <Highlight>AI-powered systems</Highlight> for{" "} 
+        <Highlight>finance, analytics, and real-world decision-making</Highlight>.
       </Paragraph>
       <Paragraph className="max-w-xl mt-4">
-        I&apos;m a Junior AI Engineer with{" "}
-        <Highlight>2 years of experience</Highlight> building scalable AI and ML based solutions for all kinds of organisations and needs
+        My work focuses on{" "}
+        <Highlight>financial data automation, forecasting, machine learning, explainable AI</Highlight>, 
+        and scalable data products — helping transform complex data into{" "}
+        <Highlight>actionable insights and intelligent workflows</Highlight>.
       </Paragraph>
       <Heading
         as="h2"
