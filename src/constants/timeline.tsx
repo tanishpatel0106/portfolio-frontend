@@ -1,5 +1,17 @@
   export const timeline = [
     {
+      company: "Jain Global",
+      title: "Data Management & Vendor Operations Intern",
+      date: "June 2026 - August 2026",
+      description: "AI-Enabled Data Operations & Vendor Management",
+      responsibilities: [
+        "Designing AI-enabled automation across data sourcing, procurement, and vendor-management workflows to reduce manual cycle time and accelerate delivery of alpha-generating data to investment professionals across asset classes.",
+        "Building LLM-powered extraction pipelines to parse vendor contracts, emails, invoices, and procurement documents for commercial terms, renewal triggers, obligations, pricing details, and operational exceptions.",
+        "Developing invoice processing, validation, and anomaly detection workflows to identify billing inconsistencies, vendor-data issues, and cost-optimization opportunities across firm-wide data-procurement operations.",
+        "Analyzing vendor usage, spend, and workflow performance data to support procurement decisions, improve operational visibility, and help investment teams access cleaner, faster, and more reliable external data.",
+      ],
+    },
+    {
       company: "Columbia University - Lamont-Doherty Earth Observatory",
       title: "Research Assistant — Data Valuation for Ocean fCO₂ Prediction",
       date: "January 2026 - Present",
