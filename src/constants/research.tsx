@@ -3,8 +3,8 @@ import { ResearchItem } from "@/types/research";
 export const research: ResearchItem[] = [
   {
     slug: "demystifying-defects-fl-xai",
-    thumbnail: "/images/first-image.png",
-    images: ["/images/first-image.png", "/images/illust_1.jpg", "/images/illust_2.png"],
+    thumbnail: "/images/first-image.webp",
+    images: ["/images/first-image.webp", "/images/illust_1.jpg", "/images/illust_2.webp"],
     title: "Demystifying Defects: Federated Learning and Explainable AI for Semiconductor Fault Detection",
     category: "Industrial Research",
     role: "Lead Author",
@@ -116,8 +116,8 @@ export const research: ResearchItem[] = [
   },
   {
     slug: "burnout-dtss-xai",
-    thumbnail: "/images/THESIS_F.png",
-    images: ["/images/THESIS_F.png", "/images/THESIS_1.png", "/images/THESIS_2.png"],
+    thumbnail: "/images/THESIS_F.webp",
+    images: ["/images/THESIS_F.webp", "/images/THESIS_1.png", "/images/THESIS_2.png"],
     title: "Impact of Digital Transformation on Mental Health of IT Professionals",
     category: "Undergraduate Thesis",
     role: "Principal Investigator",
@@ -209,8 +209,8 @@ export const research: ResearchItem[] = [
   },
   {
     slug: "fed-soc-ev",
-    thumbnail: "/images/SOC_PHOTO_1.png",
-    images: ["/images/SOC_PHOTO_1.png", "/images/SOC_2.png"],
+    thumbnail: "/images/SOC_PHOTO_1.webp",
+    images: ["/images/SOC_PHOTO_1.webp", "/images/SOC_2.png"],
     title: "Data-Driven SoC Forecasting in Electric Vehicles: A Federated Learning Perspective",
     category: "Smart Grid and Electric Vehicles",
     role: "Co-Author",
@@ -279,8 +279,8 @@ export const research: ResearchItem[] = [
   },
     {
     slug: "cybersec-iov",
-    thumbnail: "/images/IOV_1.png",
-    images: ["/images/IOV_1.png", "/images/IOV_2.png"],
+    thumbnail: "/images/IOV_1.webp",
+    images: ["/images/IOV_1.webp", "/images/IOV_2.png"],
     title: "Enhancing Cybersecurity in Internet of Vehicles: A Machine Learning Approach with Explainable AI for Real-Time Threat Detection",
     category: "Cybersecurity and Smart Infrastructure",
     role: "Lead Author",

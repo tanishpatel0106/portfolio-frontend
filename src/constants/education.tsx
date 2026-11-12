@@ -1,7 +1,7 @@
 export const timeline = [
   {
     company: "Columbia University in the City of New York",
-    title: "Master of Science - Data Sciene",
+    title: "Master of Science - Data Science",
     date: "August 2025 - December 2026",
     description: "Data Science Institute, Fu Foundation School of Engineering and Applied Science",
     courses: "Advanced Reinforcement Learning, Generative AI using LLMs, Data Driven Methods in Finance, Applied Deep Learning, Finance and Structuring for Data Science, Machine Learning for Data Science, Statistical Inference and Modelling",

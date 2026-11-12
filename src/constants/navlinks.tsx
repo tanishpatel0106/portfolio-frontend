@@ -1,11 +1,12 @@
 import {
+  IconApps,
   IconArticle,
   IconBolt,
   IconBriefcase2,
+  IconFileCv,
   IconFlask,
-  IconMail,
-  IconMessage2,
-  IconRobot,
+  IconSparkles,
+  IconUser,
 } from "@tabler/icons-react";
 
 export const navlinks = [
@@ -15,14 +16,14 @@ export const navlinks = [
     icon: IconBolt,
   },
   {
-    href: "/about",
-    label: "About",
-    icon: IconMessage2,
+    href: "/projects",
+    label: "Work",
+    icon: IconBriefcase2,
   },
   {
-    href: "/projects",
-    label: "Projects",
-    icon: IconBriefcase2,
+    href: "/lab",
+    label: "Live Lab",
+    icon: IconApps,
   },
   {
     href: "/research",
@@ -31,17 +32,22 @@ export const navlinks = [
   },
   {
     href: "/blog",
-    label: "Articles",
+    label: "Writing",
     icon: IconArticle,
   },
   {
-    href: "/chat",
-    label: "Chat",
-    icon: IconRobot,
+    href: "/about",
+    label: "About",
+    icon: IconUser,
   },
-  // {
-  //   href: "/contact",
-  //   label: "Contact",
-  //   icon: IconMail,
-  // },
+  {
+    href: "/resume",
+    label: "Resume",
+    icon: IconFileCv,
+  },
+  {
+    href: "/chat",
+    label: "Ask AI",
+    icon: IconSparkles,
+  },
 ];

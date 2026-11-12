@@ -9,13 +9,14 @@ export const CodeWindow = ({ title, children }: any) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- legacy component, replaced in the redesign
     setIsClient(true);
   }, []);
   useEffect(() => {
     // Prism.highlightAll();
   }, []);
 
-  let child = Children.only(children);
+  const child = Children.only(children);
 
   const [buttonText, setButtonText] = useState("Copy");
   const childRef = useRef<any>(null);
@@ -43,11 +44,11 @@ export const CodeWindow = ({ title, children }: any) => {
       <div
         className={clsx(
           "bg-slate-900 rounded-md w-auto overflow-hidden flex flex-col my-10 prose prose-sm ",
-          "prose prose-slate max-w-none dark:prose-invert dark:text-slate-400",
+          "prose prose-slate max-w-none dark:prose-invert dark:text-muted-foreground",
           // headings
           "prose-headings:scroll-mt-28  prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]",
           // lead
-          "prose-lead:text-slate-500 dark:prose-lead:text-slate-400",
+          "prose-lead:text-muted-foreground dark:prose-lead:text-muted-foreground",
           // links
           "prose-a:font-semibold dark:prose-a:text-sky-400",
           // link underline
@@ -68,12 +69,12 @@ export const CodeWindow = ({ title, children }: any) => {
             className="group cursor-pointer relative rounded-full p-px text-xs font-semibold leading-6 shadow-xl shadow-zinc-950 text-white"
           >
             <span className="absolute inset-0 overflow-hidden rounded-full">
-              <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+              <span className="absolute inset-0 rounded-full bg-[radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
             </span>
             <div className="relative z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
               {buttonText}
             </div>
-            <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
+            <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-linear-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
           </button>
         </div>
 

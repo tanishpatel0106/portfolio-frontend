@@ -1,41 +1,104 @@
-import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { twMerge } from "tailwind-merge";
+import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { Instrument_Serif } from "next/font/google";
 import { Footer } from "@/components/Footer";
+import { SiteHeader } from "@/components/site/site-header";
+import { Providers, preferencesScript } from "@/components/site/providers";
+import { SITE } from "@/constants/site";
+import { cn } from "@/lib/utils";
+import { getProjects } from "@/lib/projects";
+import { research } from "@/constants/research";
+import { socials } from "@/constants/socials";
+import { getAllBlogs } from "../../lib/getAllBlogs";
 
-const inter = Inter({
+const displaySerif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-display-serif",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Tanish Patel - AI Developer",
-  description:
-    "Tanish Patel is an AI developer, avid reader and speaker. He loves building products and solutions that can impact a solution to the community.",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: `${SITE.name} — ${SITE.role}`,
+    template: `%s · ${SITE.name}`,
+  },
+  description: SITE.description,
+  openGraph: {
+    type: "website",
+    url: SITE.url,
+    siteName: SITE.name,
+    title: `${SITE.name} — ${SITE.role}`,
+    description: SITE.description,
+  },
+  twitter: { card: "summary_large_image" },
 };
 
-export default function RootLayout({
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fcfcfd" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0d" },
+  ],
+};
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Titles only: the search palette never needs the full write-ups.
+  const posts = await getAllBlogs();
+  const searchIndex = {
+    projects: getProjects().map((p) => ({ slug: p.slug, title: p.title })),
+    papers: research.map((r) => ({ slug: r.slug, title: r.title })),
+    posts: posts.map((b) => ({ slug: b.slug as string, title: b.title as string })),
+  };
+
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: SITE.name,
+    url: SITE.url,
+    jobTitle: SITE.role,
+    description: SITE.description,
+    image: `${SITE.url}/images/Headshot.jpeg`,
+    address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY" },
+    alumniOf: [
+      { "@type": "CollegeOrUniversity", name: "Columbia University" },
+      { "@type": "CollegeOrUniversity", name: "Pandit Deendayal Energy University" },
+    ],
+    sameAs: socials.map((s) => s.href),
+  };
+
   return (
-    <html lang="en">
-      <body
-        className={twMerge(
-          inter.className,
-          "flex antialiased h-screen overflow-hidden bg-gray-100"
-        )}
-      >
-        <Sidebar />
-        <div className="lg:pl-2 lg:pt-2 bg-gray-100 flex-1 overflow-y-auto">
-          <div className="flex-1 bg-white min-h-screen lg:rounded-tl-xl border border-transparent lg:border-neutral-200 overflow-y-auto">
-            {children}
-            <Footer />
-          </div>
-        </div>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(GeistSans.variable, GeistMono.variable, displaySerif.variable)}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: preferencesScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+      </head>
+      <body className="min-h-screen">
+        <Providers>
+          <a
+            href="#content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+          >
+            Skip to content
+          </a>
+          <SiteHeader searchIndex={searchIndex} />
+          <div id="content">{children}</div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
