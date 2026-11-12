@@ -1,46 +1,120 @@
-import { Container } from "@/components/Container";
-import { Heading } from "@/components/Heading";
-import { Highlight } from "@/components/Highlight";
-import { Paragraph } from "@/components/Paragraph";
-import { EducationHistory } from "@/components/Education";
-import { Products } from "@/components/Products";
-import { WorkHistory } from "@/components/WorkHistory";
-import { LeadershipHistory } from "@/components/Leadership";
-import { CocurricularHistory } from "@/components/CoCurricular";
-import Image from "next/image";
+import { Metadata } from "next";
+import { IconFileText } from "@tabler/icons-react";
+import { ExperienceTimeline } from "@/components/resume/experience-timeline";
+import { PrintButton } from "@/components/resume/print-button";
+import { ButtonLink, Eyebrow, SectionHeading, Shell, Tag } from "@/components/shared/primitives";
+import { timeline as work } from "@/constants/timeline";
+import { timeline as education } from "@/constants/education";
+import { timeline as leadership } from "@/constants/leadership";
+import { timeline as cocurricular } from "@/constants/cocurricular";
+import { SITE } from "@/constants/site";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Resume",
+  description:
+    "Resume of Tanish Patel: experience in applied AI and data science, education at Columbia University and PDEU, leadership and awards.",
+};
+
+export default function ResumePage() {
+  const awards = cocurricular.flatMap((c) => c.responsibilities);
+
   return (
-    <Container>
-      <span className="text-4xl">💼</span>
-      <Heading className="font-black">Work History</Heading>
-      <Paragraph className="max-w-xl">
-        I&apos;m an AI Engineer that loves{" "}
-        <Highlight>building products</Highlight> and web apps that can impact
-        millions of lives
-      </Paragraph>
-      <WorkHistory />
-      <span className="text-4xl">🎓</span>
-      <Heading className="font-black">Education</Heading>
-      <Paragraph className="max-w-xl">
-        Learning is a <Highlight>Continuous Journey</Highlight> and I am on my
-        way to master it.
-      </Paragraph>
-      <EducationHistory />
-      <span className="text-4xl">🏆</span>
-      <Heading className="font-black">Leadership</Heading>
-      <Paragraph className="max-w-xl">
-        I&apos;ts always a{" "}
-        <Highlight>Team Job</Highlight> because not everything is meant to be <Highlight>One-Man Job </Highlight>
-      </Paragraph>
-      <LeadershipHistory />
-      <span className="text-4xl">🚩</span>
-      <Heading className="font-black">Co-Curriculars</Heading>
-      <Paragraph className="max-w-xl mt-4">
-        All work and no{" "}
-        <Highlight>Play</Highlight> makes Jack a <Highlight>Dull</Highlight> Boy.
-      </Paragraph>
-      <CocurricularHistory />
-    </Container>
+    <main>
+      <Shell className="pt-36 md:pt-44">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Eyebrow className="flex items-center gap-2">
+              <span className="text-brand">Resume</span>
+              <span aria-hidden>/</span>
+              {SITE.availability}
+            </Eyebrow>
+            <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight md:text-6xl">
+              {SITE.name}
+            </h1>
+            <p className="mt-3 text-lg text-muted-foreground">
+              {SITE.role} · {SITE.location}
+            </p>
+          </div>
+          <div className="no-print flex flex-wrap gap-3">
+            <PrintButton />
+            <ButtonLink href="/contact" variant="outline">
+              Contact
+            </ButtonLink>
+          </div>
+        </div>
+      </Shell>
+
+      <Shell as="section" className="mt-16">
+        <SectionHeading index="01" label="Experience" title="Work history" className="mb-0" />
+        <ExperienceTimeline roles={work} />
+      </Shell>
+
+      <Shell as="section" className="mt-16">
+        <SectionHeading index="02" label="Education" title="Education" />
+        <div className="grid gap-4 md:grid-cols-2">
+          {education.map((e) => (
+            <div key={e.company} className="flex flex-col rounded-2xl border bg-card p-6">
+              <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                {e.date}
+              </p>
+              <h3 className="mt-2 text-xl font-semibold tracking-tight">{e.title}</h3>
+              <p className="mt-1 text-sm font-medium text-brand">{e.company}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{e.description}</p>
+              {e.courses && (
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {e.courses.split(",").map((c) => (
+                    <Tag key={c}>{c.trim()}</Tag>
+                  ))}
+                </div>
+              )}
+              {e.transcript && (
+                <a
+                  href={e.transcript}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="no-print mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-foreground underline-offset-4 hover:text-brand hover:underline"
+                >
+                  <IconFileText className="h-4 w-4" stroke={1.75} />
+                  Transcript (PDF)
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </Shell>
+
+      <Shell as="section" className="mt-24 grid gap-14 lg:grid-cols-2">
+        <div>
+          <SectionHeading index="03" label="Leadership" title="Leadership" />
+          <ul className="space-y-6">
+            {leadership.map((l) => (
+              <li key={l.company} className="border-l-2 border-border pl-5">
+                <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                  {l.date}
+                </p>
+                <h3 className="mt-1 text-lg font-semibold tracking-tight">{l.title}</h3>
+                <p className="text-sm font-medium text-brand">{l.company}</p>
+                <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground">
+                  {l.responsibilities.map((r) => (
+                    <li key={r.slice(0, 48)}>{r}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <SectionHeading index="04" label="Awards" title="Hackathons and awards" />
+          <ul className="divide-y border-y">
+            {awards.map((a, i) => (
+              <li key={a.slice(0, 48)} className="flex gap-4 py-3.5 text-sm leading-relaxed">
+                <span className="pt-0.5 font-mono text-xs text-brand">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-muted-foreground">{a.trim()}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Shell>
+    </main>
   );
 }

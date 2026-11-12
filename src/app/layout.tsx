@@ -8,6 +8,10 @@ import { SiteHeader } from "@/components/site/site-header";
 import { Providers, preferencesScript } from "@/components/site/providers";
 import { SITE } from "@/constants/site";
 import { cn } from "@/lib/utils";
+import { getProjects } from "@/lib/projects";
+import { research } from "@/constants/research";
+import { socials } from "@/constants/socials";
+import { getAllBlogs } from "../../lib/getAllBlogs";
 
 const displaySerif = Instrument_Serif({
   subsets: ["latin"],
@@ -41,11 +45,35 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Titles only: the search palette never needs the full write-ups.
+  const posts = await getAllBlogs();
+  const searchIndex = {
+    projects: getProjects().map((p) => ({ slug: p.slug, title: p.title })),
+    papers: research.map((r) => ({ slug: r.slug, title: r.title })),
+    posts: posts.map((b) => ({ slug: b.slug as string, title: b.title as string })),
+  };
+
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: SITE.name,
+    url: SITE.url,
+    jobTitle: SITE.role,
+    description: SITE.description,
+    image: `${SITE.url}/images/Headshot.jpeg`,
+    address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY" },
+    alumniOf: [
+      { "@type": "CollegeOrUniversity", name: "Columbia University" },
+      { "@type": "CollegeOrUniversity", name: "Pandit Deendayal Energy University" },
+    ],
+    sameAs: socials.map((s) => s.href),
+  };
+
   return (
     <html
       lang="en"
@@ -54,6 +82,10 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: preferencesScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </head>
       <body className="min-h-screen">
         <Providers>
@@ -63,7 +95,7 @@ export default function RootLayout({
           >
             Skip to content
           </a>
-          <SiteHeader />
+          <SiteHeader searchIndex={searchIndex} />
           <div id="content">{children}</div>
           <Footer />
         </Providers>

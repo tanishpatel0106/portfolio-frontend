@@ -245,3 +245,45 @@ html[data-motion="reduced"] *::after {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
+
+/* Marquee (shared/primitives.tsx) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+.marquee-track {
+  animation: marquee linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation-play-state: paused; }
+}
+html[data-motion="reduced"] .marquee-track {
+  animation-play-state: paused !important;
+}
+
+/* Faint blueprint grid used behind section headers. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklch, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Print: the resume page doubles as the PDF. */
+@media print {
+  header, footer, .no-print { display: none !important; }
+  body { background: white !important; color: black !important; }
+  main { padding-top: 0 !important; }
+  a { text-decoration: none !important; }
+}
+
+/* Wide tables inside long-form content scroll on their own instead of
+   pushing the page sideways on small screens. */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.prose img {
+  border-radius: 0.75rem;
+}

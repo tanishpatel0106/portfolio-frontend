@@ -91,6 +91,7 @@ function buildProjectsSection(): string {
   const body = products
     .map((p, i) => {
       const lines = [`${i + 1}. **${p.title}**`];
+      if (p.slug) lines.push(`   - Card slug: ${p.slug} (site page: /projects/${p.slug})`);
       if (p.description) lines.push(`   - ${p.description}`);
       if (p.stack?.length) lines.push(`   - Tech stack: ${p.stack.join(", ")}`);
       if (p.href) lines.push(`   - Link: ${p.href}`);
@@ -106,6 +107,7 @@ function buildResearchSection(): string {
   const body = research
     .map((r, i) => {
       const lines = [`${i + 1}. **${r.title}**`];
+      lines.push(`   - Card slug: ${r.slug} (site page: /research/${r.slug})`);
       lines.push(`   - ${r.category} · Role: ${r.role}`);
       if (r.summary) lines.push(`   - ${r.summary}`);
       if (r.authors?.length) lines.push(`   - Authors: ${r.authors.join(", ")}`);

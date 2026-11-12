@@ -1,132 +1,251 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { z } from "zod";
 import { buildSystemPrompt } from "@/lib/portfolio-knowledge";
+import { getProject } from "@/lib/projects";
+import { research } from "@/constants/research";
+import { clientIp, rateLimit, tooManyRequests } from "@/lib/rate-limit";
+import type { ChatCard, ChatStreamEvent } from "@/types/chat";
 
-// Streamed responses with extended thinking can run well past the platform's
-// default function timeout (~10-15s on Vercel), which silently cuts the answer
-// off mid-sentence. Give the function room to finish streaming.
+// Streaming can outlast the platform's default function timeout, which would
+// cut answers off mid-sentence. Give the function room to finish.
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-interface ChatMessageInput {
-  role: string;
-  content: string;
-  thinking?: string;
+// Override with CHAT_MODEL to trade capability for cost (e.g. claude-haiku-5-5).
+const MODEL = process.env.CHAT_MODEL ?? "claude-opus-5-5";
+const MAX_HISTORY = 20;
+const MAX_MESSAGE_CHARS = 4000;
+// The model may answer, show cards, then finish its answer.
+const MAX_TOOL_TURNS = 3;
+
+const Body = z.object({
+  messages: z
+    .array(
+      z.object({
+        role: z.enum(["user", "assistant"]),
+        content: z.string().max(20_000),
+      })
+    )
+    .min(1),
+});
+
+const ShowCardsInput = z.object({
+  cards: z
+    .array(z.object({ kind: z.enum(["project", "paper"]), slug: z.string().min(1).max(120) }))
+    .min(1)
+    .max(4),
+});
+
+const tools: Anthropic.Beta.BetaTool[] = [
+  {
+    name: "show_cards",
+    description:
+      "Show clickable cards for projects or papers from Tanish's portfolio inside the chat. Use the card slugs listed in the system prompt. The visitor sees each card's image, title and summary and can open its page.",
+    eager_input_streaming: true,
+    input_schema: {
+      type: "object",
+      properties: {
+        cards: {
+          type: "array",
+          description: "One to four cards, most relevant first.",
+          items: {
+            type: "object",
+            properties: {
+              kind: { type: "string", enum: ["project", "paper"] },
+              slug: { type: "string", description: "The card slug of the project or paper." },
+            },
+            required: ["kind", "slug"],
+          },
+        },
+      },
+      required: ["cards"],
+    },
+  },
+];
+
+function resolveCard(kind: "project" | "paper", slug: string): ChatCard | null {
+  if (kind === "project") {
+    const p = getProject(slug);
+    if (!p) return null;
+    return {
+      kind,
+      slug: p.slug,
+      title: p.shortTitle,
+      description: p.description,
+      thumbnail: p.thumbnail,
+      href: `/projects/${p.slug}`,
+      badge: p.live ? (p.live.kind === "external" ? "Live site" : "Live demo") : undefined,
+    };
+  }
+  const r = research.find((item) => item.slug === slug);
+  if (!r) return null;
+  return {
+    kind,
+    slug: r.slug,
+    title: r.title,
+    description: r.summary,
+    thumbnail: r.thumbnail,
+    href: `/research/${r.slug}`,
+    badge: "Paper",
+  };
+}
+
+/** Runs show_cards: returns what to render and what to tell the model. */
+function runShowCards(input: unknown): { cards: ChatCard[]; result: string; isError: boolean } {
+  const parsed = ShowCardsInput.safeParse(input);
+  if (!parsed.success) {
+    return { cards: [], result: "Invalid input: expected { cards: [{ kind, slug }] } with 1-4 cards.", isError: true };
+  }
+  const cards: ChatCard[] = [];
+  const lines: string[] = [];
+  for (const { kind, slug } of parsed.data.cards) {
+    const card = resolveCard(kind, slug);
+    if (card) {
+      cards.push(card);
+      lines.push(`Shown: ${card.title}`);
+    } else {
+      lines.push(`No ${kind} with slug "${slug}" exists; nothing was shown for it.`);
+    }
+  }
+  return { cards, result: lines.join("\n"), isError: cards.length === 0 };
+}
+
+const json = (body: unknown, status: number) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+
+function publicError(err: unknown): string {
+  if (err instanceof Anthropic.RateLimitError) {
+    return "The assistant is busy right now. Please try again in a minute.";
+  }
+  if (err instanceof Anthropic.AuthenticationError || err instanceof Anthropic.PermissionDeniedError) {
+    return "The assistant is not configured correctly yet.";
+  }
+  if (err instanceof Anthropic.APIConnectionError) {
+    return "Could not reach the AI service. Please try again.";
+  }
+  if (err instanceof Anthropic.APIError) {
+    return "The AI service returned an error. Please try again.";
+  }
+  return "Something went wrong while answering. Please try again.";
 }
 
 export async function POST(req: Request) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return new Response(
-      JSON.stringify({ error: "API key not configured" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return json({ error: "The assistant is not configured yet (missing API key)." }, 500);
   }
 
-  let body;
+  // Per-visitor limits: a short burst window and a daily ceiling.
+  const ip = clientIp(req);
+  const burst = await rateLimit(`chat:burst:${ip}`, 12, 300);
+  if (!burst.ok) return tooManyRequests(burst.retryAfterSeconds);
+  const daily = await rateLimit(`chat:day:${ip}`, 80, 86_400);
+  if (!daily.ok) return tooManyRequests(daily.retryAfterSeconds);
+
+  let parsed;
   try {
-    body = await req.json();
+    parsed = Body.safeParse(await req.json());
   } catch {
-    return new Response(
-      JSON.stringify({ error: "Invalid request body" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
+    return json({ error: "Invalid request body" }, 400);
+  }
+  if (!parsed.success) return json({ error: "Messages array is required" }, 400);
+
+  const history = parsed.data.messages.slice(-MAX_HISTORY).filter((m) => m.content.trim());
+  // The conversation must start with, and end on, a user turn.
+  while (history.length && history[0].role !== "user") history.shift();
+  const last = history[history.length - 1];
+  if (!last || last.role !== "user") return json({ error: "Nothing to answer" }, 400);
+  if (last.content.length > MAX_MESSAGE_CHARS) {
+    return json({ error: `Please keep questions under ${MAX_MESSAGE_CHARS} characters.` }, 400);
   }
 
-  const { messages } = body;
-  if (!messages || !Array.isArray(messages)) {
-    return new Response(
-      JSON.stringify({ error: "Messages array is required" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
-  }
+  const messages: Anthropic.Beta.BetaMessageParam[] = history.map((m) => ({
+    role: m.role,
+    content: m.content,
+  }));
 
-  const formattedMessages = messages.slice(-20).map(
-    (m: ChatMessageInput) => ({
-      role: m.role as "user" | "assistant",
-      content: m.content,
-    })
-  );
-
-  const anthropic = new Anthropic({ apiKey });
+  const anthropic = new Anthropic();
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({
     async start(controller) {
+      const send = (event: ChatStreamEvent) =>
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
+
       try {
-        const response = anthropic.messages.stream({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 16000,
-          thinking: {
-            type: "enabled",
-            // Thinking tokens stream at roughly answer speed, so a large budget
-            // can eat the whole time window before the answer starts. Keep it
-            // modest so thinking + answer reliably finish within maxDuration.
-            budget_tokens: 3000,
-          },
-          // Cache the (large, content-derived) system prompt so repeat turns
-          // skip re-processing it — faster first token, lower cost.
-          system: [
-            {
-              type: "text",
-              text: buildSystemPrompt(),
-              cache_control: { type: "ephemeral" },
-            },
-          ],
-          messages: formattedMessages,
-        });
+        let wroteText = false;
 
-        response.on("thinking", (thinkingDelta) => {
-          controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({
-                type: "thinking",
-                content: thinkingDelta,
-              })}\n\n`
-            )
-          );
-        });
-
-        response.on("text", (textDelta) => {
-          controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({
+        for (let turn = 0; turn <= MAX_TOOL_TURNS; turn++) {
+          const response = anthropic.beta.messages.stream({
+            model: MODEL,
+            max_tokens: 16000,
+            // If a safety classifier declines, retry on Anthropic's recommended
+            // fallback model inside the same call instead of failing the answer.
+            betas: ["server-side-fallback-2026-07-01"],
+            fallbacks: "default",
+            // Summarized thinking feeds the "reasoning" disclosure in the UI.
+            thinking: { type: "adaptive", display: "summarized" },
+            // Portfolio Q&A is simple; low effort keeps answers fast and cheap.
+            output_config: { effort: "low" },
+            // The system prompt is large and identical on every request, so
+            // cache it: later turns skip re-processing it.
+            system: [
+              {
                 type: "text",
-                content: textDelta,
-              })}\n\n`
-            )
-          );
-        });
+                text: buildSystemPrompt(),
+                cache_control: { type: "ephemeral" },
+              },
+            ],
+            tools,
+            messages,
+          });
 
-        response.on("end", () => {
-          controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({ type: "done" })}\n\n`
-            )
-          );
-          controller.close();
-        });
+          response.on("thinking", (delta) => send({ type: "thinking", content: delta }));
+          response.on("text", (delta) => {
+            wroteText = true;
+            send({ type: "text", content: delta });
+          });
 
-        response.on("error", (err: Error) => {
-          controller.enqueue(
-            encoder.encode(
-              `data: ${JSON.stringify({
-                type: "error",
-                content: err.message,
-              })}\n\n`
-            )
-          );
-          controller.close();
-        });
+          const message = await response.finalMessage();
 
-        await response.finalMessage();
+          if (message.stop_reason === "refusal") {
+            if (!wroteText) {
+              send({
+                type: "text",
+                content:
+                  "I can't help with that one. I'm here to talk about Tanish's work, research, projects and interests.",
+              });
+            }
+            break;
+          }
+
+          const toolUses = message.content.filter(
+            (block): block is Anthropic.Beta.BetaToolUseBlock => block.type === "tool_use"
+          );
+          // A tool call cut off by max_tokens may hold truncated input: don't run it.
+          if (message.stop_reason !== "tool_use" || toolUses.length === 0) break;
+
+          const results: Anthropic.Beta.BetaToolResultBlockParam[] = toolUses.map((use) => {
+            if (use.name !== "show_cards") {
+              return { type: "tool_result", tool_use_id: use.id, content: "Unknown tool.", is_error: true };
+            }
+            const { cards, result, isError } = runShowCards(use.input);
+            if (cards.length) send({ type: "cards", cards });
+            return { type: "tool_result", tool_use_id: use.id, content: result, is_error: isError };
+          });
+
+          // Thinking blocks go back unchanged alongside the tool call.
+          messages.push({ role: "assistant", content: message.content });
+          messages.push({ role: "user", content: results });
+        }
+
+        send({ type: "done" });
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : "Failed to get response";
-        controller.enqueue(
-          encoder.encode(
-            `data: ${JSON.stringify({ type: "error", content: message })}\n\n`
-          )
-        );
+        console.error("[chat]", err);
+        send({ type: "error", content: publicError(err) });
+      } finally {
         controller.close();
       }
     },
@@ -135,7 +254,7 @@ export async function POST(req: Request) {
   return new Response(stream, {
     headers: {
       "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
+      "Cache-Control": "no-cache, no-transform",
       Connection: "keep-alive",
     },
   });

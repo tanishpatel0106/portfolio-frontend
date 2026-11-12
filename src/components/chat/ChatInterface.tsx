@@ -1,20 +1,23 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ChatMessage } from "@/types/chat";
+import type { ChatMessage, ChatStreamEvent } from "@/types/chat";
 import { MessageBubble } from "./MessageBubble";
 import { SuggestedQuestions } from "./SuggestedQuestions";
 import { ChatInput } from "./ChatInput";
-import { IconSparkles } from "@tabler/icons-react";
+import { IconRefresh } from "@tabler/icons-react";
 
 interface ChatInterfaceProps {
   placeholders: string[];
   suggestedQuestions: string[];
+  /** A question handed over from elsewhere on the site (`/chat?q=…`). */
+  initialQuestion?: string;
 }
 
 export function ChatInterface({
   placeholders,
   suggestedQuestions,
+  initialQuestion,
 }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +46,7 @@ export function ChatInterface({
     const payload = trimmed.slice(5).trim();
     if (!payload) return;
 
-    let event: { type?: string; content?: string };
+    let event: ChatStreamEvent;
     try {
       event = JSON.parse(payload);
     } catch {
@@ -66,6 +69,20 @@ export function ChatInterface({
         const last = updated[updated.length - 1];
         if (last.role === "assistant") {
           last.content = (last.content || "") + (event.content ?? "");
+        }
+        return updated;
+      });
+    } else if (event.type === "cards") {
+      const cards = event.cards;
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last.role === "assistant") {
+          const seen = new Set((last.cards ?? []).map((c) => `${c.kind}-${c.slug}`));
+          last.cards = [
+            ...(last.cards ?? []),
+            ...cards.filter((c) => !seen.has(`${c.kind}-${c.slug}`)),
+          ];
         }
         return updated;
       });
@@ -206,83 +223,64 @@ export function ChatInterface({
     );
   };
 
+  // Auto-ask a question passed in from the home page, a project page or ⌘K.
+  const askedInitial = useRef(false);
+  useEffect(() => {
+    if (initialQuestion && !askedInitial.current) {
+      askedInitial.current = true;
+      sendMessage(initialQuestion);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once for the handed-over question
+  }, [initialQuestion]);
+
   const hasMessages = messages.length > 0;
 
   return (
-    <div className="flex flex-col h-full relative">
-      {/* Header */}
-      <div className="shrink-0 relative overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-r from-sky-50 via-indigo-50 to-purple-50 dark:from-sky-500/10 dark:via-indigo-500/10 dark:to-purple-500/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-sky-100/40 via-transparent to-transparent dark:hidden" />
-        <div className="relative px-6 md:px-8 py-5 flex items-center gap-3">
-          <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-linear-to-br from-sky-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-sky-200/50 dark:shadow-none">
-              <IconSparkles size={20} className="text-white" />
-            </div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white" />
-          </div>
-          <div>
-            <h1 className="font-bold text-foreground text-base">
-              Chat About Me
-            </h1>
-            <p className="text-xs text-muted-foreground">
-              AI-powered · Ask anything about Tanish
-            </p>
-          </div>
-        </div>
-        <div className="h-px bg-linear-to-r from-transparent via-border to-transparent" />
-      </div>
-
-      {/* Messages area */}
+    <div className="relative flex h-full flex-col">
       <div
         ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto overflow-x-hidden chat-scroll-area"
+        className="chat-scroll-area flex-1 overflow-y-auto overflow-x-hidden"
+        aria-live="polite"
       >
         <AnimatePresence mode="wait">
           {!hasMessages ? (
             <SuggestedQuestions
               key="suggestions"
-              onSelect={sendMessage}
               questions={suggestedQuestions}
+              onSelect={sendMessage}
             />
           ) : (
             <motion.div
               key="messages"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="px-4 md:px-8 py-6 space-y-1"
+              className="mx-auto w-full max-w-3xl px-4 py-8 md:px-6"
             >
               {messages.map((message) => (
                 <MessageBubble key={message.id} message={message} />
               ))}
+
               {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex justify-center py-3"
+                <p
+                  role="alert"
+                  className="mx-auto mb-4 w-fit rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-2.5 text-sm text-destructive"
                 >
-                  <p className="text-sm text-red-600 bg-red-50 border border-red-100 dark:text-red-300 dark:bg-red-500/10 dark:border-red-500/20 rounded-xl px-4 py-2.5 shadow-sm">
-                    {error}
-                  </p>
-                </motion.div>
+                  {error}
+                </p>
               )}
-              {interrupted && !error && (
-                <motion.div
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex justify-center py-3"
-                >
-                  <div className="flex items-center gap-3 text-sm text-amber-700 bg-amber-50 border border-amber-100 dark:text-amber-200 dark:bg-amber-500/10 dark:border-amber-500/20 rounded-xl px-4 py-2.5 shadow-sm">
-                    <span>The response was interrupted before it finished.</span>
-                    <button
-                      onClick={retryLast}
-                      disabled={isLoading}
-                      className="shrink-0 font-medium text-amber-800 underline decoration-amber-300 underline-offset-2 hover:decoration-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                      Try again
-                    </button>
-                  </div>
-                </motion.div>
+
+              {(interrupted || error) && !isLoading && (
+                <div className="mb-4 flex items-center justify-center gap-3 text-sm text-muted-foreground">
+                  {interrupted && <span>The answer was cut off.</span>}
+                  <button
+                    type="button"
+                    onClick={retryLast}
+                    className="inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 font-medium text-foreground transition-colors hover:bg-accent"
+                  >
+                    <IconRefresh className="h-3.5 w-3.5" />
+                    Try again
+                  </button>
+                </div>
               )}
               <div ref={messagesEndRef} />
             </motion.div>
@@ -290,15 +288,7 @@ export function ChatInterface({
         </AnimatePresence>
       </div>
 
-      {/* Input area */}
-      <div className="shrink-0">
-        <ChatInput
-          onSend={sendMessage}
-          isLoading={isLoading}
-          hasMessages={hasMessages}
-          placeholders={placeholders}
-        />
-      </div>
+      <ChatInput onSend={sendMessage} isLoading={isLoading} placeholders={placeholders} />
     </div>
   );
 }

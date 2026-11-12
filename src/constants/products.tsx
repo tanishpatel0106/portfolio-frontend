@@ -921,7 +921,7 @@ export const products = [
     href: "https://drive.google.com/file/d/1rSmbVlX8G1SdT0GGpVcnLCq5P-Z3NmVH/view?usp=sharing",
     title: "Advanced Time Series Forecasting",
     description:
-      "Time Series Forecasting with Exogenous Variables for Restarurants Globally",
+      "Time Series Forecasting with Exogenous Variables for Restaurants Globally",
     thumbnail: "/images/PC-1.png",
     images: [
       "/images/PC-1.png",

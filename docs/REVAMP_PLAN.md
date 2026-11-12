@@ -321,11 +321,25 @@ Checkpoint: the current pages render on the new stack.
 
 ## 10. Progress
 
-- [x] **Phase 1, foundation:**
-  - Next 16.4, React 19.3, Tailwind 4.3 with CSS-first tokens, `motion`, Tabler v3.
-  - shadcn `components.json` with the `@aceternity` registry.
-  - Geist Sans/Mono and Instrument Serif fonts.
-  - next-themes light/dark, plus accent and pause-motion preferences.
-  - Window scroll with the Aceternity Resizable Navbar (sidebar removed, hydration bug gone).
-  - ESLint 9 flat config.
-  - Images cut from 73 MB to about 16 MB (large PNG/JPG converted to WebP, filenames with spaces sanitized).
+Positioning (added during the build): **Data Scientist · AI Engineer · Quant.** Explainable AI is earlier research, not the headline.
+
+- [x] **Phase 1, foundation:** Next 16, React 19, Tailwind 4 tokens, `motion`, shadcn with the `@aceternity` registry, fonts, light/dark, accent picker, pause-motion, window scroll, image cleanup.
+- [x] **Phase 2, design system and shell:** shared primitives, Resizable Navbar, ⌘K search palette, footer with Text Hover Effect.
+- [x] **Phase 3, pages:** home, work index, case study, Live Lab, research index, paper page, writing index, article layout, about, resume, chat, contact, 404.
+- [x] **Phase 4, live apps and videos:** optional `live` / `video` fields with a normalizer, live-demo frame with wake loader, video player, `/lab`, `scripts/ingest-video.mjs`.
+- [x] **Phase 5, backend:** chat on a current model with `show_cards` and rate limits, `/api/status` with a daily warm-up cron, GitHub repo stats, `/api/contact`, `/api/views`, share images, sitemap, robots, JSON-LD.
+- [x] **Phase 6, polish:** lint clean, production build, every route checked in light, dark and at phone width.
+
+### Aceternity components in use
+
+Resizable Navbar, Dotted Glow Background, Encrypted Text, Layout Text Flip, Pointer Highlight, Hover Border Gradient, Container Scroll Animation, Glowing Effect, 3D Marquee, Apple Cards Carousel, Background Ripple Effect, Placeholders And Vanish Input, Floating Dock, Text Hover Effect, Tracing Beam, Terminal, Multi Step Loader, Timeline, Draggable Card, World Map, Text Generate Effect, Stateful Button.
+
+### Not done, and why
+
+- **Deploying the Python apps** (Trading Terminal, NLP-to-SQL, MatchOdds, RL scheduler): they live in their own repositories. Once one is deployed, put its URL in `href` or `live.url` and it appears in the Live Lab.
+- **Brag videos:** none recorded yet. The player, the hover previews and the ingest script are ready for them.
+- **Project triage** (flagships, archive, metrics): on hold until the new projects are added.
+- **Sticky Scroll Reveal and Compare slider** on case studies: they need structured problem/approach/result content and before/after images, which the current write-ups do not have.
+- **Turnstile on the contact form:** it uses a honeypot and rate limiting instead.
+- **Generated resume PDF:** the resume page has a print stylesheet and a "Save as PDF" button instead.
+- **Floating Dock as the mobile nav:** the Resizable Navbar's own mobile menu covers it; the dock is used for the social links.
