@@ -1,6 +1,7 @@
 "use client";
+/* eslint-disable react-hooks/refs -- scramble chars live in a ref by design; replaced in the redesign */
 import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_CHARSET =
@@ -40,6 +41,7 @@ function ScrambleWord({
     scrambleRef.current = text
       .split("")
       .map((c) => (c === " " ? " " : randomChar(charset)));
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset when text changes
     setRevealCount(0);
 
     const start = performance.now();
@@ -120,8 +122,8 @@ export const SkillRoller: React.FC<SkillRollerProps> = ({
   charset = DEFAULT_CHARSET,
   className,
   pillClassName,
-  encryptedClassName = "text-neutral-400",
-  revealedClassName = "text-secondary",
+  encryptedClassName = "text-muted-foreground",
+  revealedClassName = "text-muted-foreground",
 }) => {
   const prefersReducedMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
@@ -156,7 +158,7 @@ export const SkillRoller: React.FC<SkillRollerProps> = ({
           <span
             key={skill}
             className={cn(
-              "rounded-sm bg-gray-50 px-2 py-1 text-sm text-secondary",
+              "rounded-sm bg-muted px-2 py-1 text-sm text-muted-foreground",
               pillClassName,
             )}
           >
@@ -174,7 +176,7 @@ export const SkillRoller: React.FC<SkillRollerProps> = ({
       <motion.div
         layout
         className={cn(
-          "relative w-fit overflow-hidden rounded-md border border-neutral-200 bg-gray-50 px-2.5 py-1 text-sm",
+          "relative w-fit overflow-hidden rounded-md border border-border bg-muted px-2.5 py-1 text-sm",
           pillClassName,
         )}
       >

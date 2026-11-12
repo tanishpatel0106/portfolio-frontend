@@ -2,14 +2,14 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { products } from "@/constants/products";
 import { Product } from "@/types/products";
 import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
 
 const ProjectHeader = ({ product }: { product: Product }) => (
-  <div className="relative flex flex-1 w-full min-h-[10rem] overflow-hidden rounded-xl bg-gray-100">
+  <div className="relative flex flex-1 w-full min-h-[10rem] overflow-hidden rounded-xl bg-muted">
     <Image
       src={product.thumbnail}
       alt={product.title}

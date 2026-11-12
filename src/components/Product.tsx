@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { SkillRoller } from "./ui/skill-roller";
 
 export const SingleProduct = ({ product }: { product: Product }) => {
@@ -34,7 +34,7 @@ export const SingleProduct = ({ product }: { product: Product }) => {
           width="1000"
           className="rounded-md object-contain"
         />
-        <div className="absolute bottom-0 bg-white h-40 w-full [mask-image:linear-gradient(to_bottom,transparent,white)]" />
+        <div className="absolute bottom-0 bg-card h-40 w-full mask-[linear-gradient(to_bottom,transparent,white)]" />
       </motion.div>
       <div className="flex flex-row justify-center my-8 flex-wrap">
         {product.images.map((image, idx) => (
@@ -47,7 +47,7 @@ export const SingleProduct = ({ product }: { product: Product }) => {
               alt="product thumbnail"
               height="1000"
               width="1000"
-              className="h-14 w-16 md:h-40 md:w-60 object-cover object-top mr-4 mb-r border rounded-lg border-neutral-100"
+              className="h-14 w-16 md:h-40 md:w-60 object-cover object-top mr-4 mb-r border rounded-lg border-border"
             />
           </button>
         ))}
@@ -63,7 +63,7 @@ export const SingleProduct = ({ product }: { product: Product }) => {
       <div>
         <Paragraph className="max-w-xl mt-4">{product.description}</Paragraph>
       </div>
-      <div className="prose prose-sm md:prose-base max-w-none text-neutral-600">
+      <div className="prose prose-sm md:prose-base max-w-none text-muted-foreground">
         {product?.content}
       </div>
 
@@ -71,7 +71,7 @@ export const SingleProduct = ({ product }: { product: Product }) => {
         <a
           href={product.href}
           target="__blank"
-          className="inline-flex items-center gap-1 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 bg-gray-800 text-white shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-gray-50/15 group-hover/button:scale-105 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2 mt-auto origin-left"
+          className="inline-flex items-center gap-1 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 bg-gray-800 text-white shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-muted/15 group-hover/button:scale-105 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2 mt-auto origin-left"
         >
           Learn More
           <svg

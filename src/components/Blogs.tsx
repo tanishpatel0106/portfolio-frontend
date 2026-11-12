@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 
 export const Blogs = ({ blogs }: { blogs: Blog[] }) => {
@@ -50,7 +50,7 @@ export const Blogs = ({ blogs }: { blogs: Blog[] }) => {
                     scaleX: 0.95,
                     scaleY: 0.95,
                   }}
-                  className="absolute z-0 pointer-events-none bg-gray-50 inset-0 h-full w-full   rounded-md "
+                  className="absolute z-0 pointer-events-none bg-muted inset-0 h-full w-full   rounded-md "
                 />
               )}
             </AnimatePresence>
@@ -74,7 +74,7 @@ export const Blogs = ({ blogs }: { blogs: Blog[] }) => {
                   {blog.tags?.map((tag, index) => (
                     <span
                       key={`tag-${blog.slug}`}
-                      className="text-xs px-1 py-0.5 text-secondary border border-neutral-200 bg-white rounded-md"
+                      className="text-xs px-1 py-0.5 text-muted-foreground border border-border bg-card rounded-md"
                     >
                       {tag}
                     </span>

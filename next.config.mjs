@@ -1,22 +1,22 @@
-/** @type {import('next').NextConfig} */
-import nextMDX from "@next/mdx";
-import remarkGfm from "remark-gfm";
-import rehypePrism from "@mapbox/rehype-prism";
+import createMDX from "@next/mdx";
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   images: {
-    domains: ["images.unsplash.com", "res.cloudinary.com"],
-  },
-  experimental: {
-    mdxRs: true,
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
   },
 };
 
-const withMDX = nextMDX({
-  extension: /\.mdx?$/,
+const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypePrism],
+    // Plugins are passed by name so the config stays serializable for Turbopack.
+    remarkPlugins: ["remark-gfm"],
+    rehypePlugins: ["@mapbox/rehype-prism"],
   },
 });
 

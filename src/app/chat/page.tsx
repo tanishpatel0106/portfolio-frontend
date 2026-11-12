@@ -16,7 +16,7 @@ export default function ChatPage() {
   const suggestedQuestions = getSuggestedQuestions();
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="flex h-[100dvh] flex-col overflow-hidden pt-20">
       <ChatInterface
         placeholders={placeholders}
         suggestedQuestions={suggestedQuestions}

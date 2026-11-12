@@ -92,7 +92,7 @@ export const Contact = () => {
           <input
             type="text"
             placeholder="Your Name"
-            className="bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 px-2 py-2 rounded-md text-sm text-neutral-700 w-full"
+            className="bg-muted focus:outline-none focus:ring-2 focus:ring-border px-2 py-2 rounded-md text-sm text-foreground w-full"
             value={formData.name.value}
             onChange={(e) => {
               setFormData({
@@ -110,7 +110,7 @@ export const Contact = () => {
           <input
             type="email"
             placeholder="Your email address"
-            className="bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 px-2 py-2 rounded-md text-sm text-neutral-700 w-full"
+            className="bg-muted focus:outline-none focus:ring-2 focus:ring-border px-2 py-2 rounded-md text-sm text-foreground w-full"
             value={formData.email.value}
             onChange={(e) => {
               setFormData({
@@ -129,7 +129,7 @@ export const Contact = () => {
         <textarea
           placeholder="Your Message"
           rows={10}
-          className="bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 px-2 mt-4 py-2 rounded-md text-sm text-neutral-700 w-full"
+          className="bg-muted focus:outline-none focus:ring-2 focus:ring-border px-2 mt-4 py-2 rounded-md text-sm text-foreground w-full"
           value={formData.message.value}
           onChange={(e) => {
             setFormData({
@@ -144,7 +144,7 @@ export const Contact = () => {
         {formData.message.error && <p className="text-red-500 text-sm">{formData.message.error}</p>}
       </div>
       <button
-        className="w-full px-2 py-2 mt-4 bg-neutral-100 rounded-md font-bold text-neutral-500"
+        className="w-full px-2 py-2 mt-4 bg-muted rounded-md font-bold text-muted-foreground"
         type="submit"
       >
         Submit

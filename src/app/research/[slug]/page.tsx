@@ -6,11 +6,19 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
+const findResearch = (slug: string): ResearchItem | undefined =>
+  research.find((r: ResearchItem) => r.slug === slug);
+
+export function generateStaticParams() {
+  return research.map((r: ResearchItem) => ({ slug: r.slug }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const item = research.find((r: ResearchItem) => r.slug === params.slug);
+  const { slug } = await params;
+  const item = findResearch(slug);
   if (item) {
     return {
       title: item.title,
@@ -18,19 +26,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
   return {
-    title: "Research | Tanish Patel",
-    description: "Collection of research projects and papers.",
+    title: "Research",
+    description: "Research papers and projects by Tanish Patel.",
   };
 }
 
-export default function ResearchDetailPage({ params }: Props) {
-  const item = research.find((r: ResearchItem) => r.slug === params.slug);
+export default async function ResearchDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const item = findResearch(slug);
   if (!item) {
     redirect("/research");
   }
   return (
     <Container>
-      {item && <SingleResearch item={item} />}
+      <SingleResearch item={item} />
     </Container>
   );
 }

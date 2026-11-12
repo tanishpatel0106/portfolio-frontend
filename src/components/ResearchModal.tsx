@@ -33,39 +33,39 @@ export const ResearchModal = ({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-md max-h-[90vh] overflow-y-auto w-full max-w-2xl p-6 relative"
+        className="bg-card rounded-md max-h-[90vh] overflow-y-auto w-full max-w-2xl p-6 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-neutral-500 hover:text-neutral-800"
+          className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
         >
           <IconX className="h-5 w-5" />
         </button>
-        <h2 className="text-xl font-bold text-neutral-800 mb-2">{item.title}</h2>
-        <p className="text-sm text-neutral-600 mb-4">
+        <h2 className="text-xl font-bold text-foreground mb-2">{item.title}</h2>
+        <p className="text-sm text-muted-foreground mb-4">
           {item.authors.join(", ")}
         </p>
-        <p className="text-neutral-700 mb-4 whitespace-pre-line">
+        <p className="text-foreground mb-4 whitespace-pre-line">
           {item.summary}
         </p>
         <div className="mb-4 space-y-2">
-          <h3 className="font-semibold text-neutral-800">Methodology</h3>
-          <ul className="list-disc list-inside text-sm text-neutral-700">
+          <h3 className="font-semibold text-foreground">Methodology</h3>
+          <ul className="list-disc list-inside text-sm text-foreground">
             {item.methodology.map((m) => (
               <li key={m}>{m}</li>
             ))}
           </ul>
         </div>
         <div className="mb-4">
-          <h3 className="font-semibold text-neutral-800 mb-1">Results</h3>
-          <p className="text-sm text-neutral-700">{item.results}</p>
+          <h3 className="font-semibold text-foreground mb-1">Results</h3>
+          <p className="text-sm text-foreground">{item.results}</p>
         </div>
         <div className="flex flex-wrap gap-2 mb-4">
           {item.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs bg-neutral-100 text-neutral-700 px-2 py-1 rounded"
+              className="text-xs bg-muted text-foreground px-2 py-1 rounded"
             >
               {tag}
             </span>

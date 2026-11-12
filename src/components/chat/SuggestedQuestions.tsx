@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
   IconBriefcase2,
   IconCode,
@@ -16,56 +16,56 @@ const QUESTION_STYLES = [
     text: "What are you currently working on at Columbia?",
     icon: IconSchool,
     color: "from-sky-400 to-blue-500",
-    bg: "bg-sky-50 hover:bg-sky-100/80",
+    bg: "bg-sky-50 hover:bg-sky-100/80 dark:bg-sky-500/10 dark:hover:bg-sky-500/15",
     border: "border-sky-200/60",
   },
   {
     text: "Tell me about your experience building AI products at Paperchase",
     icon: IconBriefcase2,
     color: "from-violet-400 to-purple-500",
-    bg: "bg-violet-50 hover:bg-violet-100/80",
+    bg: "bg-violet-50 hover:bg-violet-100/80 dark:bg-violet-500/10 dark:hover:bg-violet-500/15",
     border: "border-violet-200/60",
   },
   {
     text: "What projects have you built in quantitative finance?",
     icon: IconCode,
     color: "from-emerald-400 to-teal-500",
-    bg: "bg-emerald-50 hover:bg-emerald-100/80",
+    bg: "bg-emerald-50 hover:bg-emerald-100/80 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/15",
     border: "border-emerald-200/60",
   },
   {
     text: "What research papers have you published?",
     icon: IconFlask,
     color: "from-orange-400 to-rose-500",
-    bg: "bg-orange-50 hover:bg-orange-100/80",
+    bg: "bg-orange-50 hover:bg-orange-100/80 dark:bg-orange-500/10 dark:hover:bg-orange-500/15",
     border: "border-orange-200/60",
   },
   {
     text: "What's your tech stack and what do you enjoy working with most?",
     icon: IconTool,
     color: "from-pink-400 to-rose-500",
-    bg: "bg-pink-50 hover:bg-pink-100/80",
+    bg: "bg-pink-50 hover:bg-pink-100/80 dark:bg-pink-500/10 dark:hover:bg-pink-500/15",
     border: "border-pink-200/60",
   },
   {
     text: "How did you get into AI and data science?",
     icon: IconRocket,
     color: "from-amber-400 to-orange-500",
-    bg: "bg-amber-50 hover:bg-amber-100/80",
+    bg: "bg-amber-50 hover:bg-amber-100/80 dark:bg-amber-500/10 dark:hover:bg-amber-500/15",
     border: "border-amber-200/60",
   },
   {
     text: "What do you do outside of work and school?",
     icon: IconMountain,
     color: "from-teal-400 to-cyan-500",
-    bg: "bg-teal-50 hover:bg-teal-100/80",
+    bg: "bg-teal-50 hover:bg-teal-100/80 dark:bg-teal-500/10 dark:hover:bg-teal-500/15",
     border: "border-teal-200/60",
   },
   {
     text: "What kind of roles or collaborations are you looking for?",
     icon: IconUsers,
     color: "from-indigo-400 to-blue-500",
-    bg: "bg-indigo-50 hover:bg-indigo-100/80",
+    bg: "bg-indigo-50 hover:bg-indigo-100/80 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/15",
     border: "border-indigo-200/60",
   },
 ];
@@ -97,13 +97,13 @@ export function SuggestedQuestions({
         transition={{ duration: 0.5 }}
         className="text-center mb-8"
       >
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-500 shadow-xl shadow-indigo-200/50 mb-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-br from-sky-400 via-indigo-500 to-purple-500 shadow-xl shadow-indigo-200/50 mb-4">
           <span className="text-3xl">💬</span>
         </div>
-        <h2 className="text-xl font-bold text-neutral-800 mb-2">
+        <h2 className="text-xl font-bold text-foreground mb-2">
           Ask me anything about Tanish
         </h2>
-        <p className="text-sm text-neutral-500 max-w-md leading-relaxed">
+        <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
           I have deep knowledge about his work, research, projects, and
           interests. Pick a topic below or type your own question!
         </p>
@@ -124,11 +124,11 @@ export function SuggestedQuestions({
             className={`group flex items-start gap-3 text-left ${q.bg} border ${q.border} rounded-xl px-4 py-3 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5`}
           >
             <div
-              className={`flex-shrink-0 w-7 h-7 rounded-lg bg-gradient-to-br ${q.color} flex items-center justify-center shadow-sm mt-0.5`}
+              className={`shrink-0 w-7 h-7 rounded-lg bg-linear-to-br ${q.color} flex items-center justify-center shadow-sm mt-0.5`}
             >
               <q.icon size={14} className="text-white" />
             </div>
-            <span className="text-sm text-neutral-600 group-hover:text-neutral-800 transition-colors leading-snug">
+            <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors leading-snug">
               {q.text}
             </span>
           </motion.button>

@@ -63,18 +63,18 @@ export const LeadershipHistory = () => {
     title: item.company,
     content: (
       <div>
-        <p className="text-neutral-800 text-sm md:text-base font-semibold mb-2">
+        <p className="text-foreground text-sm md:text-base font-semibold mb-2">
           {item.title}
         </p>
-        <p className="text-neutral-600 text-xs md:text-sm mb-2">
+        <p className="text-muted-foreground text-xs md:text-sm mb-2">
           {item.date}
         </p>
-        <p className="text-neutral-700 text-xs md:text-sm mb-4">
+        <p className="text-foreground text-xs md:text-sm mb-4">
           {item.description}
         </p>
         <ul className="list-disc ml-6">
           {item.responsibilities.map((responsibility, index) => (
-            <li key={index} className="text-neutral-800 text-xs md:text-sm mb-2">
+            <li key={index} className="text-foreground text-xs md:text-sm mb-2">
               {responsibility}
             </li>
           ))}

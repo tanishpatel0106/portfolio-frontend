@@ -12,7 +12,7 @@ export const ResearchSection = () => {
     <div className="w-full">
       <div className="flex gap-4 overflow-x-auto no-scrollbar md:grid md:grid-cols-3 md:gap-6">
         {research.map((item) => (
-          <div key={item.title} className="flex-shrink-0 md:flex-shrink md:w-auto w-72">
+          <div key={item.title} className="shrink-0 md:flex-shrink md:w-auto w-72">
             <ResearchCard item={item} onClick={() => setSelected(item)} />
           </div>
         ))}

@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ChatMessage } from "@/types/chat";
 import { ThinkingBlock } from "./ThinkingBlock";
 import { IconUser, IconSparkles } from "@tabler/icons-react";
@@ -14,26 +14,26 @@ function renderMarkdown(text: string) {
     // Inline code
     .replace(
       /`([^`]+)`/g,
-      '<code class="bg-neutral-100 text-sky-700 rounded-md px-1.5 py-0.5 text-xs font-mono">$1</code>'
+      '<code class="bg-muted text-sky-700 dark:text-sky-300 rounded-md px-1.5 py-0.5 text-xs font-mono">$1</code>'
     )
     // Bold
-    .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-neutral-800">$1</strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
     // Italic
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
     // Links
     .replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:text-sky-700 underline decoration-sky-300 underline-offset-2 hover:decoration-sky-500 transition-colors">$1</a>'
+      '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:text-sky-700 dark:text-sky-400 underline decoration-sky-300 underline-offset-2 hover:decoration-sky-500 transition-colors">$1</a>'
     )
     // Unordered lists
     .replace(
       /^[\s]*[-*]\s+(.+)/gm,
-      '<li class="ml-4 list-disc text-neutral-600">$1</li>'
+      '<li class="ml-4 list-disc text-muted-foreground">$1</li>'
     )
     // Numbered lists
     .replace(
       /^[\s]*\d+\.\s+(.+)/gm,
-      '<li class="ml-4 list-decimal text-neutral-600">$1</li>'
+      '<li class="ml-4 list-decimal text-muted-foreground">$1</li>'
     )
     // Double line breaks as paragraph breaks
     .replace(/\n\n/g, '</p><p class="mt-2">')
@@ -65,13 +65,13 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       className={`flex gap-3 ${isUser ? "flex-row-reverse" : "flex-row"} mb-5`}
     >
       {/* Avatar */}
-      <div className="flex-shrink-0 mt-0.5">
+      <div className="shrink-0 mt-0.5">
         {isUser ? (
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center shadow-md shadow-sky-200/50">
+          <div className="w-8 h-8 rounded-lg bg-linear-to-br from-sky-400 to-sky-500 flex items-center justify-center shadow-md shadow-sky-200/50 dark:shadow-none">
             <IconUser size={16} className="text-white" />
           </div>
         ) : (
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-md shadow-indigo-200/50">
+          <div className="w-8 h-8 rounded-lg bg-linear-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-md shadow-indigo-200/50 dark:shadow-none">
             <IconSparkles size={16} className="text-white" />
           </div>
         )}
@@ -91,8 +91,8 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         <div
           className={`rounded-2xl px-4 py-3 ${
             isUser
-              ? "bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-lg shadow-sky-200/40 rounded-tr-md"
-              : "bg-white border border-neutral-200/80 text-neutral-700 shadow-sm rounded-tl-md"
+              ? "bg-linear-to-br from-sky-500 to-sky-600 text-white shadow-lg shadow-sky-200/40 dark:shadow-none rounded-tr-md"
+              : "bg-card border border-border/80 text-foreground shadow-sm rounded-tl-md"
           }`}
         >
           {/* Thinking block for assistant */}

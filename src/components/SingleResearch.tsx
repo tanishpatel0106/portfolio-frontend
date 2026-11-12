@@ -2,7 +2,7 @@
 import { ResearchItem } from "@/types/research";
 import Image from "next/image";
 import { Heading } from "./Heading";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useState } from "react";
 
 const sanitizeHtml = (html: string) => {
@@ -38,7 +38,7 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
             width={1000}
             className="rounded-md object-contain"
           />
-          <div className="absolute bottom-0 bg-white h-40 w-full [mask-image:linear-gradient(to_bottom,transparent,white)]" />
+          <div className="absolute bottom-0 bg-card h-40 w-full mask-[linear-gradient(to_bottom,transparent,white)]" />
         </motion.div>
       )}
       {item.images && item.images.length > 1 && (
@@ -50,7 +50,7 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
                 alt="research image thumbnail"
                 height={1000}
                 width={1000}
-                className="h-14 w-16 md:h-40 md:w-60 object-cover object-top mr-4 mb-4 border rounded-lg border-neutral-100"
+                className="h-14 w-16 md:h-40 md:w-60 object-cover object-top mr-4 mb-4 border rounded-lg border-border"
               />
             </button>
           ))}
@@ -62,14 +62,14 @@ export const SingleResearch = ({ item }: { item: ResearchItem }) => {
           {item.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs md:text-xs lg:text-xs bg-gray-50 px-2 py-1 rounded-sm text-secondary"
+              className="text-xs md:text-xs lg:text-xs bg-muted px-2 py-1 rounded-sm text-muted-foreground"
             >
               {tag}
             </span>
           ))}
         </div>
       </div>
-      <div className="prose prose-sm md:prose-base max-w-none text-neutral-600 mt-6">
+      <div className="prose prose-sm md:prose-base max-w-none text-muted-foreground mt-6">
         {item.descriptionHtml ? (
           <div
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.descriptionHtml) }}

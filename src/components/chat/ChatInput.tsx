@@ -35,10 +35,10 @@ export function ChatInput({
     <div className="relative">
       {/* Top fade gradient for visual blending */}
       {hasMessages && (
-        <div className="absolute -top-8 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
+        <div className="absolute -top-8 left-0 right-0 h-8 bg-linear-to-t from-white to-transparent pointer-events-none z-10" />
       )}
 
-      <div className="relative bg-white/80 backdrop-blur-md border-t border-neutral-100 px-4 md:px-8 py-4">
+      <div className="relative bg-card/80 backdrop-blur-md border-t border-border px-4 md:px-8 py-4">
         <PlaceholdersAndVanishInput
           placeholders={placeholders}
           onChange={handleChange}
@@ -46,7 +46,7 @@ export function ChatInput({
           disabled={isLoading}
         />
 
-        <p className="text-[10px] text-neutral-400 mt-3 text-center">
+        <p className="text-[10px] text-muted-foreground mt-3 text-center">
           Powered by Claude AI · Extended thinking enabled ·{" "}
           <span className="text-neutral-300">Press Enter to send</span>
         </p>

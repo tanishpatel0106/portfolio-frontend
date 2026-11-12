@@ -1,6 +1,177 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+/* Class-based dark mode, driven by next-themes (`class="dark"` on <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* -------------------------------------------------------------------------- */
+/*  Design tokens                                                             */
+/*                                                                            */
+/*  Neutrals are a cool graphite scale. The brand colour is swappable: set    */
+/*  `data-accent="lime|amber|cyan|violet"` on <html> (AccentProvider does     */
+/*  this). `--primary` is the fill colour (buttons, dots, highlights) and     */
+/*  `--brand` is the contrast-safe version for text on the page background.   */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(0.99 0.002 270);
+  --foreground: oklch(0.18 0.006 270);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+  --secondary: oklch(0.96 0.003 270);
+  --secondary-foreground: oklch(0.24 0.006 270);
+  --muted: oklch(0.965 0.003 270);
+  --muted-foreground: oklch(0.5 0.012 270);
+  --accent: oklch(0.955 0.004 270);
+  --accent-foreground: oklch(0.24 0.006 270);
+  --destructive: oklch(0.58 0.22 27);
+  --border: oklch(0.915 0.004 270);
+  --input: oklch(0.915 0.004 270);
+  --surface: oklch(0.975 0.003 270);
+
+  --success: oklch(0.62 0.17 150);
+  --warning: oklch(0.72 0.16 70);
+
+  /* default accent: lime */
+  --primary: oklch(0.86 0.2 128);
+  --primary-foreground: oklch(0.2 0.03 130);
+  --brand: oklch(0.52 0.15 135);
+  --ring: var(--brand);
+}
+
+.dark {
+  --background: oklch(0.145 0.004 270);
+  --foreground: oklch(0.97 0.002 270);
+  --card: oklch(0.18 0.005 270);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.18 0.005 270);
+  --popover-foreground: var(--foreground);
+  --secondary: oklch(0.22 0.006 270);
+  --secondary-foreground: oklch(0.95 0.002 270);
+  --muted: oklch(0.21 0.005 270);
+  --muted-foreground: oklch(0.69 0.012 270);
+  --accent: oklch(0.24 0.006 270);
+  --accent-foreground: oklch(0.97 0.002 270);
+  --destructive: oklch(0.68 0.2 25);
+  --border: oklch(0.27 0.006 270);
+  --input: oklch(0.3 0.006 270);
+  --surface: oklch(0.165 0.005 270);
+
+  --success: oklch(0.75 0.18 150);
+  --warning: oklch(0.8 0.15 75);
+
+  --primary: oklch(0.89 0.21 128);
+  --primary-foreground: oklch(0.2 0.03 130);
+  --brand: oklch(0.89 0.21 128);
+}
+
+/* Accent options ---------------------------------------------------------- */
+[data-accent="amber"] {
+  --primary: oklch(0.8 0.16 72);
+  --primary-foreground: oklch(0.22 0.04 60);
+  --brand: oklch(0.56 0.15 55);
+}
+.dark[data-accent="amber"],
+[data-accent="amber"] .dark {
+  --primary: oklch(0.83 0.16 75);
+  --brand: oklch(0.83 0.16 75);
+}
+[data-accent="cyan"] {
+  --primary: oklch(0.8 0.13 210);
+  --primary-foreground: oklch(0.2 0.04 230);
+  --brand: oklch(0.52 0.12 228);
+}
+.dark[data-accent="cyan"],
+[data-accent="cyan"] .dark {
+  --primary: oklch(0.82 0.13 210);
+  --brand: oklch(0.82 0.13 210);
+}
+[data-accent="violet"] {
+  --primary: oklch(0.6 0.22 285);
+  --primary-foreground: oklch(0.98 0.01 285);
+  --brand: oklch(0.52 0.22 285);
+}
+.dark[data-accent="violet"],
+[data-accent="violet"] .dark {
+  --primary: oklch(0.72 0.18 290);
+  --primary-foreground: oklch(0.16 0.03 290);
+  --brand: oklch(0.76 0.16 290);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-brand: var(--brand);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-display-serif), ui-serif, Georgia, serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply scroll-smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 45%, transparent);
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+}
+
+/* Honour the OS setting and the site's own "pause motion" toggle. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
 
 /* Hide scrollbars for elements with the `no-scrollbar` class */
 .no-scrollbar::-webkit-scrollbar {
@@ -19,15 +190,15 @@
   background: transparent;
 }
 .chat-scroll-area::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: color-mix(in oklch, var(--foreground) 12%, transparent);
   border-radius: 999px;
 }
 .chat-scroll-area::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: color-mix(in oklch, var(--foreground) 22%, transparent);
 }
 .chat-scroll-area {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  scrollbar-color: color-mix(in oklch, var(--foreground) 12%, transparent) transparent;
 }
 
 /* Blinking cursor animation for streaming */

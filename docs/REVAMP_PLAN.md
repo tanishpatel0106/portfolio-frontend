@@ -308,12 +308,24 @@ Checkpoint: the current pages render on the new stack.
 
 ---
 
-## 9. Decisions needed from you
+## 9. Decisions
 
-1. **Visual direction:** the dark "Research Desk" (recommended) or a light editorial look? Which accent: lime, amber or cyan?
-2. **Domain:** is there a custom domain, or should it stay on Vercel's?
-3. **Python app hosting budget:** free tiers mean cold starts (handled by the wake loader). A paid tier is about $5–20/month for always-on.
-4. **Flagship projects:** which 4–6 lead? The suggestion is Trading Terminal, StressTester, NLP-to-SQL, MatchOdds and Paperchase.
-5. **Paperchase:** can you show a video or screenshots of a commercial product?
-6. **Availability badge text**, e.g. "Open to full-time roles · Jan 2027 · NYC".
-7. **Asset cleanup:** OK to delete the four unreferenced root images and the duplicate screenshot?
+| # | Question | Answer |
+|---|---|---|
+| 1 | Visual direction / accent | Light **and** dark with a toggle (system default). The accent isn't chosen yet, so the site ships an **accent picker** (lime, amber, cyan, violet) to try them live. The default is lime until one is picked. |
+| 2 | Domain | **tanishpatel.dev** (Vercel). |
+| 3 | Python app hosting | **Free tiers** for now, with the cold-start wake loader. Design for an easy switch to always-on. |
+| 4–5 | Flagship projects / Paperchase | **Deferred.** More projects are being added first. |
+| 6 | Availability badge | "Open to full-time · Jan 2027 · NYC" |
+| 7 | Asset cleanup | Approved. |
+
+## 10. Progress
+
+- [x] **Phase 1, foundation:**
+  - Next 16.4, React 19.3, Tailwind 4.3 with CSS-first tokens, `motion`, Tabler v3.
+  - shadcn `components.json` with the `@aceternity` registry.
+  - Geist Sans/Mono and Instrument Serif fonts.
+  - next-themes light/dark, plus accent and pause-motion preferences.
+  - Window scroll with the Aceternity Resizable Navbar (sidebar removed, hydration bug gone).
+  - ESLint 9 flat config.
+  - Images cut from 73 MB to about 16 MB (large PNG/JPG converted to WebP, filenames with spaces sanitized).

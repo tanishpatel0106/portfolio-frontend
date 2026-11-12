@@ -126,12 +126,12 @@ export const products = [
   title: "AI Adoption Value Realization Dashboard",
   description:
     "An executive Power BI system that turns a two-year, $4M enterprise AI adoption strategy into a tracked value-realization layer, modeling spend, revenue uplift, payback, KPI gates, roadmap progress, scenario NPV, and program risk for a $75M CPG e-commerce business.",
-  thumbnail: "/images/DSI-1.png",
+  thumbnail: "/images/DSI-1.webp",
   images: [
-    "/images/DSI-1.png",
-    "/images/DSI-2.png",
-    "/images/DSI-3.png",
-    "/images/DSI-4.png",
+    "/images/DSI-1.webp",
+    "/images/DSI-2.webp",
+    "/images/DSI-3.webp",
+    "/images/DSI-4.webp",
     "/images/DSI-5.png",
     "/images/DSI-6.png"
   ],
@@ -233,10 +233,10 @@ export const products = [
   title: "MatchOdds AI",
   description:
     "An agentic RAG system for NBA pre-game betting analysis that aggregates statistics, injuries, odds, historical matchups, news, and sentiment signals, then compares CoT, ReAct, and multi-agent reasoning strategies for calibrated game prediction.",
-  thumbnail: "/images/MatchOdds1.png",
+  thumbnail: "/images/MatchOdds1.webp",
   images: [
-    "/images/MatchOdds1.png",
-    "/images/MatchOdds2.png",
+    "/images/MatchOdds1.webp",
+    "/images/MatchOdds2.webp",
     "/images/MatchOdds3.png",
     "/images/MatchOdds4.png"
   ],
@@ -339,12 +339,12 @@ export const products = [
   title: "Dynamic Resource Allocation in Cloud Computing",
   description:
     "A power-aware, SLA-bound deep reinforcement learning scheduler for cloud computing, built with a custom Gymnasium simulator, PyTorch RL agents, FastAPI orchestration, and a React monitoring dashboard.",
-  thumbnail: "/images/DR-Thumb.png",
+  thumbnail: "/images/DR-Thumb.webp",
   images: [
-    "/images/DR-Thumb.png",
-    "/images/DRA-1.png",
-    "/images/DRA-2.png",
-    "/images/DRA-3.png",
+    "/images/DR-Thumb.webp",
+    "/images/DRA-1.webp",
+    "/images/DRA-2.webp",
+    "/images/DRA-3.webp",
   ],
   stack: [
     "Deep Reinforcement Learning",
@@ -447,9 +447,9 @@ export const products = [
   title: "Data Valuation for Sparse Surface Ocean Carbon Data",
   description:
     "A Shapley-based data valuation pipeline for sparse surface ocean carbon prediction, ranking climate and Earth system data sources by their marginal contribution to regional fCO₂ prediction performance.",
-  thumbnail: "/images/data-valuation-1.jpg",
+  thumbnail: "/images/data-valuation-1.webp",
   images: [
-    "/images/data-valuation-1.jpg"
+    "/images/data-valuation-1.webp"
   ],
   stack: [
     "Data Valuation",
@@ -531,8 +531,8 @@ export const products = [
   thumbnail: "/images/stress-tester-1.png",
   images: [
     "/images/stress-tester-1.png",
-    "/images/stress-tester-2.png",
-    "/images/stress-tester-3.png",
+    "/images/stress-tester-2.webp",
+    "/images/stress-tester-3.webp",
     "/images/stress-tester-4.png",
     "/images/stress-tester-5.png",
   ],
@@ -603,9 +603,9 @@ export const products = [
   title: "Agentic NLP-to-SQL: Secure Multi-Agent Analytics Copilot",
   description:
     "A security-first, multi-agent natural language to SQL system with clarification, schema grounding, accounting-aware query generation, and safe execution across SQL backends",
-  thumbnail: "/images/nlp2sql-4.png",
+  thumbnail: "/images/nlp2sql-4.webp",
   images: [
-    "/images/nlp2sql-4.png",
+    "/images/nlp2sql-4.webp",
   ],
   stack: [
     "LLM Agents",
@@ -856,8 +856,8 @@ export const products = [
     thumbnail: "/images/paperchaseai1.png",
     images: [
       "/images/paperchaseai1.png",
-      "/images/paperchaseai2.png",
-      // "/images/paperchaseai3.png"
+      "/images/paperchaseai2.webp",
+      // "/images/paperchaseai3.webp"
     ],
     stack: ["Time Series Analysis", "Power BI", "Agentic Systems", "Deep Learning", "Machine Learning"],
     slug: "paperchaseai",
@@ -894,9 +894,9 @@ export const products = [
     title: "Predictive Maintenance in SCANIA Trucks",
     description:
       "Mitigating failures by using Federated Learning and Explainable AI",
-    thumbnail: "/images/diagram_minor.png",
+    thumbnail: "/images/diagram_minor.webp",
     images: [
-      "/images/diagram_minor.png",
+      "/images/diagram_minor.webp",
     ],
     stack: ["Machine Learning", "Explainable AI", "Federated Learning"],
     slug: "pmscania",
@@ -951,9 +951,9 @@ export const products = [
     title: "Margshala",
     description:
       "AI Career Assistant for Rural people",
-    thumbnail: "/images/WhatsApp Image 2024-06-16 at 06.54.51.jpeg",
+    thumbnail: "/images/WhatsApp-Image-2024-06-16-at-06.54.51.jpeg",
     images: [
-      "/images/WhatsApp Image 2024-06-16 at 06.54.51.jpeg",
+      "/images/WhatsApp-Image-2024-06-16-at-06.54.51.jpeg",
       "/images/illustration.png",
     ],
     stack: ["React.js", "Flask", "OpenAI", "MySQL"],
@@ -977,7 +977,7 @@ export const products = [
     thumbnail: "/images/illust_1.jpg",
     images: [
       "/images/illust_1.jpg",
-      "/images/illust_2.png",
+      "/images/illust_2.webp",
     ],
     stack: ["Python", "Tensorflow", "OpenCV", "Plotly"],
     slug: "demystifyingdefects",
@@ -997,13 +997,13 @@ export const products = [
     title: "Prognosis Assistant and Appointment Scheduler",
     description:
       "A comprehensive web application to assist in pre-doctor visit health analyses and streamline in-app appointment scheduling.",
-    thumbnail: "/images/image (1).png",
+    thumbnail: "/images/image-1.png",
     images: [
-      "/images/image (1).png",
+      "/images/image-1.png",
       "/images/image.png",
       "/images/plot1.png",
-      "/images/WhatsApp Image 2023-11-09 at 00.42.51_d3d6b530.jpg",
-      "/images/WhatsApp Image 2023-11-09 at 00.44.40_07aa976d.jpg",
+      "/images/WhatsApp-Image-2023-11-09-at-00.42.51_d3d6b530.jpg",
+      "/images/WhatsApp-Image-2023-11-09-at-00.44.40_07aa976d.jpg",
     ],
     stack: ["HTML/CSS", "Django", "Scikit-Learn", "Streamlit"],
     slug: "prognosisappointment",
@@ -1023,9 +1023,9 @@ export const products = [
     title: "Posture Correction using Computer Vision",
     description:
       "DL and ML Approaches for Real Time Posture Detection and Correction",
-    thumbnail: "/images/Setup.png",
+    thumbnail: "/images/Setup.webp",
     images: [
-      "/images/Setup.png"
+      "/images/Setup.webp"
     ],
     stack: ["Python", "OpenCV", "Tensorflow"],
     slug: "posturecorrection",
@@ -1045,9 +1045,9 @@ export const products = [
     title: "FL for State of Charge Prediction",
     description:
       "Data-Driven SoC Forecasting in Electric Vehicles: A Federated Learning Perspective",
-    thumbnail: "/images/SOC_1.png",
+    thumbnail: "/images/SOC_1.webp",
     images: [
-      "/images/SOC_1.png",
+      "/images/SOC_1.webp",
       "/images/SOC_2.png",
     ],
     stack: ["Python", "Scikit-Learn", "Power BI"],

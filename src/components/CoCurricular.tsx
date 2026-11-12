@@ -61,7 +61,7 @@ export const CocurricularHistory = () => {
   const data = timeline.map((item, index) => (
     <ul key={index} className="list-disc w-full px-4">
       {item.responsibilities.map((responsibility, index) => (
-        <li key={index} className="text-neutral-800 text-xs md:text-sm mb-2">
+        <li key={index} className="text-foreground text-xs md:text-sm mb-2">
           {responsibility}
         </li>
       ))}
