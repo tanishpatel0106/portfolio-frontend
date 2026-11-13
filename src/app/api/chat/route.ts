@@ -166,7 +166,13 @@ export async function POST(req: Request) {
     content: m.content,
   }));
 
-  const anthropic = new Anthropic();
+  const workspaceId = process.env.ANTHROPIC_WORKSPACE_ID?.trim();
+  const anthropic = new Anthropic({
+    // Organization-level keys require a workspace; scoped keys can omit it.
+    defaultHeaders: workspaceId
+      ? { "anthropic-workspace-id": workspaceId }
+      : undefined,
+  });
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({

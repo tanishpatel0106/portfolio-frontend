@@ -20,7 +20,7 @@ npm run dev
 
 Other scripts: `npm run build`, `npm run start`, `npm run lint`.
 
-Only `ANTHROPIC_API_KEY` is needed for a full local run (it powers `/chat`). Every other variable in `.env.example` is optional, and the feature it controls switches itself off when the variable is missing.
+`ANTHROPIC_API_KEY` powers `/chat`. Organization-level API keys also require `ANTHROPIC_WORKSPACE_ID`, identifying a workspace in the same organization; workspace-scoped keys can omit it. The remaining integrations in `.env.example` are optional.
 
 ## Where things live
 
@@ -116,11 +116,14 @@ A project with a video and no deployment is listed with the live apps in the Liv
 | Variable | Needed for |
 |---|---|
 | `ANTHROPIC_API_KEY` | AI chat (required for `/chat`) |
+| `ANTHROPIC_WORKSPACE_ID` | AI chat workspace selection (required for organization-level API keys) |
 | `CHAT_MODEL` | Optional chat model override |
 | `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Contact form delivery |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | View counts and rate limits shared across instances |
 | `GITHUB_TOKEN` | Higher GitHub API limit for repo stats |
 | `BLOB_READ_WRITE_TOKEN` | Video uploads from `scripts/ingest-video.mjs` |
+
+On Vercel, set the chat variables for the deployment environment (for example, Production), then redeploy for changes to take effect. Keep both variables server-side; do not prefix them with `NEXT_PUBLIC_`.
 
 ## Preferences
 
