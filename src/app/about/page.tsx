@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { PhotoStack } from "@/components/about/photo-stack";
-import { PlacesMap } from "@/components/about/places-map";
+import { PlacesMapLazy } from "@/components/about/places-map-lazy";
 import { ButtonLink, Eyebrow, SectionHeading, Shell } from "@/components/shared/primitives";
 import { Reveal } from "@/components/shared/reveal";
 import { ABOUT_PARAGRAPHS, ABOUT_PHOTOS } from "@/constants/about";
@@ -67,11 +67,10 @@ export default function AboutPage() {
       <Shell as="section" className="mt-24">
         <SectionHeading
           label="Places"
-          title="From Gujarat to New York, by way of the Himalayas"
-          description="Undergrad in Gandhinagar, a drone competition at IIT Roorkee, mountain trails in Uttarakhand, and now Columbia."
+          title="Where I’ve been"
         />
         <div className="overflow-hidden rounded-3xl border bg-card p-2 md:p-6">
-          <PlacesMap />
+          <PlacesMapLazy />
         </div>
       </Shell>
 

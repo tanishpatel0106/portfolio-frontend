@@ -1,5 +1,93 @@
 export const products = [
   {
+    href: "https://github.com/ai-at-the-margin/AIM-Replication",
+    title: "AI at the Margin: Replicating an LLM stock-picking experiment on OpenAI and Anthropic models",
+    description:
+      "A reproducible pipeline that asks twelve language models for stock portfolios, resolves every ticker to an issuer with WRDS data and measures each book on a Barra-style factor model.",
+    thumbnail: "/images/aim-1.webp",
+    images: [
+      "/images/aim-1.webp",
+      "/images/aim-2.webp",
+      "/images/aim-3.webp",
+      "/images/aim-4.webp",
+      "/images/aim-5.webp",
+      "/images/aim-6.webp",
+      "/images/aim-7.webp",
+      "/images/aim-8.webp",
+    ],
+    imageAlt: [
+      "Dashboard overview for the synthetic demo dataset: project summary and eight KPI cards for calls completed, valid portfolios, spend, holdings resolved, search use, estimation universe size and refusal rate",
+      "Name overlap page: a 12 by 12 heatmap of mean Jaccard overlap between every pair of models for bare-request prompts, beside consensus names and the most frequently picked issuers, all from synthetic demo data",
+      "Factor profiles page: every synthetic demo portfolio plotted on the first two principal components of its factor loadings, coloured by provider, next to a chart of name distance against factor distance",
+      "Mandates page: a heatmap of mean factor loading for each of the Value, Quality, Momentum and Unconstrained mandates, and per-model bars of the change in the targeted factor, from synthetic demo data",
+      "Search and queries page: dumbbell charts comparing momentum loadings offline and with web search available, by task and by model, above a heatmap of search invocation rates, from synthetic demo data",
+      "AI crowd book page: KPI cards for the aggregate book, bars comparing crowd weight with market weight for the top 20 names, and the crowd book's factor exposures, from synthetic demo data",
+      "Information date page: momentum loadings of offline Momentum-mandate books re-measured zero to 18 months back for each OpenAI model, and a scatter of implied against stated knowledge cutoff, from synthetic demo data",
+      "Portfolio explorer with one simulated call opened: the call's factor loadings and its ten holdings, showing each ticker as written, the resolved issuer, the match method, weight, sector and exposures",
+    ],
+    stack: [
+      "Python",
+      "pandas",
+      "NumPy",
+      "SciPy",
+      "DuckDB",
+      "Apache Parquet",
+      "asyncio and httpx",
+      "RapidFuzz",
+      "WRDS (Compustat, Capital IQ, I/B/E/S, CRSP)",
+      "OpenAI Responses API",
+      "Anthropic Messages API",
+      "Barra-style factor model",
+      "Bootstrap and permutation tests",
+      "Principal component analysis",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Recharts",
+      "pytest",
+    ],
+    slug: "ai-at-the-margin",
+    video: {
+      src: "/videos/ai-at-the-margin.mp4",
+      poster: "/videos/ai-at-the-margin-poster.webp",
+      duration: 21,
+    },
+    featured: true,
+    year: 2026,
+    category: "finance",
+    metrics: [
+      { value: "12", label: "OpenAI and Anthropic models compared" },
+      { value: "2,640", label: "planned model calls across three stages" },
+      { value: "7", label: "factor exposures measured for every portfolio" },
+      { value: "12", label: "dashboard pages" },
+    ],
+    content: (
+      <div>
+        <p data-label="Paper and question">
+          {"I replicated the LLM portfolio experiment in OMI Advisory and Man Group's July 2026 paper, Artificial Intelligence, Alpha and the Architecture of Markets. The paper asks what a marginal AI investor would buy: when language models are asked for a ten-stock portfolio, do they converge on the same names, and do their books carry a consistent factor tilt? I rebuilt the full pipeline on twelve OpenAI and Anthropic models, keeping every choice the paper leaves open in configuration and a deviations log. The team later added DeepSeek and Kimi models for a pilot."}
+        </p>
+        <p data-label="Data">
+          {"All market data comes from WRDS. I used Compustat daily prices for North America and global markets, Compustat FX, the Fama-French risk-free rate, point-in-time Compustat Snapshot fundamentals with a restated fallback, I/B/E/S forward earnings and Capital IQ as the security master. Each input has a primary and a fallback source, and a verification step probes table schemas at run time and picks a working source. It also computes an effective latest date for each table, which drops erroneous future-dated rows, and moves the as-of date back if prices or FX do not cover it."}
+        </p>
+        <p data-label="Portfolio collection">
+          {"I wrote adapters for the OpenAI Responses API and the Anthropic Messages API that capture web-search queries, handle paused turns and record refusals. The design has three stages: four free-form framings asked 30 times per model, four 300 to 400 word institutional mandates asked 15 times, and the same eight prompts rerun on four models with web search available. That is 2,640 planned calls. The asynchronous runner retries transport errors with backoff, never retries refusals or malformed answers, resumes by deterministic call id, enforces a budget cap per stage and refuses to spend without a matching dry run."}
+        </p>
+        <p data-label="Ticker resolution">
+          {"Models write tickers in many formats, such as BRK.B, 0700.HK, 600519.SS or ASML NA, so I built a resolver that maps each one to an issuer. It normalises the string against 30 canonical exchange codes, matches the ticker and exchange in Capital IQ, falls back to Compustat, and then to fuzzy matching on company names. Share classes, ADRs and cross-listings collapse to one issuer through the Capital IQ company id, so GOOGL and GOOG, or TSM and 2330.TW, count as the same name. Matches below a confidence threshold go to a review file."}
+        </p>
+        <p data-label="Factor model">
+          {"Barra is not licensed on the account, so I built a Barra-style replica. It measures seven exposures for every issuer: size, value, quality, momentum, residual volatility, low volatility and beta. Returns are daily USD total returns. Momentum is an EWMA-weighted 504-day excess return lagged 21 days, with a simple 12-1 month return as a robustness check. Quality averages profitability, leverage, earnings variability and accruals. Each descriptor is winsorised and standardised against an estimation universe that approximates MSCI ACWI, so a book's loading is in standard deviations. Missing data stays missing and flagged rather than zero-filled."}
+        </p>
+        <p data-label="Analysis and dashboard">
+          {"The analysis reproduces the paper's seven figures and adds new measures. It computes Jaccard name overlap with bootstrap confidence intervals over 2,000 draws, mandate effects with permutation tests, a four-part compliance test, web-search invocation rates and a rule-based query classifier scored with Cohen's kappa. The new analytics include a PCA of every book in factor space, an aggregate AI crowd book against market weights, and an implied information date that re-measures momentum books zero to 18 months back. I built a React dashboard with twelve pages over the exported results."}
+        </p>
+        <p data-label="What it shows">
+          {"The pipeline measures how much models agree on names as the prompt becomes more specific, whether different names still produce similar factor positions, whether a mandate moves the factor it targets, and whether web search changes a momentum book. The screenshots come from the synthetic demo, which runs the whole design on simulated models and a synthetic market without API keys or WRDS access. In that demo the resolver matched 35,011 of 35,158 holdings. Demo numbers test the code path only and are not research results; the dashboard labels every page as synthetic."}
+        </p>
+      </div>
+    ),
+  },
+  {
     href: "https://github.com/tanishpatel0106/FI-Acc-Dec-Wedmont",
     title: "LIFECYCLE: Lifetime-Utility Research Platform for Multi-Asset Retirement Portfolios",
     description:
@@ -90,94 +178,6 @@ export const products = [
         </p>
         <p data-label="Findings">
           {"On the public-data snapshot, with WRDS data still pending, the headline run compared a parametric dynamic policy with 60/40 for a risk aversion of 4 under the block bootstrap. Across the 91 cells the mean gain in certainty-equivalent consumption was 7.55%, the largest was 17.6%, and 80 cells were more than two standard errors from zero. Gains were close to zero for retirees withdrawing 3% or less and generally grew with the withdrawal rate. These numbers are model-dependent research output from one data vintage, not investment advice."}
-        </p>
-      </div>
-    ),
-  },
-  {
-    href: "https://github.com/ai-at-the-margin/AIM-Replication",
-    title: "AI at the Margin: Replicating an LLM stock-picking experiment on OpenAI and Anthropic models",
-    description:
-      "A reproducible pipeline that asks twelve language models for stock portfolios, resolves every ticker to an issuer with WRDS data and measures each book on a Barra-style factor model.",
-    thumbnail: "/images/aim-1.webp",
-    images: [
-      "/images/aim-1.webp",
-      "/images/aim-2.webp",
-      "/images/aim-3.webp",
-      "/images/aim-4.webp",
-      "/images/aim-5.webp",
-      "/images/aim-6.webp",
-      "/images/aim-7.webp",
-      "/images/aim-8.webp",
-    ],
-    imageAlt: [
-      "Dashboard overview for the synthetic demo dataset: project summary and eight KPI cards for calls completed, valid portfolios, spend, holdings resolved, search use, estimation universe size and refusal rate",
-      "Name overlap page: a 12 by 12 heatmap of mean Jaccard overlap between every pair of models for bare-request prompts, beside consensus names and the most frequently picked issuers, all from synthetic demo data",
-      "Factor profiles page: every synthetic demo portfolio plotted on the first two principal components of its factor loadings, coloured by provider, next to a chart of name distance against factor distance",
-      "Mandates page: a heatmap of mean factor loading for each of the Value, Quality, Momentum and Unconstrained mandates, and per-model bars of the change in the targeted factor, from synthetic demo data",
-      "Search and queries page: dumbbell charts comparing momentum loadings offline and with web search available, by task and by model, above a heatmap of search invocation rates, from synthetic demo data",
-      "AI crowd book page: KPI cards for the aggregate book, bars comparing crowd weight with market weight for the top 20 names, and the crowd book's factor exposures, from synthetic demo data",
-      "Information date page: momentum loadings of offline Momentum-mandate books re-measured zero to 18 months back for each OpenAI model, and a scatter of implied against stated knowledge cutoff, from synthetic demo data",
-      "Portfolio explorer with one simulated call opened: the call's factor loadings and its ten holdings, showing each ticker as written, the resolved issuer, the match method, weight, sector and exposures",
-    ],
-    stack: [
-      "Python",
-      "pandas",
-      "NumPy",
-      "SciPy",
-      "DuckDB",
-      "Apache Parquet",
-      "asyncio and httpx",
-      "RapidFuzz",
-      "WRDS (Compustat, Capital IQ, I/B/E/S, CRSP)",
-      "OpenAI Responses API",
-      "Anthropic Messages API",
-      "Barra-style factor model",
-      "Bootstrap and permutation tests",
-      "Principal component analysis",
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "Recharts",
-      "pytest",
-    ],
-    slug: "ai-at-the-margin",
-    video: {
-      src: "/videos/ai-at-the-margin.mp4",
-      poster: "/videos/ai-at-the-margin-poster.webp",
-      duration: 21,
-    },
-    featured: true,
-    year: 2026,
-    category: "finance",
-    metrics: [
-      { value: "12", label: "OpenAI and Anthropic models compared" },
-      { value: "2,640", label: "planned model calls across three stages" },
-      { value: "7", label: "factor exposures measured for every portfolio" },
-      { value: "12", label: "dashboard pages" },
-    ],
-    content: (
-      <div>
-        <p data-label="Paper and question">
-          {"I replicated the LLM portfolio experiment in OMI Advisory and Man Group's July 2026 paper, Artificial Intelligence, Alpha and the Architecture of Markets. The paper asks what a marginal AI investor would buy: when language models are asked for a ten-stock portfolio, do they converge on the same names, and do their books carry a consistent factor tilt? I rebuilt the full pipeline on twelve OpenAI and Anthropic models, keeping every choice the paper leaves open in configuration and a deviations log. The team later added DeepSeek and Kimi models for a pilot."}
-        </p>
-        <p data-label="Data">
-          {"All market data comes from WRDS. I used Compustat daily prices for North America and global markets, Compustat FX, the Fama-French risk-free rate, point-in-time Compustat Snapshot fundamentals with a restated fallback, I/B/E/S forward earnings and Capital IQ as the security master. Each input has a primary and a fallback source, and a verification step probes table schemas at run time and picks a working source. It also computes an effective latest date for each table, which drops erroneous future-dated rows, and moves the as-of date back if prices or FX do not cover it."}
-        </p>
-        <p data-label="Portfolio collection">
-          {"I wrote adapters for the OpenAI Responses API and the Anthropic Messages API that capture web-search queries, handle paused turns and record refusals. The design has three stages: four free-form framings asked 30 times per model, four 300 to 400 word institutional mandates asked 15 times, and the same eight prompts rerun on four models with web search available. That is 2,640 planned calls. The asynchronous runner retries transport errors with backoff, never retries refusals or malformed answers, resumes by deterministic call id, enforces a budget cap per stage and refuses to spend without a matching dry run."}
-        </p>
-        <p data-label="Ticker resolution">
-          {"Models write tickers in many formats, such as BRK.B, 0700.HK, 600519.SS or ASML NA, so I built a resolver that maps each one to an issuer. It normalises the string against 30 canonical exchange codes, matches the ticker and exchange in Capital IQ, falls back to Compustat, and then to fuzzy matching on company names. Share classes, ADRs and cross-listings collapse to one issuer through the Capital IQ company id, so GOOGL and GOOG, or TSM and 2330.TW, count as the same name. Matches below a confidence threshold go to a review file."}
-        </p>
-        <p data-label="Factor model">
-          {"Barra is not licensed on the account, so I built a Barra-style replica. It measures seven exposures for every issuer: size, value, quality, momentum, residual volatility, low volatility and beta. Returns are daily USD total returns. Momentum is an EWMA-weighted 504-day excess return lagged 21 days, with a simple 12-1 month return as a robustness check. Quality averages profitability, leverage, earnings variability and accruals. Each descriptor is winsorised and standardised against an estimation universe that approximates MSCI ACWI, so a book's loading is in standard deviations. Missing data stays missing and flagged rather than zero-filled."}
-        </p>
-        <p data-label="Analysis and dashboard">
-          {"The analysis reproduces the paper's seven figures and adds new measures. It computes Jaccard name overlap with bootstrap confidence intervals over 2,000 draws, mandate effects with permutation tests, a four-part compliance test, web-search invocation rates and a rule-based query classifier scored with Cohen's kappa. The new analytics include a PCA of every book in factor space, an aggregate AI crowd book against market weights, and an implied information date that re-measures momentum books zero to 18 months back. I built a React dashboard with twelve pages over the exported results."}
-        </p>
-        <p data-label="What it shows">
-          {"The pipeline measures how much models agree on names as the prompt becomes more specific, whether different names still produce similar factor positions, whether a mandate moves the factor it targets, and whether web search changes a momentum book. The screenshots come from the synthetic demo, which runs the whole design on simulated models and a synthetic market without API keys or WRDS access. In that demo the resolver matched 35,011 of 35,158 holdings. Demo numbers test the code path only and are not research results; the dashboard labels every page as synthetic."}
         </p>
       </div>
     ),
