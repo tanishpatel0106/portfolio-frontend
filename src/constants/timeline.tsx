@@ -23,7 +23,7 @@ export const timeline = [
     },
     {
       company: "Wedmont Private Capital × Columbia - Capstone Project",
-      title: "Quantitative Researcher",
+      title: "Data Scientist – Quantitative Research (Part Time)",
       date: "August 2026 - Present",
       description: "Lifetime-utility research platform for retirement portfolios",
       responsibilities: [
