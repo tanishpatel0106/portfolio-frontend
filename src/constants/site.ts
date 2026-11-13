@@ -43,24 +43,67 @@ export const HIGHLIGHTS: { value: string; label: string; source: string }[] = [
 export const ROLES = ["Data Scientist", "AI Engineer", "Quant"];
 
 /**
- * Places on the About-page map, in order. Arcs are drawn between consecutive
- * entries. `dx`/`dy`/`anchor` only nudge the label so neighbours don't overlap.
+ * Places on the About-page map. They are not an itinerary: the map hops
+ * between them at random. A place with a `description` also gets a card under
+ * the map. `dx`/`dy`/`anchor` nudge the on-map label so neighbours don't overlap.
  */
 export const PLACES: {
   label: string;
   lat: number;
   lng: number;
+  description?: string;
   dx?: number;
   dy?: number;
   anchor?: "start" | "middle" | "end";
 }[] = [
-  { label: "Ahmedabad", lat: 23.0225, lng: 72.5714, dx: -6, dy: 0, anchor: "end" },
-  { label: "Mumbai", lat: 19.076, lng: 72.8777, dx: -6, dy: 9, anchor: "end" },
-  { label: "Roorkee", lat: 29.8543, lng: 77.888, dx: 6, dy: -4, anchor: "start" },
+  {
+    label: "Ahmedabad",
+    lat: 23.0225,
+    lng: 72.5714,
+    description: "Hometown, and where I worked at Paperchase.",
+    dx: -1.4,
+    dy: 0.4,
+    anchor: "end",
+  },
+  {
+    label: "Gandhinagar",
+    lat: 23.2156,
+    lng: 72.6369,
+    description: "Undergrad at Pandit Deendayal Energy University.",
+    dx: 1.4,
+    dy: -0.9,
+    anchor: "start",
+  },
+  {
+    label: "London",
+    lat: 51.5074,
+    lng: -0.1278,
+    description: "The hackathon where StressTester was built, with Paperchase.",
+    dx: 0,
+    dy: -2.2,
+    anchor: "middle",
+  },
+  {
+    label: "New York",
+    lat: 40.7128,
+    lng: -74.006,
+    description: "Columbia for my MS in Data Science, and my work since with Jain Global, Man Group and BMLL.",
+    dx: -1.4,
+    dy: 1.5,
+    anchor: "end",
+  },
+  {
+    label: "Old Greenwich",
+    lat: 41.0229,
+    lng: -73.5649,
+    description: "Home away from home.",
+    dx: 1.5,
+    dy: -1.3,
+    anchor: "start",
+  },
+  { label: "Mumbai", lat: 19.076, lng: 72.8777, dx: -1.4, dy: 0.9, anchor: "end" },
+  { label: "Roorkee", lat: 29.8543, lng: 77.888, dx: 1.4, dy: -0.9, anchor: "start" },
+  { label: "Singapore", lat: 1.3521, lng: 103.8198, dx: -1.4, dy: 0, anchor: "end" },
   // Country-level stop: the marker sits on Java.
-  { label: "Indonesia", lat: -6.2088, lng: 106.8456, dx: 7, dy: 7, anchor: "start" },
-  { label: "Singapore", lat: 1.3521, lng: 103.8198, dx: -6, dy: 1, anchor: "end" },
-  { label: "London", lat: 51.5074, lng: -0.1278, dx: 0, dy: -8, anchor: "middle" },
-  { label: "New York", lat: 40.7128, lng: -74.006, dx: -6, dy: 8, anchor: "end" },
-  { label: "Old Greenwich", lat: 41.0229, lng: -73.5649, dx: 7, dy: -5, anchor: "start" },
+  { label: "Indonesia", lat: -6.2088, lng: 106.8456, dx: 1.5, dy: 1.2, anchor: "start" },
 ];
