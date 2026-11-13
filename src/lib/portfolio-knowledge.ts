@@ -8,6 +8,7 @@ import { timeline as workTimeline } from "@/constants/timeline";
 import { timeline as educationTimeline } from "@/constants/education";
 import { timeline as leadershipTimeline } from "@/constants/leadership";
 import { timeline as cocurricularTimeline } from "@/constants/cocurricular";
+import { awards } from "@/constants/awards";
 import { research } from "@/constants/research";
 import { socials } from "@/constants/socials";
 import {
@@ -134,7 +135,14 @@ function buildLeadershipSection(): string {
       return lines.join("\n");
     })
     .join("\n\n");
-  return `## Leadership\n\n${body}`;
+  return `## Positions of Responsibility\n\n${body}`;
+}
+
+function buildAwardsSection(): string {
+  const body = awards
+    .map((a) => `- **${a.title}** — ${a.organization} (${a.date}). ${a.description}`)
+    .join("\n");
+  return `## Awards\n\n${body}`;
 }
 
 function buildCoCurricularSection(): string {
@@ -142,7 +150,7 @@ function buildCoCurricularSection(): string {
     .flatMap((c) => c.responsibilities ?? [])
     .map((r: string) => `- ${r}`)
     .join("\n");
-  return `## Co-Curricular Achievements\n\n${body}`;
+  return `## Earlier Hackathons and Competitions (undergraduate)\n\n${body}`;
 }
 
 function buildSkillsSection(): string {
@@ -172,6 +180,7 @@ export function buildSystemPrompt(): string {
     buildProjectsSection(),
     buildResearchSection(),
     buildLeadershipSection(),
+    buildAwardsSection(),
     buildCoCurricularSection(),
     buildSkillsSection(),
     `## Hobbies & Interests\n\n${HOBBIES}`,

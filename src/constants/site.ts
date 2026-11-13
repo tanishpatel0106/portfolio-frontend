@@ -24,19 +24,21 @@ export type AccentId = (typeof ACCENTS)[number]["id"];
 export const DEFAULT_ACCENT: AccentId = "lime";
 
 /**
- * Headline numbers for the home-page ticker: outcomes, not scale. Each one
- * restates a figure from the work history (`timeline.tsx`) or from a project
- * or paper write-up; `source` says which.
+ * Headline numbers for the home-page ticker. Paperchase and Columbia-era work
+ * only; each restates a figure from `timeline.tsx`, `leadership.tsx` or
+ * `awards.tsx`, and `source` says where it is from.
  */
 export const HIGHLIGHTS: { value: string; label: string; source: string }[] = [
-  { value: "200+", label: "finance clients served by the platform", source: "Paperchase · AI Engineer" },
-  { value: "~40%", label: "faster financial reporting", source: "Paperchase · AI Engineer" },
-  { value: "15–20 h", label: "manual work saved per client, every month", source: "Paperchase · AI Engineer" },
-  { value: "+7.55%", label: "mean certainty-equivalent gain over 60/40", source: "Wedmont Private Capital × Columbia" },
-  { value: "$6.6M", label: "gross-profit uplift modeled for a $4M AI program", source: "AI Adoption Value Dashboard" },
-  { value: "35%", label: "shorter patient waiting times", source: "Prognosis Assistant & Scheduler" },
-  { value: "7%", label: "error on daily sales forecasts in production", source: "Time Series Forecasting" },
-  { value: "98.78%", label: "defect-detection accuracy", source: "IEEE Access paper" },
+  { value: "70%", label: "less time to extract contract terms", source: "Jain Global · Quant Developer Intern" },
+  { value: "12–18%", label: "reduction in client churn", source: "Paperchase · AI Engineer" },
+  { value: "$10B", label: "institutional portfolio simulated", source: "BMLL Technologies × Columbia" },
+  { value: "40%", label: "fewer manual forecast adjustments", source: "Paperchase · AI Engineer" },
+  { value: "50K", label: "Bloomberg data fields analysed for cost", source: "Jain Global · Quant Developer Intern" },
+  { value: "20%", label: "better forecast accuracy (MAPE)", source: "Paperchase · AI Engineer" },
+  { value: "100+", label: "graduate students taught", source: "Columbia · Head Teaching Assistant" },
+  { value: "30%", label: "wider anomaly-detection coverage", source: "Paperchase · AI Engineer" },
+  { value: "1st", label: "AI adoption strategy case competition", source: "Columbia University · 2026" },
+  { value: "#85", label: "in the US, IMC Prosperity 4", source: "Trading competition · 2026" },
 ];
 
 export const ROLES = ["Data Scientist", "AI Engineer", "Quant"];

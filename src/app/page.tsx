@@ -169,7 +169,7 @@ export default async function Home() {
           action={{ href: "/resume", label: "Full resume" }}
         />
         <ol className="divide-y border-y">
-          {work.slice(0, 5).map((role, i) => (
+          {work.slice(0, 6).map((role, i) => (
             <Reveal key={role.company + role.title} delay={i * 0.04}>
               <li className="grid gap-2 py-6 md:grid-cols-[11rem_1fr] md:gap-8">
                 <p className="pt-0.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
