@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Hero } from "@/components/home/hero";
-import { Flagship } from "@/components/home/flagship";
+import { FeaturedShowcase } from "@/components/home/featured-showcase";
 import { SelectedWork } from "@/components/home/selected-work";
 import { LiveStrip } from "@/components/home/live-strip";
 import { AskAi } from "@/components/home/ask-ai";
@@ -22,7 +22,14 @@ import { research } from "@/constants/research";
 import { timeline as work } from "@/constants/timeline";
 import { techstack } from "@/constants/techstack";
 import { socials } from "@/constants/socials";
-import { getLiveProjects, getProjects, getSelectedProjects, toCard } from "@/lib/projects";
+import {
+  CATEGORY_LABELS,
+  getFeaturedProjects,
+  getLiveProjects,
+  getMoreProjects,
+  getProjects,
+  toCard,
+} from "@/lib/projects";
 import { getChatPlaceholders, getSuggestedQuestions } from "@/lib/portfolio-knowledge";
 import { getBlogMetas } from "../../lib/getAllBlogs";
 import { formatDate } from "../../lib/formatDate";
@@ -36,7 +43,8 @@ const hostOf = (url: string) => {
 };
 
 export default async function Home() {
-  const [flagship, ...selected] = getSelectedProjects(8);
+  const featured = getFeaturedProjects();
+  const selected = getMoreProjects(7);
   const total = getProjects().length;
   const liveApps = getLiveProjects();
   const posts = (await getBlogMetas()).slice(0, 3);
@@ -58,12 +66,23 @@ export default async function Home() {
         </Marquee>
       </section>
 
-      <Flagship project={flagship} />
+      <FeaturedShowcase
+        items={featured.map((p) => ({
+          slug: p.slug,
+          shortTitle: p.shortTitle,
+          description: p.description,
+          thumbnail: p.thumbnail,
+          video: p.video,
+          repoUrl: p.repoUrl,
+          category: CATEGORY_LABELS[p.category],
+          metrics: p.metrics,
+        }))}
+      />
 
       <Shell as="section" className="pb-24">
         <SectionHeading
           index="02"
-          label="Selected work"
+          label="More work"
           title="Systems that ship, not just notebooks"
           description="Trading research tools, agentic analytics, forecasting platforms and applied ML. Each one has a full write-up."
           action={{ href: "/projects", label: `All ${total} projects` }}

@@ -39,6 +39,8 @@ export type Product = {
   description: string;
   thumbnail: string;
   images: string[];
+  /** Optional alt text for `images`, in the same order. */
+  imageAlt?: string[];
   href: string;
   slug?: string;
   stack?: string[];

@@ -12,6 +12,42 @@
       ],
     },
     {
+      company: "Wedmont Private Capital × Columbia - Capstone Project",
+      title: "Quantitative Researcher",
+      date: "September 2026 - Present",
+      description: "Lifetime-utility research platform for retirement portfolios",
+      responsibilities: [
+        "Built a Numba lifecycle simulator and a FastAPI service with 25 /v1 operations, addressing every result by a SHA-256 run ID.",
+        "Implemented 5 scenario generators and 14 allocation policy types, up to a grid dynamic program on a 200-point cash-on-hand grid.",
+        "Designed 91-cell sweeps (13 withdrawal rates by 7 horizons) at 2,000 simulated paths per cell to measure certainty-equivalent gains over 60/40.",
+        "Wrote 27 backend tests, including a 60/40 cohort replay that matches an independent loop to 1e-8.",
+      ],
+    },
+    {
+      company: "Man Group × Columbia - Capstone Project",
+      title: "Quantitative Researcher",
+      date: "September 2026 - Present",
+      description: "Replicating LLM portfolio research with WRDS data",
+      responsibilities: [
+        "Built a collection pipeline that plans 2,640 calls to 12 OpenAI and Anthropic models across free-form, mandate and web-search stages, with dry-run cost estimates, retries and a budget cap per stage.",
+        "Designed a ticker resolver that maps model-written tickers to issuers through Capital IQ, Compustat and fuzzy name matching across 30 canonical exchange codes, collapsing share classes, ADRs and cross-listings.",
+        "Implemented a Barra-style factor model on WRDS data that measures 7 exposures per issuer, using point-in-time fundamentals and fallback sources chosen by run-time schema probes.",
+        "Delivered analyses behind the paper's 7 figures plus new crowding, factor-space and information-date measures, shown in a 12-page React dashboard and covered by 67 pytest tests.",
+      ],
+    },
+    {
+      company: "BMLL Technologies × Columbia - Capstone Project",
+      title: "Quantitative Developer",
+      date: "September 2026 - Present",
+      description: "Built a simulated asset manager end to end",
+      responsibilities: [
+        "Built a deterministic engine that ran a 1,002-session S&P 500 index fund through PM, trader, child-order and fill levels, checking the NAV identity every session.",
+        "Designed a 29-table Postgres schema and 56 FastAPI endpoints covering runs, orders, lineage, TCA, market data and studies.",
+        "Implemented notional-weighted transaction-cost analytics with a four-part implementation-shortfall split and 2,000-resample block bootstrap intervals, validated by a known-answer test within 0.5 bps.",
+        "Wrote 66 backend tests and a CI pipeline running ruff, strict mypy, pytest and an OpenAPI contract check, alongside a replay command that fails unless output hashes match.",
+      ],
+    },
+    {
       company: "Columbia University - Lamont-Doherty Earth Observatory",
       title: "Research Assistant — Data Valuation for Ocean fCO₂ Prediction",
       date: "January 2026 - May 2026",

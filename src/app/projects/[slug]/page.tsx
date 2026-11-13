@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -15,7 +16,7 @@ import { Gallery } from "@/components/projects/gallery";
 import { LiveDemo } from "@/components/shared/live-demo";
 import { VideoPlayer } from "@/components/shared/video-player";
 import { ViewCounter } from "@/components/shared/view-counter";
-import { TracingBeam } from "@/components/ui/tracing-beam";
+import { ScrollStory, type StoryItem } from "@/components/projects/scroll-story";
 import {
   ButtonLink,
   Eyebrow,
@@ -58,6 +59,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * Splits a write-up (`<div><p>…</p><p>…</p></div>`) into its paragraphs so each
+ * can animate on its own. A paragraph may carry `data-label="Problem"`.
+ */
+function toStory(content: React.ReactNode): StoryItem[] | null {
+  if (!React.isValidElement<{ children?: React.ReactNode }>(content)) return null;
+  const blocks = React.Children.toArray(content.props.children).filter((child) =>
+    React.isValidElement(child)
+  ) as React.ReactElement<{ "data-label"?: string }>[];
+  if (blocks.length < 2) return null;
+  return blocks.map((node) => ({ label: node.props["data-label"], node }));
+}
+
 const formatMonth = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric" });
 
@@ -69,6 +83,9 @@ export default async function SingleProjectPage({ params }: Props) {
   const { prev, next } = getAdjacentProjects(project.slug);
   const repo = await getRepoStats(repoSlug(project.repoUrl));
   const { live, video, link } = project;
+  const story = toStory(project.content);
+  // "Name: what it is" titles show the name large and the rest as a subtitle.
+  const subtitle = project.title.slice(project.shortTitle.length).replace(/^\s*[:—–]\s*/, "").trim();
   // The hero shows the richest thing available: live app, then video, then a screenshot.
   const galleryImages =
     live || video ? project.images : project.images.filter((i) => i !== project.thumbnail);
@@ -97,8 +114,13 @@ export default async function SingleProjectPage({ params }: Props) {
                 )}
               </Eyebrow>
               <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                {project.title}
+                {project.shortTitle}
               </h1>
+              {subtitle && (
+                <p className="mt-3 max-w-2xl text-balance text-xl font-medium leading-snug tracking-tight text-foreground/80 md:text-2xl">
+                  {subtitle}
+                </p>
+              )}
               <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
                 {project.description}
               </p>
@@ -173,7 +195,7 @@ export default async function SingleProjectPage({ params }: Props) {
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border bg-muted">
                 <Image
                   src={project.thumbnail}
-                  alt={`${project.shortTitle} screenshot`}
+                  alt={project.imageAlt?.[project.images.indexOf(project.thumbnail)] ?? `${project.shortTitle} screenshot`}
                   fill
                   priority
                   sizes="(min-width: 1152px) 1088px, 100vw"
@@ -185,18 +207,23 @@ export default async function SingleProjectPage({ params }: Props) {
         </Shell>
 
         <Shell className="mt-14 grid gap-12 lg:grid-cols-[1fr_18rem]">
-          <div className="min-w-0 lg:pl-10">
-            {/* Aceternity Tracing Beam follows reading progress down the write-up. */}
-            <TracingBeam className="h-auto max-w-none">
+          <div className="min-w-0">
+            {story ? (
+              <ScrollStory items={story} />
+            ) : (
               <div className="prose prose-neutral max-w-none dark:prose-invert prose-p:leading-relaxed prose-p:text-muted-foreground prose-headings:tracking-tight prose-a:text-brand prose-strong:text-foreground">
                 {project.content}
               </div>
-            </TracingBeam>
+            )}
 
             {galleryImages.length > 0 && (
               <section className="mt-14">
                 <Eyebrow className="mb-4">Screenshots</Eyebrow>
-                <Gallery images={galleryImages} title={project.shortTitle} />
+                <Gallery
+                  images={galleryImages}
+                  alts={galleryImages.map((src) => project.imageAlt?.[project.images.indexOf(src)])}
+                  title={project.shortTitle}
+                />
               </section>
             )}
           </div>

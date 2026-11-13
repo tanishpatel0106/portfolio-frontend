@@ -152,11 +152,16 @@ export const getProjects = (): Project[] => all;
 export const getProject = (slug: string): Project | undefined =>
   all.find((p) => p.slug === slug);
 
-/** Featured first (in file order), then everything else in file order. */
-export const getSelectedProjects = (count: number): Project[] => {
+/** Hero projects for the home showcase: every `featured` entry, else the first. */
+export const getFeaturedProjects = (): Project[] => {
   const featured = all.filter((p) => p.featured);
-  const rest = all.filter((p) => !p.featured);
-  return [...featured, ...rest].slice(0, count);
+  return featured.length ? featured : all.slice(0, 1);
+};
+
+/** The next `count` projects after the hero ones, in file order. */
+export const getMoreProjects = (count: number): Project[] => {
+  const heroes = new Set(getFeaturedProjects().map((p) => p.slug));
+  return all.filter((p) => !heroes.has(p.slug)).slice(0, count);
 };
 
 export const getLiveProjects = (): Project[] => all.filter((p) => p.live);

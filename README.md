@@ -67,11 +67,24 @@ live: {
 video: { src: "…mp4", webm: "…webm", poster: "…webp", duration: 20 },
 ```
 
-The first project in the file (or the first with `featured: true`) is the scroll showcase on the home page.
+Every project with `featured: true` becomes a tab in the scroll showcase at the top of the home page (if none is featured, the first project is used). The grid below it shows the next projects in file order.
+
+Write-ups animate paragraph by paragraph on the project page. Each top-level `<p>` in `content` is one step; give it a short label with `data-label`:
+
+```tsx
+content: (
+  <div>
+    <p data-label="Problem">…</p>
+    <p data-label="Data">…</p>
+  </div>
+),
+```
+
+`imageAlt` is an optional list of alt texts in the same order as `images`.
 
 ### Live apps
 
-A project with a live app appears in the Live Lab (`/lab`) and gets a status dot from `/api/status`, which pings its `healthUrl` (cached for 60 seconds). Apps on free hosting sleep when idle; the demo frame wakes them and shows a loader while they start. `vercel.json` schedules a daily warm-up call. For an app to be embedded it must allow framing from `tanishpatel.dev`.
+A project that is not deployed shows its demo video in the Live Lab instead (featured projects without a video show a screenshot preview). A project with a live app appears in the Live Lab (`/lab`) and gets a status dot from `/api/status`, which pings its `healthUrl` (cached for 60 seconds). Apps on free hosting sleep when idle; the demo frame wakes them and shows a loader while they start. `vercel.json` schedules a daily warm-up call. For an app to be embedded it must allow framing from `tanishpatel.dev`.
 
 ### Videos (Brag)
 

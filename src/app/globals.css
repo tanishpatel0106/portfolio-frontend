@@ -287,3 +287,12 @@ html[data-motion="reduced"] .marquee-track {
 .prose img {
   border-radius: 0.75rem;
 }
+
+/* Auto-advance indicator on the active tab of the home showcase. */
+@keyframes featured-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.featured-progress {
+  animation: featured-progress linear forwards;
+}

@@ -32,11 +32,11 @@ export const ContainerScroll = ({
 
   const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
-  const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const translate = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
     <div
-      className="h-[46rem] md:h-[72rem] flex items-center justify-center relative p-2 md:p-16"
+      className="h-[56rem] md:h-[86rem] flex items-center justify-center relative p-2 md:p-16"
       ref={containerRef}
     >
       <div
