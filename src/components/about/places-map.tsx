@@ -32,13 +32,22 @@ const arc = (a: { x: number; y: number }, b: { x: number; y: number }) => {
   return `M ${a.x} ${a.y} Q ${(a.x + b.x) / 2} ${Math.min(a.y, b.y) - lift} ${b.x} ${b.y}`;
 };
 
+// Every pair of places gets a line. Places that sit almost on top of each
+// other (Ahmedabad/Gandhinagar, New York/Old Greenwich) share one set of
+// lines, otherwise the same arc would be drawn twice.
+const NODES = POINTS.filter(
+  (place, i) => !POINTS.slice(0, i).some((earlier) => Math.hypot(earlier.x - place.x, earlier.y - place.y) < 1.5)
+);
+const WEB = NODES.flatMap((a, i) => NODES.slice(i + 1).map((b) => ({ key: `${a.label}-${b.label}`, d: arc(a, b) })));
+
 type Hop = { id: number; from: number; to: number };
 const HOP_MS = 1900;
 const TRAIL = [1, 0.4, 0.15];
 
 /**
- * World map (after Aceternity's World Map) that hops between places at random.
- * The places are not a route, so there is no order and no numbering.
+ * World map (after Aceternity's World Map): a web of lines between all the
+ * places, with a brighter arc that hops between them at random. The places
+ * are not a route, so there is no order and no numbering.
  */
 export function PlacesMap() {
   const { motion: motionPref } = usePreferences();
@@ -100,6 +109,23 @@ export function PlacesMap() {
           aria-label={`World map marking ${PLACES.map((p) => p.label).join(", ")}`}
           className="pointer-events-none absolute inset-0 h-full w-full select-none"
         >
+          {/* The standing web: every place linked to every other. */}
+          {WEB.map((line, i) => (
+            <motion.path
+              key={line.key}
+              d={line.d}
+              fill="none"
+              stroke="var(--brand)"
+              strokeWidth={0.2}
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 0.38 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, delay: 0.2 + i * 0.07, ease: "easeOut" }}
+            />
+          ))}
+
+          {/* The hop: one brighter arc travelling between random places. */}
           <AnimatePresence>
             {hops.map((hop, age) => (
               <motion.path
@@ -107,7 +133,7 @@ export function PlacesMap() {
                 d={arc(POINTS[hop.from], POINTS[hop.to])}
                 fill="none"
                 stroke="var(--brand)"
-                strokeWidth={0.32}
+                strokeWidth={0.42}
                 strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 1 }}
                 animate={{ pathLength: 1, opacity: TRAIL[age] }}
