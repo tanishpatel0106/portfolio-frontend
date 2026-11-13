@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { PhotoStack } from "@/components/about/photo-stack";
+import { PhotoGallery } from "@/components/about/photo-gallery";
 import { PlacesMapLazy } from "@/components/about/places-map-lazy";
 import { ButtonLink, Eyebrow, SectionHeading, Shell } from "@/components/shared/primitives";
 import { Reveal } from "@/components/shared/reveal";
@@ -46,7 +46,6 @@ export default function AboutPage() {
           ))}
         </div>
         <div className="space-y-6">
-          <PhotoStack photos={ABOUT_PHOTOS} />
           {current.length > 0 && (
             <div className="rounded-2xl border bg-card p-5">
               <Eyebrow className="text-brand">Now</Eyebrow>
@@ -62,6 +61,11 @@ export default function AboutPage() {
             </div>
           )}
         </div>
+      </Shell>
+
+      <Shell as="section" className="mt-24">
+        <SectionHeading label="In pictures" title="A little beyond the work" />
+        <PhotoGallery photos={ABOUT_PHOTOS} />
       </Shell>
 
       <Shell as="section" className="mt-24">
