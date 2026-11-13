@@ -42,10 +42,25 @@ export const HIGHLIGHTS: { value: string; label: string; source: string }[] = [
 
 export const ROLES = ["Data Scientist", "AI Engineer", "Quant"];
 
-/** Places on the About-page map. */
-export const PLACES = {
-  gandhinagar: { lat: 23.2156, lng: 72.6369, label: "Gandhinagar" },
-  newYork: { lat: 40.7128, lng: -74.006, label: "New York" },
-  roorkee: { lat: 29.8543, lng: 77.888, label: "Roorkee" },
-  uttarakhand: { lat: 30.0668, lng: 79.0193, label: "Uttarakhand" },
-} as const;
+/**
+ * Places on the About-page map, in order. Arcs are drawn between consecutive
+ * entries. `dx`/`dy`/`anchor` only nudge the label so neighbours don't overlap.
+ */
+export const PLACES: {
+  label: string;
+  lat: number;
+  lng: number;
+  dx?: number;
+  dy?: number;
+  anchor?: "start" | "middle" | "end";
+}[] = [
+  { label: "Ahmedabad", lat: 23.0225, lng: 72.5714, dx: -6, dy: 0, anchor: "end" },
+  { label: "Mumbai", lat: 19.076, lng: 72.8777, dx: -6, dy: 9, anchor: "end" },
+  { label: "Roorkee", lat: 29.8543, lng: 77.888, dx: 6, dy: -4, anchor: "start" },
+  // Country-level stop: the marker sits on Java.
+  { label: "Indonesia", lat: -6.2088, lng: 106.8456, dx: 7, dy: 7, anchor: "start" },
+  { label: "Singapore", lat: 1.3521, lng: 103.8198, dx: -6, dy: 1, anchor: "end" },
+  { label: "London", lat: 51.5074, lng: -0.1278, dx: 0, dy: -8, anchor: "middle" },
+  { label: "New York", lat: 40.7128, lng: -74.006, dx: -6, dy: 8, anchor: "end" },
+  { label: "Old Greenwich", lat: 41.0229, lng: -73.5649, dx: 7, dy: -5, anchor: "start" },
+];

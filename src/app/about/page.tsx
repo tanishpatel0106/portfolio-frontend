@@ -67,8 +67,8 @@ export default function AboutPage() {
       <Shell as="section" className="mt-24">
         <SectionHeading
           label="Places"
-          title="From Gujarat to New York, by way of the Himalayas"
-          description="Undergrad in Gandhinagar, a drone competition at IIT Roorkee, mountain trails in Uttarakhand, and now Columbia."
+          title="From Ahmedabad to New York, with stops along the way"
+          description="Ahmedabad, Mumbai, Roorkee, Indonesia, Singapore, London, New York and Old Greenwich."
         />
         <div className="overflow-hidden rounded-3xl border bg-card p-2 md:p-6">
           <PlacesMap />

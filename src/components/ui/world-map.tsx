@@ -12,11 +12,21 @@ interface MapProps {
     end: { lat: number; lng: number; label?: string };
   }>;
   lineColor?: string;
+  /** Optional place names drawn next to their markers (hidden on small screens). */
+  labels?: Array<{
+    lat: number;
+    lng: number;
+    label: string;
+    dx?: number;
+    dy?: number;
+    anchor?: "start" | "middle" | "end";
+  }>;
 }
 
 export default function WorldMap({
   dots = [],
   lineColor = "#0ea5e9",
+  labels = [],
 }: MapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const map = new DottedMap({ height: 100, grid: "diagonal" });
@@ -41,7 +51,9 @@ export default function WorldMap({
     end: { x: number; y: number }
   ) => {
     const midX = (start.x + end.x) / 2;
-    const midY = Math.min(start.y, end.y) - 50;
+    // Lift the arc in proportion to its length so short hops stay shallow.
+    const distance = Math.hypot(end.x - start.x, end.y - start.y);
+    const midY = Math.min(start.y, end.y) - Math.min(50, distance * 0.4);
     return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
   };
 
@@ -164,6 +176,27 @@ export default function WorldMap({
             </g>
           </g>
         ))}
+        {labels.map((place) => {
+          const point = projectPoint(place.lat, place.lng);
+          return (
+            <text
+              key={`label-${place.label}`}
+              x={point.x + (place.dx ?? 6)}
+              y={point.y + (place.dy ?? 0)}
+              textAnchor={place.anchor ?? "start"}
+              dominantBaseline="middle"
+              fontSize="7.5"
+              fontWeight="500"
+              paintOrder="stroke"
+              stroke="var(--card)"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+              className="hidden fill-foreground md:block"
+            >
+              {place.label}
+            </text>
+          );
+        })}
       </svg>
     </div>
   );
