@@ -24,16 +24,20 @@ export type AccentId = (typeof ACCENTS)[number]["id"];
 export const DEFAULT_ACCENT: AccentId = "lime";
 
 /**
- * Headline numbers for the home-page ticker. Each one restates a fact that
- * already appears in `timeline.tsx`, `research.tsx` or a project write-up.
+ * Headline numbers for the home-page ticker. Paperchase and Columbia-era work
+ * only; each restates a figure from `timeline.tsx`, `leadership.tsx` or
+ * `awards.tsx`, and `source` says where it is from.
  */
-export const HIGHLIGHTS: { value: string; label: string }[] = [
-  { value: "200+", label: "hospitality finance clients served at Paperchase" },
-  { value: "~40%", label: "lower reporting latency from Azure microservices" },
-  { value: "8,192", label: "data-source coalitions scored for ocean fCO₂ valuation" },
-  { value: "15–20 h", label: "of manual forecasting saved per client each month" },
-  { value: "4", label: "research papers, including IEEE Access, Springer and ACM SAC" },
-  { value: "200+", label: "technical indicators in the Prosperity Trading Terminal" },
+export const HIGHLIGHTS: { value: string; label: string; source: string }[] = [
+  { value: "70%", label: "less time to extract contract terms", source: "Jain Global · Quant Developer Intern" },
+  { value: "12–18%", label: "reduction in client churn", source: "Paperchase · AI Engineer" },
+  { value: "$10B", label: "institutional portfolio simulated", source: "BMLL Technologies × Columbia" },
+  { value: "40%", label: "fewer manual forecast adjustments", source: "Paperchase · AI Engineer" },
+  { value: "50K", label: "Bloomberg data fields analysed for cost", source: "Jain Global · Quant Developer Intern" },
+  { value: "20%", label: "better forecast accuracy (MAPE)", source: "Paperchase · AI Engineer" },
+  { value: "30%", label: "wider anomaly-detection coverage", source: "Paperchase · AI Engineer" },
+  { value: "1st", label: "AI adoption strategy case competition", source: "Columbia University · 2026" },
+  { value: "#85", label: "in the US, IMC Prosperity 4", source: "Trading competition · 2026" },
 ];
 
 export const ROLES = ["Data Scientist", "AI Engineer", "Quant"];

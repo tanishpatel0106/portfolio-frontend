@@ -67,7 +67,20 @@ live: {
 video: { src: "…mp4", webm: "…webm", poster: "…webp", duration: 20 },
 ```
 
-The first project in the file (or the first with `featured: true`) is the scroll showcase on the home page.
+Every project with `featured: true` becomes a tab in the scroll showcase at the top of the home page (if none is featured, the first project is used). The grid below it shows the next projects in file order.
+
+Write-ups animate paragraph by paragraph on the project page. Each top-level `<p>` in `content` is one step; give it a short label with `data-label`:
+
+```tsx
+content: (
+  <div>
+    <p data-label="Problem">…</p>
+    <p data-label="Data">…</p>
+  </div>
+),
+```
+
+`imageAlt` is an optional list of alt texts in the same order as `images`.
 
 ### Live apps
 
@@ -76,15 +89,17 @@ A project with a live app appears in the Live Lab (`/lab`) and gets a status dot
 ### Videos (Brag)
 
 1. Run `/brag` in the project's repository to produce `brag-output/brag.mp4`.
-2. Convert and upload it:
+2. Prepare it for the site:
 
 ```bash
-node scripts/ingest-video.mjs <project-slug> path/to/brag.mp4
+node scripts/ingest-video.mjs <project-slug> path/to/brag.mp4 --poster-at 5
 ```
 
 3. Paste the printed `video: { … }` snippet into the project's entry.
 
-The script needs FFmpeg. With `BLOB_READ_WRITE_TOKEN` set it uploads to Vercel Blob; without it, the files are written to `video-out/` for you to host elsewhere. Videos are never committed to git.
+The script needs FFmpeg. It writes a compressed MP4 and a poster image to `public/videos/`, which you commit with the site; a 20-second clip comes out at about 2 MB. `--poster-at` picks the frame (in seconds) used as the poster. For long or numerous videos, add `--blob` to upload to Vercel Blob instead (needs `BLOB_READ_WRITE_TOKEN`), which keeps them out of git.
+
+A project with a video and no deployment is listed with the live apps in the Live Lab, in the same browser frame, marked "Video demo".
 
 ## AI chat
 

@@ -7,16 +7,17 @@ import { timeline as work } from "@/constants/timeline";
 import { timeline as education } from "@/constants/education";
 import { timeline as leadership } from "@/constants/leadership";
 import { timeline as cocurricular } from "@/constants/cocurricular";
+import { awards } from "@/constants/awards";
 import { SITE } from "@/constants/site";
 
 export const metadata: Metadata = {
   title: "Resume",
   description:
-    "Resume of Tanish Patel: experience in applied AI and data science, education at Columbia University and PDEU, leadership and awards.",
+    "Resume of Tanish Patel: experience in data science, AI engineering and quantitative research, education at Columbia University and PDEU, positions of responsibility and awards.",
 };
 
 export default function ResumePage() {
-  const awards = cocurricular.flatMap((c) => c.responsibilities);
+  const earlier = cocurricular.flatMap((c) => c.responsibilities);
 
   return (
     <main>
@@ -85,7 +86,7 @@ export default function ResumePage() {
 
       <Shell as="section" className="mt-24 grid gap-14 lg:grid-cols-2">
         <div>
-          <SectionHeading index="03" label="Leadership" title="Leadership" />
+          <SectionHeading index="03" label="Leadership" title="Positions of responsibility" />
           <ul className="space-y-6">
             {leadership.map((l) => (
               <li key={l.company} className="border-l-2 border-border pl-5">
@@ -104,15 +105,33 @@ export default function ResumePage() {
           </ul>
         </div>
         <div>
-          <SectionHeading index="04" label="Awards" title="Hackathons and awards" />
-          <ul className="divide-y border-y">
-            {awards.map((a, i) => (
-              <li key={a.slice(0, 48)} className="flex gap-4 py-3.5 text-sm leading-relaxed">
-                <span className="pt-0.5 font-mono text-xs text-brand">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-muted-foreground">{a.trim()}</span>
+          <SectionHeading index="04" label="Awards" title="Awards" />
+          <ul className="space-y-4">
+            {awards.map((a) => (
+              <li key={a.title} className="rounded-2xl border bg-card p-5">
+                <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                  {a.date} · {a.organization}
+                </p>
+                <h3 className="mt-1.5 text-lg font-semibold tracking-tight">{a.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{a.description}</p>
               </li>
             ))}
           </ul>
+          {earlier.length > 0 && (
+            <>
+              <Eyebrow className="mb-3 mt-10">Earlier hackathons and competitions</Eyebrow>
+              <ul className="divide-y border-y">
+                {earlier.map((a, i) => (
+                  <li key={a.slice(0, 48)} className="flex gap-4 py-3 text-sm leading-relaxed">
+                    <span className="pt-0.5 font-mono text-xs text-muted-foreground">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-muted-foreground">{a.trim()}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       </Shell>
     </main>

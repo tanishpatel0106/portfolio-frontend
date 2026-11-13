@@ -1,5 +1,14 @@
 export const timeline = [
   {
+    company: "Columbia University - Algorithmic Trading, Data Driven Methods in Finance, Time Series Analysis",
+    title: "Head Teaching Assistant",
+    date: "September 2025 - Present",
+    description: "",
+    responsibilities: [
+      "Lead instruction for 100+ graduate students across Algorithmic Trading, Data-Driven Methods in Finance, and Time Series Analysis, covering statistical modeling, quantitative strategy development, Python-based backtesting, and portfolio risk analytics.",
+    ],
+  },
+  {
     company: "Anirveda - Techno-Economics Society of PDEU",
     title: "Vice President",
     date: "2021 - 2024",

@@ -1,48 +1,66 @@
-  export const timeline = [
+export const timeline = [
     {
-      company: "Jain Global",
-      title: "Data Management & Vendor Operations Intern",
-      date: "June 2026 - Present",
-      description: "AI-Enabled Data Operations & Vendor Management",
+      company: "Man Group × Columbia - Capstone Project",
+      title: "Data Scientist – Quantitative Research (Part Time)",
+      date: "August 2026 - Present",
+      description: "LLM portfolio-construction research on WRDS data",
       responsibilities: [
-        "Designing AI-enabled automation across data sourcing, procurement, and vendor-management workflows to reduce manual cycle time and accelerate delivery of alpha-generating data to investment professionals across asset classes.",
-        "Building LLM-powered extraction pipelines to parse vendor contracts, emails, invoices, and procurement documents for commercial terms, renewal triggers, obligations, pricing details, and operational exceptions.",
-        "Developing invoice processing, validation, and anomaly detection workflows to identify billing inconsistencies, vendor-data issues, and cost-optimization opportunities across firm-wide data-procurement operations.",
-        "Analyzing vendor usage, spend, and workflow performance data to support procurement decisions, improve operational visibility, and help investment teams access cleaner, faster, and more reliable external data.",
+        "Engineered a 3-stage LLM experimentation framework evaluating 12 OpenAI and Anthropic models on portfolio construction, automating inference, structured extraction, model evaluation, and cost monitoring.",
+        "Developed WRDS-based factor models and crowding analytics to benchmark study findings, including Jaccard overlap declining from 0.69 to 0.38 and momentum exposure shifting from −0.38 to +0.43 with web-enabled inference.",
       ],
     },
     {
-      company: "Columbia University - Lamont-Doherty Earth Observatory",
-      title: "Research Assistant — Data Valuation for Ocean fCO₂ Prediction",
+      company: "BMLL Technologies × Columbia - Capstone Project",
+      title: "Data Scientist – Quantitative Development (Part Time)",
+      date: "August 2026 - Present",
+      description: "Institutional portfolio and execution simulation",
+      responsibilities: [
+        "Built a $10B institutional portfolio simulation using CRSP data, processing 8,452 synthetic orders across 1,010 NAV observations, with daily NAV reconciliation; achieved 107% cumulative pre-cost returns, 16% annualized volatility, and 19% maximum drawdown.",
+        "Designed a multi-stage PM, Trader, Broker, Execution simulation framework for BMLL market microstructure research, incorporating synthetic child orders, venue routing, modeled fills, and transaction-cost analytics covering implementation shortfall, slippage, market impact, order-flow toxicity, and broker execution quality.",
+      ],
+    },
+    {
+      company: "Wedmont Private Capital × Columbia - Capstone Project",
+      title: "Quantitative Researcher",
+      date: "September 2026 - Present",
+      description: "Lifetime-utility research platform for retirement portfolios",
+      responsibilities: [
+        "Built a Numba lifecycle simulator and a FastAPI service with 25 /v1 operations, addressing every result by a SHA-256 run ID.",
+        "Implemented 5 scenario generators and 14 allocation policy types, up to a grid dynamic program on a 200-point cash-on-hand grid.",
+        "Designed 91-cell sweeps (13 withdrawal rates by 7 horizons) at 2,000 simulated paths per cell to measure certainty-equivalent gains over 60/40.",
+        "Wrote 27 backend tests, including a 60/40 cohort replay that matches an independent loop to 1e-8.",
+      ],
+    },
+    {
+      company: "Jain Global, LLC",
+      title: "Quantitative Developer Intern – Data Management",
+      date: "June 2026 - August 2026",
+      description: "Market-data analytics and LLM document intelligence",
+      responsibilities: [
+        "Engineered Bloomberg Data License usage analytics across 50K fields using anomaly detection, cost-impact scoring, and 4-month simulations to identify duplicate, stale, and over-frequent requests and generate field-level optimization recommendations.",
+        "Developed a metadata-driven alternative-data discovery and vendor-risk framework evaluating schema coverage, point-in-time availability, entitlement constraints, and dataset usability to prioritize datasets and accelerate sourcing workflows.",
+        "Built an LLM-based document intelligence pipeline using document routing, citation-backed extraction, and cross-model proposer–verifier checks, reducing contract extraction time by 70% while improving reliability of structured outputs.",
+      ],
+    },
+    {
+      company: "Data Science Institute, Columbia University",
+      title: "Researcher",
       date: "January 2026 - May 2026",
-      description: "Cooperative Game Theory & ML",
+      description: "Data valuation for ocean CO₂ prediction",
       responsibilities: [
-        "Conducting a data valuation study for ocean fCO₂ prediction using cooperative game theory, exhaustively enumerating all 2¹³ = 8,192 source coalitions across 13 observational datasets (~300K samples) and training XGBRegressor models per coalition against a held-out North American Subtropical task set.",
-        "Implemented 8+ valuation methodologies — exact Shapley, Banzhaf, Beta Shapley, Least Core (LP-based), Complement Shapley, Weighted Banzhaf, Shapley-Taylor order-3 interactions, and Weighted Shapley with geographic weighting schemes — to quantify individual and joint source contributions.",
-        "Developed a novel Interaction-Aware Two-Phase Valuation framework that captures higher-order synergy and redundancy effects missed by standard marginal-contribution methods, with detailed negative source removal impact analysis.",
-        "Built a reproducible research pipeline with resumable .npz coalition caching, joblib parallelism, and Cartopy Robinson projection geospatial visualizations, producing 51+ analytical graphs across two notebooks and a full research report.",
+        "Built a data-valuation framework across 13 heterogeneous data sources, training XGBoost models over 8,192 source coalitions and computing exact Shapley values to quantify each source’s marginal contribution to ocean CO₂ prediction accuracy.",
+        "Developed interaction-aware attribution methods to identify complementary and redundant source combinations, quantifying incremental predictive value beyond standalone contributions and enabling principled data-selection decisions.",
       ],
     },
     {
-      company: "Columbia University — IEOR Department",
-      title: "Teaching Assistant — Algorithmic Trading (IEOR E4733)",
-      date: "January 2026 - May 2026",
-      description: "Market Microstructure & Trading Systems",
-      responsibilities: [
-        "Supporting graduate-level instruction in algorithmic trading covering market microstructure theory, optimal market-making (Avellaneda-Stoikov), optimal execution (GLFT), and high-frequency trading system design.",
-        "Guided students through hands-on implementation of HDF5 data pipelines, event-driven trading architectures, and statistical signal construction for systematic strategies.",
-      ],
-    },
-    {
-      company: "Paperchase Inc.",
+      company: "Paperchase Accountancy Ltd.",
       title: "AI Engineer",
-      date: "May 2024 - August 2025",
+      date: "April 2024 - July 2025",
       description: "Predictive Analytics and Product Development for Hospitality Finance",
       responsibilities: [
-        "Engineered an end-to-end financial intelligence platform combining AutoML forecasting, multi-agent LLM commentary, and drill-through P&L/Balance Sheet analytics used by CFOs and finance leaders across 200+ hospitality clients.",
-        "Built scalable Azure-based microservices (FastAPI + Functions + SQL Server) to operationalize forecasting, KPI computation, and AI-generated variance analysis, reducing reporting latency by nearly 40%.",
-        "Led the development of a multi-agent reasoning workflow that produced account-wise financial insights, automated variance explanations, and executive-grade commentary for P&L and Balance Sheet statements.",
-        "Designed and deployed data pipelines and forecasting frameworks using SARIMA, LSTM, N-BEATS, AutoTS, and NeuralForecast, standardizing financial projections and saving 15–20 hours/month of manual effort per client.",
+        "Developed and validated forecasting pipelines using SARIMA, LSTM, N-BEATS, and AutoTS for revenue and demand planning, improving forecast accuracy by 20% MAPE and reducing manual forecast adjustments by 40%.",
+        "Engineered anomaly-detection models across financial account clusters to identify mispostings, unusual accrual/prepayment behavior, expense spikes, and margin-impacting outliers, increasing detection coverage by 30%.",
+        "Built client-risk models using engagement, usage, and financial-behavior features, achieving 87% precision and contributing to a 12–18% reduction in client churn.",
       ],
     },
     {
@@ -81,4 +99,4 @@
         "Effectively communicated complex technical updates and insights to stakeholders, fostering a collaborative environment and ensuring alignment with project goals.",
       ],
     },
-  ];
+];

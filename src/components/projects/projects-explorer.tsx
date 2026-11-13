@@ -11,7 +11,7 @@ import { CATEGORY_LABELS, type ProjectCard } from "@/lib/projects";
 import type { ProjectCategory } from "@/types/products";
 import { cn } from "@/lib/utils";
 
-type Filter = "all" | "live" | "video" | "source" | ProjectCategory;
+type Filter = "all" | "demo" | "source" | ProjectCategory;
 
 const chip = (active: boolean) =>
   cn(
@@ -30,11 +30,9 @@ export function ProjectsExplorer({ projects }: { projects: ProjectCard[] }) {
     const out: { id: Filter; label: string; count: number }[] = [
       { id: "all", label: "All", count: projects.length },
     ];
-    const live = projects.filter((p) => p.isLive).length;
-    const video = projects.filter((p) => p.video).length;
+    const demo = projects.filter((p) => p.isLive || p.video).length;
     const source = projects.filter((p) => p.hasRepo).length;
-    if (live) out.push({ id: "live", label: "Live", count: live });
-    if (video) out.push({ id: "video", label: "Video", count: video });
+    if (demo) out.push({ id: "demo", label: "Demos", count: demo });
     if (source) out.push({ id: "source", label: "Open source", count: source });
     (Object.keys(CATEGORY_LABELS) as ProjectCategory[]).forEach((c) => {
       const count = projects.filter((p) => p.category === c).length;
@@ -45,8 +43,7 @@ export function ProjectsExplorer({ projects }: { projects: ProjectCard[] }) {
 
   const visible = projects.filter((p) => {
     if (filter === "all") return true;
-    if (filter === "live") return p.isLive;
-    if (filter === "video") return Boolean(p.video);
+    if (filter === "demo") return p.isLive || Boolean(p.video);
     if (filter === "source") return p.hasRepo;
     return p.category === filter;
   });
@@ -63,7 +60,7 @@ export function ProjectsExplorer({ projects }: { projects: ProjectCard[] }) {
               onClick={() => setFilter(f.id)}
               className={chip(filter === f.id)}
             >
-              {f.id === "live" && <StatusDot status="live" pulse={false} />}
+              {f.id === "demo" && <StatusDot status="live" pulse={false} />}
               {f.label}
               <span className={cn("font-mono text-[10px]", filter === f.id ? "opacity-70" : "opacity-60")}>
                 {f.count}

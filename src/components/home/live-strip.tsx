@@ -11,10 +11,11 @@ export type LiveAppCard = {
   title: string;
   host: string;
   thumbnail: string;
-  embeddable: boolean;
+  /** A recorded demo instead of a deployed app. */
+  videoOnly?: boolean;
 };
 
-/** Compact list of running apps with a real health check next to each. */
+/** Compact list of things to run or watch: live apps (with a real health check) and video demos. */
 export function LiveStrip({ apps }: { apps: LiveAppCard[] }) {
   const statuses = useAppStatuses();
   return (
@@ -35,12 +36,21 @@ export function LiveStrip({ apps }: { apps: LiveAppCard[] }) {
                 <span className="block truncate font-mono text-[11px] text-muted-foreground">{app.host}</span>
               </span>
               <span className="hidden items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-muted-foreground sm:inline-flex">
-                <StatusDot status={status?.state ?? "idle"} />
-                {status
-                  ? status.state === "live"
-                    ? `${status.latencyMs} ms`
-                    : status.state
-                  : "checking"}
+                {app.videoOnly ? (
+                  <>
+                    <StatusDot status="video" />
+                    video demo
+                  </>
+                ) : (
+                  <>
+                    <StatusDot status={status?.state ?? "idle"} />
+                    {status
+                      ? status.state === "live"
+                        ? `${status.latencyMs} ms`
+                        : status.state
+                      : "checking"}
+                  </>
+                )}
               </span>
               <IconArrowUpRight
                 className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand"

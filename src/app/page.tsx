@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Hero } from "@/components/home/hero";
-import { Flagship } from "@/components/home/flagship";
+import { FeaturedShowcase } from "@/components/home/featured-showcase";
 import { SelectedWork } from "@/components/home/selected-work";
 import { LiveStrip } from "@/components/home/live-strip";
 import { AskAi } from "@/components/home/ask-ai";
@@ -22,7 +22,14 @@ import { research } from "@/constants/research";
 import { timeline as work } from "@/constants/timeline";
 import { techstack } from "@/constants/techstack";
 import { socials } from "@/constants/socials";
-import { getLiveProjects, getProjects, getSelectedProjects, toCard } from "@/lib/projects";
+import {
+  CATEGORY_LABELS,
+  getFeaturedProjects,
+  getLabProjects,
+  getMoreProjects,
+  getProjects,
+  toCard,
+} from "@/lib/projects";
 import { getChatPlaceholders, getSuggestedQuestions } from "@/lib/portfolio-knowledge";
 import { getBlogMetas } from "../../lib/getAllBlogs";
 import { formatDate } from "../../lib/formatDate";
@@ -36,34 +43,55 @@ const hostOf = (url: string) => {
 };
 
 export default async function Home() {
-  const [flagship, ...selected] = getSelectedProjects(8);
+  const featured = getFeaturedProjects();
+  const selected = getMoreProjects(7);
   const total = getProjects().length;
-  const liveApps = getLiveProjects();
+  const liveApps = getLabProjects();
   const posts = (await getBlogMetas()).slice(0, 3);
 
   return (
     <main>
       <Hero />
 
-      {/* Headline numbers, each restating a fact from the work history. */}
-      <section aria-label="Highlights" className="border-y bg-surface py-5">
-        <Marquee durationSeconds={55}>
+      {/* Headline numbers from the work history, each tagged with its source. */}
+      <section aria-label="Highlights" className="border-y bg-surface py-4">
+        <Marquee durationSeconds={60}>
           {HIGHLIGHTS.map((h) => (
-            <div key={h.label} className="flex items-baseline gap-3 px-8">
-              <span className="font-mono text-2xl font-medium tracking-tight text-foreground">{h.value}</span>
-              <span className="max-w-[16rem] text-sm text-muted-foreground">{h.label}</span>
-              <span aria-hidden className="ml-8 text-brand">◆</span>
+            <div key={h.value + h.label} className="flex items-center">
+              <div className="flex items-center gap-4 px-8">
+                <span className="font-mono text-[1.7rem] font-medium leading-none tracking-tight text-foreground">
+                  {h.value}
+                </span>
+                <span className="flex flex-col gap-1 whitespace-nowrap">
+                  <span className="text-sm leading-none text-foreground/90">{h.label}</span>
+                  <span className="font-mono text-[10px] uppercase leading-none tracking-[0.14em] text-muted-foreground">
+                    {h.source}
+                  </span>
+                </span>
+              </div>
+              <span aria-hidden className="h-9 w-px bg-border" />
             </div>
           ))}
         </Marquee>
       </section>
 
-      <Flagship project={flagship} />
+      <FeaturedShowcase
+        items={featured.map((p) => ({
+          slug: p.slug,
+          shortTitle: p.shortTitle,
+          description: p.description,
+          thumbnail: p.thumbnail,
+          video: p.video,
+          repoUrl: p.repoUrl,
+          category: CATEGORY_LABELS[p.category],
+          metrics: p.metrics,
+        }))}
+      />
 
       <Shell as="section" className="pb-24">
         <SectionHeading
           index="02"
-          label="Selected work"
+          label="More work"
           title="Systems that ship, not just notebooks"
           description="Trading research tools, agentic analytics, forecasting platforms and applied ML. Each one has a full write-up."
           action={{ href: "/projects", label: `All ${total} projects` }}
@@ -82,11 +110,11 @@ export default async function Home() {
               </Eyebrow>
               <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight md:text-4xl">
                 Don’t take my word for it.{" "}
-                <span className="font-display font-normal italic text-brand">Run it.</span>
+                <span className="font-display font-normal italic text-brand">Run it, or watch it.</span>
               </h2>
               <p className="mt-4 max-w-md text-pretty text-muted-foreground">
-                Some of these projects are deployed. Launch them inside the page;
-                the status next to each one is a real health check.
+                Deployed apps launch inside the page, and the status next to
+                each is a real health check. The others play a recorded demo.
               </p>
               <ButtonLink href="/lab" className="mt-7">
                 Open the live lab
@@ -96,9 +124,9 @@ export default async function Home() {
               apps={liveApps.map((p) => ({
                 slug: p.slug,
                 title: p.shortTitle,
-                host: hostOf(p.live!.url),
+                host: p.live ? hostOf(p.live.url) : "Recorded demo",
                 thumbnail: p.thumbnail,
-                embeddable: p.live!.kind !== "external",
+                videoOnly: !p.live,
               }))}
             />
           </Shell>
@@ -141,7 +169,7 @@ export default async function Home() {
           action={{ href: "/resume", label: "Full resume" }}
         />
         <ol className="divide-y border-y">
-          {work.slice(0, 5).map((role, i) => (
+          {work.slice(0, 6).map((role, i) => (
             <Reveal key={role.company + role.title} delay={i * 0.04}>
               <li className="grid gap-2 py-6 md:grid-cols-[11rem_1fr] md:gap-8">
                 <p className="pt-0.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">

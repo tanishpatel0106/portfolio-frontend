@@ -330,6 +330,8 @@ Positioning (added during the build): **Data Scientist · AI Engineer · Quant.*
 - [x] **Phase 5, backend:** chat on a current model with `show_cards` and rate limits, `/api/status` with a daily warm-up cron, GitHub repo stats, `/api/contact`, `/api/views`, share images, sitemap, robots, JSON-LD.
 - [x] **Phase 6, polish:** lint clean, production build, every route checked in light, dark and at phone width.
 
+- [x] **Capstones:** LIFECYCLE (Wedmont Private Capital), AI at the Margin (Man Group) and SIMP (BMLL Technologies) added as featured projects and as work experience, with screenshots taken on synthetic or public data. The home showcase now rotates through every featured project, write-ups animate per paragraph, and the Live Lab shows a video or screenshot preview for projects that are not deployed.
+
 ### Aceternity components in use
 
 Resizable Navbar, Dotted Glow Background, Encrypted Text, Layout Text Flip, Pointer Highlight, Hover Border Gradient, Container Scroll Animation, Glowing Effect, 3D Marquee, Apple Cards Carousel, Background Ripple Effect, Placeholders And Vanish Input, Floating Dock, Text Hover Effect, Tracing Beam, Terminal, Multi Step Loader, Timeline, Draggable Card, World Map, Text Generate Effect, Stateful Button.

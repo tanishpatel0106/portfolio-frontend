@@ -1,15 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { IconBrandGithub } from "@tabler/icons-react";
+import Image from "next/image";
 import { LiveDemo } from "@/components/shared/live-demo";
+import { VideoDemo } from "@/components/shared/video-demo";
 import { StatusTerminal } from "@/components/lab/status-terminal";
-import { ArrowLink, Eyebrow, SectionHeading, Shell, Tag } from "@/components/shared/primitives";
-import { getLiveProjects, getProjects } from "@/lib/projects";
+import { ArrowLink, Eyebrow, SectionHeading, Shell, StatusBadge, Tag } from "@/components/shared/primitives";
+import { getLabProjects, getProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Live Lab",
   description:
-    "Run Tanish Patel's deployed projects in the browser. Each app shows a real health check and launches inside the page.",
+    "Run Tanish Patel's deployed projects in the browser and watch recorded demos of the rest.",
 };
 
 const hostOf = (url: string) => {
@@ -21,8 +23,14 @@ const hostOf = (url: string) => {
 };
 
 export default function LabPage() {
-  const live = getLiveProjects();
-  const codeOnly = getProjects().filter((p) => !p.live && p.repoUrl);
+  // Deployed apps and recorded demos share the main list, in project order.
+  const lab = getLabProjects();
+  const deployed = lab.filter((p) => p.live);
+  const videoCount = lab.length - deployed.length;
+  const rest = getProjects().filter((p) => !p.live && !p.video);
+  // Hero projects with nothing to run or watch yet get a screenshot preview.
+  const previews = rest.filter((p) => p.featured);
+  const codeOnly = rest.filter((p) => !p.featured && p.repoUrl);
 
   return (
     <main>
@@ -33,38 +41,43 @@ export default function LabPage() {
             <Eyebrow className="flex items-center gap-2">
               <span className="text-brand">Live lab</span>
               <span aria-hidden>/</span>
-              {live.length} {live.length === 1 ? "app" : "apps"} online
+              {[
+                deployed.length > 0 && `${deployed.length} live`,
+                videoCount > 0 && `${videoCount} video ${videoCount === 1 ? "demo" : "demos"}`,
+              ]
+                .filter(Boolean)
+                .join(" · ")}
             </Eyebrow>
             <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight md:text-6xl">
               Run the work,{" "}
               <span className="font-display font-normal italic text-brand">don’t just read</span> about it
             </h1>
             <p className="mt-5 max-w-lg text-pretty text-lg leading-relaxed text-muted-foreground">
-              Deployed projects launch inside the page. Apps on free hosting go
-              to sleep when idle; launching one wakes it, which can take up to a
-              minute.
+              Deployed projects launch inside the page; the rest play a
+              recorded demo. Apps on free hosting sleep when idle, so launching
+              one can take up to a minute.
             </p>
           </div>
-          {live.length > 0 && (
-            <StatusTerminal apps={live.map((p) => ({ slug: p.slug, host: hostOf(p.live!.url) }))} />
+          {deployed.length > 0 && (
+            <StatusTerminal apps={deployed.map((p) => ({ slug: p.slug, host: hostOf(p.live!.url) }))} />
           )}
         </Shell>
       </section>
 
       <Shell className="space-y-20 py-16">
-        {live.length === 0 && (
+        {lab.length === 0 && (
           <p className="rounded-2xl border bg-card p-10 text-center text-muted-foreground">
-            No apps are deployed yet. They will appear here as they go live.
+            Nothing to run or watch yet. Apps and demos will appear here.
           </p>
         )}
 
-        {live.map((p, i) => (
+        {lab.map((p, i) => (
           <section key={p.slug} id={p.slug} className="grid scroll-mt-28 gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div className="lg:sticky lg:top-28 lg:self-start">
               <Eyebrow className="flex items-center gap-2">
                 <span className="text-brand">{String(i + 1).padStart(2, "0")}</span>
                 <span aria-hidden>/</span>
-                {hostOf(p.live!.url)}
+                {p.live ? hostOf(p.live.url) : "Video demo"}
               </Eyebrow>
               <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight">{p.shortTitle}</h2>
               <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">{p.description}</p>
@@ -78,15 +91,55 @@ export default function LabPage() {
                 {p.repoUrl && <ArrowLink href={p.repoUrl}>Source</ArrowLink>}
               </div>
             </div>
-            <LiveDemo
-              slug={p.slug}
-              title={p.shortTitle}
-              live={p.live!}
-              poster={p.thumbnail}
-              video={p.video}
-            />
+            {p.live ? (
+              <LiveDemo
+                slug={p.slug}
+                title={p.shortTitle}
+                live={p.live}
+                poster={p.thumbnail}
+                video={p.video}
+              />
+            ) : (
+              <VideoDemo slug={p.slug} title={p.shortTitle} video={p.video!} />
+            )}
           </section>
         ))}
+
+        {previews.length > 0 && (
+          <section>
+            <SectionHeading
+              label="No demo yet"
+              title="Previews"
+              description="Screenshots and the full write-up, until a demo is recorded or the app is deployed."
+            />
+            <ul className="grid gap-6 md:grid-cols-2">
+              {previews.map((p) => (
+                <li key={p.slug} id={p.slug} className="scroll-mt-28 overflow-hidden rounded-2xl border bg-card">
+                  <Link href={`/projects/${p.slug}`} tabIndex={-1} aria-hidden className="relative block aspect-[16/10] bg-muted">
+                    <Image
+                      src={p.thumbnail}
+                      alt=""
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover object-left-top"
+                    />
+                    <StatusBadge status="idle" label="Screenshots" className="absolute left-3 top-3" />
+                  </Link>
+                  <div className="p-5">
+                    <h3 className="text-xl font-semibold tracking-tight">{p.shortTitle}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                      {p.description}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-5">
+                      <ArrowLink href={`/projects/${p.slug}`}>Case study</ArrowLink>
+                      {p.repoUrl && <ArrowLink href={p.repoUrl}>Source</ArrowLink>}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {codeOnly.length > 0 && (
           <section>

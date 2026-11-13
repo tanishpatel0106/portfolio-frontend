@@ -7,7 +7,17 @@ import { IconChevronLeft, IconChevronRight, IconX } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 /** Screenshot grid with a keyboard-friendly lightbox. */
-export function Gallery({ images, title }: { images: string[]; title: string }) {
+export function Gallery({
+  images,
+  title,
+  alts,
+}: {
+  images: string[];
+  title: string;
+  /** Optional alt text per image, same order as `images`. */
+  alts?: (string | undefined)[];
+}) {
+  const altFor = (i: number) => alts?.[i] ?? `${title} screenshot ${i + 1}`;
   const [open, setOpen] = useState<number | null>(null);
 
   useEffect(() => {
@@ -47,7 +57,7 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
           >
             <Image
               src={src}
-              alt={`${title} screenshot ${i + 1}`}
+              alt={altFor(i)}
               fill
               sizes="(min-width: 768px) 33vw, 50vw"
               className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
@@ -110,7 +120,7 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
               <Image
                 key={images[open]}
                 src={images[open]}
-                alt={`${title} screenshot ${open + 1}`}
+                alt={altFor(open)}
                 fill
                 sizes="100vw"
                 className="object-contain"

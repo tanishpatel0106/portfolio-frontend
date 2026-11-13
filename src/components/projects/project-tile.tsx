@@ -24,7 +24,7 @@ function badgeFor(project: ProjectCard, status?: AppStatus): { status: Status; l
     if (project.liveKind === "external") return { status: "live", label: "Live site" };
     return { status: status?.state ?? "live", label: status?.state === "waking" ? "Waking" : "Live demo" };
   }
-  if (project.video) return { status: "video", label: "Video" };
+  if (project.video) return { status: "video", label: "Video demo" };
   return null;
 }
 
