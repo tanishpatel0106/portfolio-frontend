@@ -7,6 +7,7 @@ export const timeline = [
       responsibilities: [
         "Engineered a 3-stage LLM experimentation framework evaluating 12 OpenAI and Anthropic models on portfolio construction, automating inference, structured extraction, model evaluation, and cost monitoring.",
         "Developed WRDS-based factor models and crowding analytics to benchmark study findings, including Jaccard overlap declining from 0.69 to 0.38 and momentum exposure shifting from −0.38 to +0.43 with web-enabled inference.",
+        "Designed a ticker resolver that maps model-written tickers to issuers through Capital IQ, Compustat and fuzzy name matching across 30 canonical exchange codes, collapsing share classes, ADRs and cross-listings.",
       ],
     },
     {
@@ -17,6 +18,7 @@ export const timeline = [
       responsibilities: [
         "Built a $10B institutional portfolio simulation using CRSP data, processing 8,452 synthetic orders across 1,010 NAV observations, with daily NAV reconciliation; achieved 107% cumulative pre-cost returns, 16% annualized volatility, and 19% maximum drawdown.",
         "Designed a multi-stage PM, Trader, Broker, Execution simulation framework for BMLL market microstructure research, incorporating synthetic child orders, venue routing, modeled fills, and transaction-cost analytics covering implementation shortfall, slippage, market impact, order-flow toxicity, and broker execution quality.",
+        "Designed a 29-table Postgres schema and 56 FastAPI endpoints covering runs, orders, lineage, TCA, market data and studies, with a replay command that fails unless output hashes match.",
       ],
     },
     {
@@ -25,10 +27,9 @@ export const timeline = [
       date: "August 2026 - Present",
       description: "Lifetime-utility research platform for retirement portfolios",
       responsibilities: [
-        "Built a Numba lifecycle simulator and a FastAPI service with 25 /v1 operations, addressing every result by a SHA-256 run ID.",
+        "Built a Numba lifecycle simulator and a FastAPI service with 25 /v1 operations, addressing every result by a SHA-256 run ID and covering the engine with 27 backend tests.",
         "Implemented 5 scenario generators and 14 allocation policy types, up to a grid dynamic program on a 200-point cash-on-hand grid.",
         "Designed 91-cell sweeps (13 withdrawal rates by 7 horizons) at 2,000 simulated paths per cell to measure certainty-equivalent gains over 60/40.",
-        "Wrote 27 backend tests, including a 60/40 cohort replay that matches an independent loop to 1e-8.",
       ],
     },
     {
