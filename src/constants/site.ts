@@ -35,7 +35,6 @@ export const HIGHLIGHTS: { value: string; label: string; source: string }[] = [
   { value: "40%", label: "fewer manual forecast adjustments", source: "Paperchase · AI Engineer" },
   { value: "50K", label: "Bloomberg data fields analysed for cost", source: "Jain Global · Quant Developer Intern" },
   { value: "20%", label: "better forecast accuracy (MAPE)", source: "Paperchase · AI Engineer" },
-  { value: "100+", label: "graduate students taught", source: "Columbia · Head Teaching Assistant" },
   { value: "30%", label: "wider anomaly-detection coverage", source: "Paperchase · AI Engineer" },
   { value: "1st", label: "AI adoption strategy case competition", source: "Columbia University · 2026" },
   { value: "#85", label: "in the US, IMC Prosperity 4", source: "Trading competition · 2026" },
