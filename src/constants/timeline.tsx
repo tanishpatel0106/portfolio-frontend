@@ -22,7 +22,7 @@ export const timeline = [
     {
       company: "Wedmont Private Capital × Columbia - Capstone Project",
       title: "Quantitative Researcher",
-      date: "September 2026 - Present",
+      date: "August 2026 - Present",
       description: "Lifetime-utility research platform for retirement portfolios",
       responsibilities: [
         "Built a Numba lifecycle simulator and a FastAPI service with 25 /v1 operations, addressing every result by a SHA-256 run ID.",
