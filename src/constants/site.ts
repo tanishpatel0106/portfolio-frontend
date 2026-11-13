@@ -24,16 +24,18 @@ export type AccentId = (typeof ACCENTS)[number]["id"];
 export const DEFAULT_ACCENT: AccentId = "lime";
 
 /**
- * Headline numbers for the home-page ticker. Each one restates a fact that
- * already appears in `timeline.tsx`, `research.tsx` or a project write-up.
+ * Headline numbers for the home-page ticker. Every one is taken from a bullet
+ * in the work history (`timeline.tsx`); `source` names the role it comes from.
  */
-export const HIGHLIGHTS: { value: string; label: string }[] = [
-  { value: "200+", label: "hospitality finance clients served at Paperchase" },
-  { value: "~40%", label: "lower reporting latency from Azure microservices" },
-  { value: "8,192", label: "data-source coalitions scored for ocean fCO₂ valuation" },
-  { value: "15–20 h", label: "of manual forecasting saved per client each month" },
-  { value: "4", label: "research papers, including IEEE Access, Springer and ACM SAC" },
-  { value: "200+", label: "technical indicators in the Prosperity Trading Terminal" },
+export const HIGHLIGHTS: { value: string; label: string; source: string }[] = [
+  { value: "2,640", label: "LLM calls planned across 12 models", source: "Man Group × Columbia" },
+  { value: "1,002", label: "trading sessions per simulated fund run", source: "BMLL Technologies × Columbia" },
+  { value: "2,000", label: "simulated paths per cell, 91-cell sweeps", source: "Wedmont Private Capital × Columbia" },
+  { value: "~300K", label: "ocean samples across 13 datasets", source: "Lamont-Doherty Earth Observatory" },
+  { value: "0.5 bps", label: "tolerance on the trading-cost check", source: "BMLL Technologies × Columbia" },
+  { value: "14", label: "allocation policies, 5 scenario generators", source: "Wedmont Private Capital × Columbia" },
+  { value: "8+", label: "data-valuation methods implemented", source: "Lamont-Doherty Earth Observatory" },
+  { value: "7", label: "factor exposures measured per issuer", source: "Man Group × Columbia" },
 ];
 
 export const ROLES = ["Data Scientist", "AI Engineer", "Quant"];

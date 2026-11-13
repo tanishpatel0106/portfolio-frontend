@@ -53,14 +53,23 @@ export default async function Home() {
     <main>
       <Hero />
 
-      {/* Headline numbers, each restating a fact from the work history. */}
-      <section aria-label="Highlights" className="border-y bg-surface py-5">
-        <Marquee durationSeconds={55}>
+      {/* Headline numbers from the work history, each tagged with its source. */}
+      <section aria-label="Highlights" className="border-y bg-surface py-4">
+        <Marquee durationSeconds={60}>
           {HIGHLIGHTS.map((h) => (
-            <div key={h.label} className="flex items-baseline gap-3 px-8">
-              <span className="font-mono text-2xl font-medium tracking-tight text-foreground">{h.value}</span>
-              <span className="max-w-[16rem] text-sm text-muted-foreground">{h.label}</span>
-              <span aria-hidden className="ml-8 text-brand">◆</span>
+            <div key={h.value + h.label} className="flex items-center">
+              <div className="flex items-center gap-4 px-8">
+                <span className="font-mono text-[1.7rem] font-medium leading-none tracking-tight text-foreground">
+                  {h.value}
+                </span>
+                <span className="flex flex-col gap-1 whitespace-nowrap">
+                  <span className="text-sm leading-none text-foreground/90">{h.label}</span>
+                  <span className="font-mono text-[10px] uppercase leading-none tracking-[0.14em] text-muted-foreground">
+                    {h.source}
+                  </span>
+                </span>
+              </div>
+              <span aria-hidden className="h-9 w-px bg-border" />
             </div>
           ))}
         </Marquee>
