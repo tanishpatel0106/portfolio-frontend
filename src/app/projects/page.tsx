@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import { ProjectsExplorer } from "@/components/projects/projects-explorer";
+import { ProjectGraphView } from "@/components/projects/project-graph";
+import { buildProjectGraph } from "@/lib/project-graph";
 import { ThreeDMarquee } from "@/components/ui/3d-marquee";
-import { Eyebrow, Shell } from "@/components/shared/primitives";
+import { Eyebrow, SectionHeading, Shell } from "@/components/shared/primitives";
 import { getProjects, toCard } from "@/lib/projects";
 
 export const metadata: Metadata = {
@@ -45,7 +47,18 @@ export default function Projects() {
         </Shell>
       </section>
 
-      <Shell as="section" className="py-12">
+      <Shell as="section" className="pt-14">
+        <SectionHeading
+          label="Project graph"
+          title="How the work connects"
+          description="Each dot is a project. A line joins two that share tools, methods or a domain, so related work ends up side by side. Pick a project or a thread."
+          className="mb-6"
+        />
+        <ProjectGraphView graph={buildProjectGraph()} />
+      </Shell>
+
+      <Shell as="section" className="py-14">
+        <SectionHeading label="All projects" title="Browse everything" className="mb-6" />
         <ProjectsExplorer projects={projects.map(toCard)} />
       </Shell>
     </main>

@@ -296,3 +296,19 @@ html[data-motion="reduced"] .marquee-track {
 .featured-progress {
   animation: featured-progress linear forwards;
 }
+
+/* Project-graph group colours. Four hues from a palette checked for
+   colour-blind separation and contrast on each surface; dark mode has its own
+   steps rather than an automatic flip. */
+:root {
+  --viz-finance: #2a78d6;
+  --viz-agents: #e87ba4;
+  --viz-ml: #008300;
+  --viz-research: #eda100;
+}
+.dark {
+  --viz-finance: #3987e5;
+  --viz-agents: #d55181;
+  --viz-ml: #008300;
+  --viz-research: #c98500;
+}

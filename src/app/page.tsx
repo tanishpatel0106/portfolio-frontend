@@ -18,9 +18,10 @@ import {
 } from "@/components/shared/primitives";
 import { Reveal } from "@/components/shared/reveal";
 import { HIGHLIGHTS, SITE } from "@/constants/site";
+import { cn } from "@/lib/utils";
 import { research } from "@/constants/research";
 import { timeline as work } from "@/constants/timeline";
-import { techstack } from "@/constants/techstack";
+import { techstackRows, type Skill } from "@/constants/techstack";
 import { socials } from "@/constants/socials";
 import {
   CATEGORY_LABELS,
@@ -41,6 +42,43 @@ const hostOf = (url: string) => {
     return url;
   }
 };
+
+// Brand colours that are nearly black would vanish on the dark theme, so
+// those icons take the text colour instead.
+const isDark = (hex: string) => {
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b < 70;
+};
+
+function SkillChip({ skill }: { skill: Skill }) {
+  return (
+    <div className="flex items-center gap-2.5 px-6">
+      {skill.src ? (
+        <Image
+          src={skill.src}
+          alt=""
+          width={28}
+          height={28}
+          className={cn("h-6 w-6 object-contain", skill.invertOnDark && "dark:invert")}
+        />
+      ) : skill.icon ? (
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden
+          className="h-5 w-5 shrink-0 text-foreground"
+          fill={isDark(skill.icon.hex) ? "currentColor" : `#${skill.icon.hex}`}
+        >
+          <path d={skill.icon.path} />
+        </svg>
+      ) : (
+        <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+      )}
+      <span className="whitespace-nowrap font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {skill.title}
+      </span>
+    </div>
+  );
+}
 
 export default async function Home() {
   const featured = getFeaturedProjects();
@@ -232,17 +270,14 @@ export default async function Home() {
         </Shell>
       )}
 
-      <section aria-label="Tools I work with" className="border-y bg-surface py-8">
-        <Marquee durationSeconds={50} reverse>
-          {techstack.map((t) => (
-            <div key={t.title} className="flex items-center gap-2.5 px-7">
-              <Image src={t.src} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
-              <span className="whitespace-nowrap font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                {t.title}
-              </span>
-            </div>
-          ))}
-        </Marquee>
+      <section aria-label="Tools I work with" className="space-y-5 border-y bg-surface py-7">
+        {techstackRows.map((row, i) => (
+          <Marquee key={i} durationSeconds={i === 0 ? 55 : 70} reverse={i % 2 === 0}>
+            {row.map((skill) => (
+              <SkillChip key={skill.title} skill={skill} />
+            ))}
+          </Marquee>
+        ))}
       </section>
 
       <Shell as="section" className="py-24">
