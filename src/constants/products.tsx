@@ -528,6 +528,11 @@ export const products = [
     "NBA API",
   ],
   slug: "matchodds-ai",
+  video: {
+    src: "/videos/matchodds-ai.mp4",
+    poster: "/videos/matchodds-ai-poster.webp",
+    duration: 21,
+  },
   content: (
     <div>
       <p>
@@ -634,6 +639,11 @@ export const products = [
     "WandB"
   ],
   slug: "cloud-rl",
+  video: {
+    src: "/videos/cloud-rl.mp4",
+    poster: "/videos/cloud-rl-poster.webp",
+    duration: 22,
+  },
   content: (
     <div>
       <p>
