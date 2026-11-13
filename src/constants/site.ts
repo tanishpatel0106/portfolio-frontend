@@ -24,18 +24,19 @@ export type AccentId = (typeof ACCENTS)[number]["id"];
 export const DEFAULT_ACCENT: AccentId = "lime";
 
 /**
- * Headline numbers for the home-page ticker. Every one is taken from a bullet
- * in the work history (`timeline.tsx`); `source` names the role it comes from.
+ * Headline numbers for the home-page ticker: outcomes, not scale. Each one
+ * restates a figure from the work history (`timeline.tsx`) or from a project
+ * or paper write-up; `source` says which.
  */
 export const HIGHLIGHTS: { value: string; label: string; source: string }[] = [
-  { value: "2,640", label: "LLM calls planned across 12 models", source: "Man Group × Columbia" },
-  { value: "1,002", label: "trading sessions per simulated fund run", source: "BMLL Technologies × Columbia" },
-  { value: "2,000", label: "simulated paths per cell, 91-cell sweeps", source: "Wedmont Private Capital × Columbia" },
-  { value: "~300K", label: "ocean samples across 13 datasets", source: "Lamont-Doherty Earth Observatory" },
-  { value: "0.5 bps", label: "tolerance on the trading-cost check", source: "BMLL Technologies × Columbia" },
-  { value: "14", label: "allocation policies, 5 scenario generators", source: "Wedmont Private Capital × Columbia" },
-  { value: "8+", label: "data-valuation methods implemented", source: "Lamont-Doherty Earth Observatory" },
-  { value: "7", label: "factor exposures measured per issuer", source: "Man Group × Columbia" },
+  { value: "200+", label: "finance clients served by the platform", source: "Paperchase · AI Engineer" },
+  { value: "~40%", label: "faster financial reporting", source: "Paperchase · AI Engineer" },
+  { value: "15–20 h", label: "manual work saved per client, every month", source: "Paperchase · AI Engineer" },
+  { value: "+7.55%", label: "mean certainty-equivalent gain over 60/40", source: "Wedmont Private Capital × Columbia" },
+  { value: "$6.6M", label: "gross-profit uplift modeled for a $4M AI program", source: "AI Adoption Value Dashboard" },
+  { value: "35%", label: "shorter patient waiting times", source: "Prognosis Assistant & Scheduler" },
+  { value: "7%", label: "error on daily sales forecasts in production", source: "Time Series Forecasting" },
+  { value: "98.78%", label: "defect-detection accuracy", source: "IEEE Access paper" },
 ];
 
 export const ROLES = ["Data Scientist", "AI Engineer", "Quant"];
