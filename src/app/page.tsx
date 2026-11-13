@@ -25,7 +25,7 @@ import { socials } from "@/constants/socials";
 import {
   CATEGORY_LABELS,
   getFeaturedProjects,
-  getLiveProjects,
+  getLabProjects,
   getMoreProjects,
   getProjects,
   toCard,
@@ -46,7 +46,7 @@ export default async function Home() {
   const featured = getFeaturedProjects();
   const selected = getMoreProjects(7);
   const total = getProjects().length;
-  const liveApps = getLiveProjects();
+  const liveApps = getLabProjects();
   const posts = (await getBlogMetas()).slice(0, 3);
 
   return (
@@ -101,11 +101,11 @@ export default async function Home() {
               </Eyebrow>
               <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight md:text-4xl">
                 Don’t take my word for it.{" "}
-                <span className="font-display font-normal italic text-brand">Run it.</span>
+                <span className="font-display font-normal italic text-brand">Run it, or watch it.</span>
               </h2>
               <p className="mt-4 max-w-md text-pretty text-muted-foreground">
-                Some of these projects are deployed. Launch them inside the page;
-                the status next to each one is a real health check.
+                Deployed apps launch inside the page, and the status next to
+                each is a real health check. The others play a recorded demo.
               </p>
               <ButtonLink href="/lab" className="mt-7">
                 Open the live lab
@@ -115,9 +115,9 @@ export default async function Home() {
               apps={liveApps.map((p) => ({
                 slug: p.slug,
                 title: p.shortTitle,
-                host: hostOf(p.live!.url),
+                host: p.live ? hostOf(p.live.url) : "Recorded demo",
                 thumbnail: p.thumbnail,
-                embeddable: p.live!.kind !== "external",
+                videoOnly: !p.live,
               }))}
             />
           </Shell>

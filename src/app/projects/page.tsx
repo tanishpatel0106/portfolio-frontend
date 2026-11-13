@@ -16,7 +16,7 @@ const wallImage = (src: string) => `/_next/image?url=${encodeURIComponent(src)}&
 export default function Projects() {
   const projects = getProjects();
   const wall = projects.flatMap((p) => p.images.slice(0, 2)).slice(0, 28).map(wallImage);
-  const liveCount = projects.filter((p) => p.live).length;
+  const demoCount = projects.filter((p) => p.live || p.video).length;
 
   return (
     <main>
@@ -32,7 +32,7 @@ export default function Projects() {
           <Eyebrow className="flex items-center gap-2">
             <span className="text-brand">Work</span>
             <span aria-hidden>/</span>
-            {projects.length} projects{liveCount > 0 && ` · ${liveCount} live`}
+            {projects.length} projects{demoCount > 0 && ` · ${demoCount} with demos`}
           </Eyebrow>
           <h1 className="mt-4 max-w-2xl text-balance text-5xl font-semibold tracking-tight md:text-6xl">
             Things I’ve{" "}
@@ -40,7 +40,7 @@ export default function Projects() {
           </h1>
           <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
             Trading research tools, agentic analytics, forecasting platforms
-            and applied ML. Every project has a full write-up; some you can run.
+            and applied ML. Every project has a full write-up; some you can run or watch.
           </p>
         </Shell>
       </section>

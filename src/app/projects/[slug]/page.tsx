@@ -14,7 +14,7 @@ import {
 } from "@tabler/icons-react";
 import { Gallery } from "@/components/projects/gallery";
 import { LiveDemo } from "@/components/shared/live-demo";
-import { VideoPlayer } from "@/components/shared/video-player";
+import { VideoDemo } from "@/components/shared/video-demo";
 import { ViewCounter } from "@/components/shared/view-counter";
 import { ScrollStory, type StoryItem } from "@/components/projects/scroll-story";
 import {
@@ -131,6 +131,7 @@ export default async function SingleProjectPage({ params }: Props) {
                 {live && live.kind !== "external" && (
                   <ButtonLink href="#demo">Launch live demo</ButtonLink>
                 )}
+                {!live && video && <ButtonLink href="#demo">Watch the demo</ButtonLink>}
                 {link.kind !== "none" && link.kind !== "github" && !(live && link.url === live.url && live.kind !== "external") && (
                   <ButtonLink href={link.url} variant={live && live.kind !== "external" ? "outline" : "primary"}>
                     {link.label}
@@ -146,7 +147,7 @@ export default async function SingleProjectPage({ params }: Props) {
               </div>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 lg:justify-end">
                 {live && <StatusBadge status="live" label={live.kind === "external" ? "Live site" : "Live demo"} />}
-                {video && <StatusBadge status="video" label="Video" />}
+                {video && <StatusBadge status="video" label="Video demo" />}
                 {repo && (
                   <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
                     <span className="inline-flex items-center gap-1">
@@ -185,12 +186,7 @@ export default async function SingleProjectPage({ params }: Props) {
                 video={video}
               />
             ) : video ? (
-              <VideoPlayer
-                video={video}
-                title={project.shortTitle}
-                fit="contain"
-                className="aspect-video w-full rounded-2xl border"
-              />
+              <VideoDemo slug={project.slug} title={project.shortTitle} video={video} linkToCaseStudy={false} />
             ) : (
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border bg-muted">
                 <Image

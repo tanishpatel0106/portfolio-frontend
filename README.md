@@ -84,20 +84,22 @@ content: (
 
 ### Live apps
 
-A project that is not deployed shows its demo video in the Live Lab instead (featured projects without a video show a screenshot preview). A project with a live app appears in the Live Lab (`/lab`) and gets a status dot from `/api/status`, which pings its `healthUrl` (cached for 60 seconds). Apps on free hosting sleep when idle; the demo frame wakes them and shows a loader while they start. `vercel.json` schedules a daily warm-up call. For an app to be embedded it must allow framing from `tanishpatel.dev`.
+A project with a live app appears in the Live Lab (`/lab`) and gets a status dot from `/api/status`, which pings its `healthUrl` (cached for 60 seconds). Apps on free hosting sleep when idle; the demo frame wakes them and shows a loader while they start. `vercel.json` schedules a daily warm-up call. For an app to be embedded it must allow framing from `tanishpatel.dev`.
 
 ### Videos (Brag)
 
 1. Run `/brag` in the project's repository to produce `brag-output/brag.mp4`.
-2. Convert and upload it:
+2. Prepare it for the site:
 
 ```bash
-node scripts/ingest-video.mjs <project-slug> path/to/brag.mp4
+node scripts/ingest-video.mjs <project-slug> path/to/brag.mp4 --poster-at 5
 ```
 
 3. Paste the printed `video: { … }` snippet into the project's entry.
 
-The script needs FFmpeg. With `BLOB_READ_WRITE_TOKEN` set it uploads to Vercel Blob; without it, the files are written to `video-out/` for you to host elsewhere. Videos are never committed to git.
+The script needs FFmpeg. It writes a compressed MP4 and a poster image to `public/videos/`, which you commit with the site; a 20-second clip comes out at about 2 MB. `--poster-at` picks the frame (in seconds) used as the poster. For long or numerous videos, add `--blob` to upload to Vercel Blob instead (needs `BLOB_READ_WRITE_TOKEN`), which keeps them out of git.
+
+A project with a video and no deployment is listed with the live apps in the Live Lab, in the same browser frame, marked "Video demo".
 
 ## AI chat
 

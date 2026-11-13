@@ -164,7 +164,11 @@ export const getMoreProjects = (count: number): Project[] => {
   return all.filter((p) => !heroes.has(p.slug)).slice(0, count);
 };
 
+/** Deployed apps only (these get a real health check). */
 export const getLiveProjects = (): Project[] => all.filter((p) => p.live);
+
+/** Everything with something to run or watch: deployed apps and video demos. */
+export const getLabProjects = (): Project[] => all.filter((p) => p.live || p.video);
 
 export const getAdjacentProjects = (slug: string) => {
   const i = all.findIndex((p) => p.slug === slug);

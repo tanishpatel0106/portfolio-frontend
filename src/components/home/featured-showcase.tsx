@@ -38,14 +38,16 @@ export function FeaturedShowcase({ items }: { items: FeaturedItem[] }) {
   const { motion: motionPref } = usePreferences();
   const item = items[active];
   const many = items.length > 1;
-  const autoplay = many && inView && !paused && motionPref !== "reduced" && !item.video;
+  // A tab with a video stays up for the length of the video.
+  const rotateMs = item.video ? ((item.video.duration ?? 20) + 1) * 1000 : ROTATE_MS;
+  const autoplay = many && inView && !paused && motionPref !== "reduced";
 
   useEffect(() => {
     if (!autoplay) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setTimeout(() => setActive((a) => (a + 1) % items.length), ROTATE_MS);
+    const timer = window.setTimeout(() => setActive((a) => (a + 1) % items.length), rotateMs);
     return () => window.clearTimeout(timer);
-  }, [autoplay, active, items.length]);
+  }, [autoplay, active, items.length, rotateMs]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
@@ -104,7 +106,7 @@ export function FeaturedShowcase({ items }: { items: FeaturedItem[] }) {
                         key={active}
                         aria-hidden
                         className="featured-progress absolute inset-x-0 bottom-0 h-0.5 origin-left bg-primary"
-                        style={{ animationDuration: `${ROTATE_MS}ms` }}
+                        style={{ animationDuration: `${rotateMs}ms` }}
                       />
                     )}
                   </button>
@@ -165,7 +167,7 @@ export function FeaturedShowcase({ items }: { items: FeaturedItem[] }) {
               className="absolute inset-0"
             >
               {item.video ? (
-                <VideoPlayer video={item.video} title={item.shortTitle} className="h-full w-full rounded-xl" />
+                <VideoPlayer video={item.video} title={item.shortTitle} fit="contain" className="h-full w-full rounded-xl" />
               ) : (
                 <Link href={`/projects/${item.slug}`} tabIndex={-1} aria-hidden className="relative block h-full w-full">
                   <Image

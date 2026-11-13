@@ -74,7 +74,7 @@ function resolveCard(kind: "project" | "paper", slug: string): ChatCard | null {
       description: p.description,
       thumbnail: p.thumbnail,
       href: `/projects/${p.slug}`,
-      badge: p.live ? (p.live.kind === "external" ? "Live site" : "Live demo") : undefined,
+      badge: p.live ? (p.live.kind === "external" ? "Live site" : "Live demo") : p.video ? "Video demo" : undefined,
     };
   }
   const r = research.find((item) => item.slug === slug);
