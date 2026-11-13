@@ -1292,6 +1292,7 @@ export const products = [
     ],
     stack: ["HTML/CSS", "Django", "Scikit-Learn", "Streamlit"],
     slug: "prognosisappointment",
+    category: "ml",
     content: (
       <div>
         <p>

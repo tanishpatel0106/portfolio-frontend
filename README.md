@@ -82,6 +82,12 @@ content: (
 
 `imageAlt` is an optional list of alt texts in the same order as `images`.
 
+### Project graph and shared threads
+
+The Work page opens with a graph: each project is a dot, and a line joins two projects that have something in common. Those links come from `src/constants/threads.ts`, a list of shared tools, methods and domains with the project slugs that use each one. To connect a new project, add its slug to every thread it belongs to, or add a new thread. Rarer threads make stronger links than ubiquitous ones such as Python. The layout is computed at build time in `src/lib/project-graph.ts`.
+
+The skills banner on the home page is `src/constants/techstack.ts`.
+
 ### Live apps
 
 A project with a live app appears in the Live Lab (`/lab`) and gets a status dot from `/api/status`, which pings its `healthUrl` (cached for 60 seconds). Apps on free hosting sleep when idle; the demo frame wakes them and shows a loader while they start. `vercel.json` schedules a daily warm-up call. For an app to be embedded it must allow framing from `tanishpatel.dev`.
