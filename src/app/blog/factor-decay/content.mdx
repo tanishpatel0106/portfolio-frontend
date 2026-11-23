@@ -1,7 +1,7 @@
 import { BlogLayout } from "@/components/BlogLayout";
 
 export const meta = {
-  date: "2026-11-15",
+  date: "2026-11-23",
   title: "When Value Stops Being Value: Measuring Factor Identity Drift in US Equities",
   description:
     "Fifty-five years of CRSP and Compustat data on how much equity factors change what they are while their rules stay fixed, and whether that change predicts anything.",
@@ -57,17 +57,13 @@ First, give each factor a fingerprint. Every month, for each factor, I compute w
 
 That gives the identity vector of factor *f* in month *t*:
 
-$$
-\boldsymbol{\beta}_{f,t} = \sum_i w^{L}_{i,t}\,x_{i,t} - \sum_i w^{S}_{i,t}\,x_{i,t}
-$$
+<math display="block" className="tml-display"><mrow><msub><mi>𝜷</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi></mrow></msub><mo>=</mo><mrow><munder><mo movablelimits="false">∑</mo><mi>i</mi></munder></mrow><msubsup><mi>w</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>t</mi></mrow><mi className="tml-med-pad">L</mi></msubsup><mspace width="0.1667em"></mspace><msub><mi>x</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>t</mi></mrow></msub><mo>−</mo><mrow><munder><mo movablelimits="false">∑</mo><mi>i</mi></munder></mrow><msubsup><mi>w</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>t</mi></mrow><mi className="tml-med-pad">S</mi></msubsup><mspace width="0.1667em"></mspace><msub><mi>x</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>t</mi></mrow></msub></mrow></math>
 
 Here *x* is a stock's 29 characteristics and the *w*'s are its weights in the long and short legs. In plain English, the vector says what kind of company the factor owns compared with the kind it's short.
 
 Second, measure how far the fingerprint has moved. The obvious choice is a simple distance between this year's vector and last year's. But that treats a 10% tilt toward utilities the same as a 10% tilt toward high-momentum stocks, which have very different risk. So I weight each exposure by its risk, using the covariance matrix of pure characteristic returns (Fama–MacBeth slopes, trailing 60 months, Ledoit–Wolf shrinkage):
 
-$$
-D_{f,t}(h) = 1 - \frac{\boldsymbol{\beta}_{f,t}^{\top}\,\boldsymbol{\Sigma}_t\,\boldsymbol{\beta}_{f,t-h}}{\sqrt{\boldsymbol{\beta}_{f,t}^{\top}\boldsymbol{\Sigma}_t\boldsymbol{\beta}_{f,t}}\;\sqrt{\boldsymbol{\beta}_{f,t-h}^{\top}\boldsymbol{\Sigma}_t\boldsymbol{\beta}_{f,t-h}}}
-$$
+<math display="block" className="tml-display"><mrow><msub><mi>D</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi></mrow></msub><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>h</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><msubsup><mi>𝜷</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi></mrow><mi>⊤</mi></msubsup><mspace width="0.1667em"></mspace><msub><mi>𝚺</mi><mi>t</mi></msub><mspace width="0.1667em"></mspace><msub><mi>𝜷</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi><mo>−</mo><mi>h</mi></mrow></msub></mrow><mrow><msqrt><mrow><msubsup><mi>𝜷</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi></mrow><mi>⊤</mi></msubsup><msub><mi>𝚺</mi><mi>t</mi></msub><msub><mi>𝜷</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi></mrow></msub></mrow></msqrt><mspace width="0.2778em"></mspace><msqrt><mrow><msubsup><mi>𝜷</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi><mo>−</mo><mi>h</mi></mrow><mi>⊤</mi></msubsup><msub><mi>𝚺</mi><mi>t</mi></msub><msub><mi>𝜷</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi><mo>−</mo><mi>h</mi></mrow></msub></mrow></msqrt></mrow></mfrac></mrow></math>
 
 With that weighting, the fraction has a plain reading: it is the **correlation between the returns today's portfolio would earn and the returns last year's portfolio would earn**. So D is easy to interpret:
 
@@ -117,9 +113,7 @@ None of this means value is "broken." It means the label on the tin stayed the s
 
 **No factor forgets everything. Each has a permanent core it keeps forever and a satellite layer it sheds with a measurable half-life.** If you plot how similar a factor is to itself *h* months earlier, the curve doesn't fall to zero. It levels off at a floor, so I fit:
 
-$$
-S_f(h) = s^{\infty}_f + \left(S^{0}_f - s^{\infty}_f\right) e^{-h/\tau_f}, \qquad t_{1/2} = \tau_f \ln 2
-$$
+<math display="block" className="tml-display"><mrow><msub><mi>S</mi><mi>f</mi></msub><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>h</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>=</mo><msubsup><mi>s</mi><mi>f</mi><mi className="tml-sml-pad">∞</mi></msubsup><mo>+</mo><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msubsup><mi>S</mi><mi>f</mi><mn className="tml-med-pad">0</mn></msubsup><mo>−</mo><msubsup><mi>s</mi><mi>f</mi><mi className="tml-sml-pad">∞</mi></msubsup><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><msup><mi>e</mi><mrow className="tml-sml-pad"><mo form="prefix" stretchy="false" lspace="0em" rspace="0em">−</mo><mi>h</mi><mi>/</mi><msub><mi>τ</mi><mi>f</mi></msub></mrow></msup><mo separator="true">,</mo><mspace width="2em"></mspace><msub><mi>t</mi><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow></msub><mo>=</mo><msub><mi>τ</mi><mi>f</mi></msub><mrow><mi>ln</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mn>2</mn></mrow></math>
 
 Here s-infinity is the core (what never changes) and the half-life measures how fast the satellite fades. (My first attempt used a plain exponential decay. That reported value's identity half-life as 254 months, roughly the life expectancy of a tortoise. The core-plus-satellite model fixed that.)
 
@@ -204,9 +198,7 @@ The hypothesis was tempting. If a factor changes what it is *before* its returns
 
 The model is a pooled logit across the six factors:
 
-$$
-\Pr\left(R_{f,t+1:t+12} < 0\right) = \Lambda\left(\alpha_f + \gamma D_{f,t} + \delta^{\top} X_{f,t}\right)
-$$
+<math display="block" className="tml-display"><mrow><mrow><mi>Pr</mi><mo>⁡</mo></mrow><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msub><mi>R</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi><mo>+</mo><mn>1</mn><mo lspace="0.2222em" rspace="0.2222em">:</mo><mi>t</mi><mo>+</mo><mn>12</mn></mrow></msub><mo>&lt;</mo><mn>0</mn><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mo>=</mo><mrow><mi mathvariant="normal">Λ</mi><mspace></mspace></mrow><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msub><mi>α</mi><mi>f</mi></msub><mo>+</mo><mi>γ</mi><msub><mi>D</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi></mrow></msub><mo>+</mo><msup><mi>δ</mi><mi>⊤</mi></msup><msub><mi>X</mi><mrow><mi>f</mi><mo separator="true">,</mo><mi>t</mi></mrow></msub><mo fence="true" form="postfix" stretchy="true">)</mo></mrow></mrow></math>
 
 In-sample, the drift coefficient is **γ = 0.035 with a t-statistic of 0.30**, and the bootstrap 90% interval [−0.17, 0.26] sits comfortably around zero. Out of sample, re-estimated every year from 1995 to 2024 without peeking at future outcomes:
 
