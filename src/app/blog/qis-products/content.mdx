@@ -1,0 +1,187 @@
+import { BlogLayout } from "@/components/BlogLayout";
+
+export const meta = {
+  date: "2026-11-23",
+  title: "The Trade That Worked Until It Didn't: XIV and the Hidden Fragility of QIS",
+  description:
+    "What fifteen years of Bloomberg data say about XIV, Volmageddon, and why halving a short-volatility position helps but doesn't make the tail go away.",
+  image:
+    "/images/blogs/qis-xiv/intro.png",
+  tags: ["Quantitative Finance", "QIS", "Volatility", "Systematic Investing"],
+};
+
+export default (props) => <BlogLayout meta={meta} {...props} />;
+
+> "How did you go bankrupt?" Bill asked.
+> "Two ways," Mike said. "Gradually and then suddenly."
+>
+> — Ernest Hemingway, *The Sun Also Rises* (1926)
+
+*Data: Bloomberg daily series, January 2011 to November 20, 2026*
+
+Systematic risk premia have an obvious appeal. Find a return that seems to show up again and again, wrap it in a set of rules, and let compounding do the heavy lifting. The catch is that some of these returns aren't free at all. They're payment for sitting on top of a rare loss that can be enormous, and the cleaner the backtest looks, the easier it is to forget the loss is still in there.
+
+XIV is one of the cleanest examples. It was an inverse-volatility exchange-traded note issued by Credit Suisse, and it died in February 2018. It's often described as "short the VIX," but that isn't quite right. What it actually delivered was roughly **−1× the *daily* return of a rolling portfolio of near-term VIX futures**, less fees and subject to the note's terms. Two words in that sentence carry the whole story: *futures*, not the spot VIX, and *daily*, not a buy-and-hold short.
+
+This study uses daily Bloomberg histories for XIV, SVXY, the S&P 500 VIX Short-Term Futures Excess Return Index (`SPVXSP`), the VIX itself and the first two VIX futures contracts to answer two questions. How good did the trade really look before its worst day? And what changes if the inverse exposure is cut from −1× to −0.5×?
+
+## 1. Seven good years
+
+This is the part that explains why so many investors bought it. From January 3, 2011, to February 2, 2018, XIV's closing price went from $12.38 to $115.55. That's roughly an 833% gain for anyone who held it the whole way, ignoring trading costs. It actually peaked at $145 on January 11, 2018, less than four weeks before the end.
+
+![Growth of $100 across XIV, modeled daily inverse exposures and S&P 500 total return](/images/blogs/qis-xiv/01_rise_and_collapse.png)
+
+There's an old trading-floor line that selling volatility is like picking up nickels in front of a steamroller. The nickels are easy to see in this chart. The steamroller only shows up in the last few pixels on the right.
+
+To separate the strategy from the product's market price, the study models two simple daily-reset strategies on `SPVXSP`:
+
+<div style={{ textAlign: "center", margin: "1.5rem 0", fontSize: "1.08rem", fontWeight: 500, lineHeight: 2 }}>
+  R<sub>t</sub><sup>(L)</sup> = −L × (I<sub>t</sub> / I<sub>t−1</sub> − 1) − 0.01 / 252, &nbsp; L ∈ {"{1, 0.5}"}
+</div>
+
+Here <code>I_t</code> is the futures **excess-return** index, and the 1% annual drag is a fee applied equally to both versions for illustration. It isn't either product's actual expense ratio. Wealth compounds daily. The model deliberately leaves out financing, slippage, premiums or discounts to NAV, issuer credit risk and termination mechanics, so it is best read as a lens on the exposure rather than a replica of XIV or SVXY.
+
+Up to February 2, 2018, the −1× model was up **793.8%** and the −0.5× model was up **346.3%**. Full exposure finished with more than twice the gain. But by then it had also already sat through a **74.8%** drawdown, against **47.0%** for half exposure. Even in the good years this was never a gentle carry trade. It only looked like one in hindsight, because it kept recovering.
+
+## 2. February 5, 2018
+
+Then came the Monday now known as Volmageddon. The VIX closed at 37.32, up from 17.31 the Friday before, so it more than doubled in a single session. `SPVXSP`, the futures index XIV actually referenced, rose **96.10%** in one day.
+
+For a daily-reset inverse strategy there's nothing ambiguous about what that means. At −1× it's a **−96.10%** day. At −0.5× it's **−48.05%**. Same shock, very different odds of surviving it.
+
+Compounding makes it worse. Measured from January 2011, the −1× model went from **+793.8% to −65.2%** in one day. Seven years of gains gone, and then some. The −0.5× model went from **+346.3% to +131.8%**: painful, but still standing. That result shouldn't be oversold. Half exposure isn't crash-proof. It simply lost a smaller share of its capital on this particular day.
+
+Warren Buffett once wrote in a Berkshire Hathaway shareholder letter that "you only find out who is swimming naked when the tide goes out." February 5 was the tide going out on an entire corner of the volatility market.
+
+### The closing prices don't tell the story you'd expect
+
+Lined up side by side, the closing prices for that week look, at first glance, like a data error.
+
+![February 2018: daily index change versus XIV and SVXY closing-price returns](/images/blogs/qis-xiv/02_february_2018_timing.png)
+
+<div style={{ overflowX: "auto", margin: "1.5rem 0" }}>
+  <table>
+    <thead>
+      <tr>
+        <th>Observation</th>
+        <th>February 5, 2018</th>
+        <th>February 6, 2018</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>VIX short-term futures excess-return index</td>
+        <td>+96.10%</td>
+        <td>-25.96%</td>
+      </tr>
+      <tr>
+        <td>XIV exchange closing-price return</td>
+        <td>-14.32%</td>
+        <td>-92.58%</td>
+      </tr>
+      <tr>
+        <td>SVXY exchange closing-price return</td>
+        <td>-31.99%</td>
+        <td>-82.96%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+XIV closed down "only" 14.32% on the day its index nearly doubled, then fell 92.58% the next day. That doesn't mean XIV somehow escaped the February 5 loss. VIX futures kept trading after the 4 p.m. stock-market close, and a lot of the move landed there, so the exchange close, the index settlement and the note's indicative value were effectively running on different clocks. Credit Suisse later announced that XIV's *intraday indicative value* on February 5 had fallen to 20% or less of the prior day's closing indicative value, which triggered an acceleration event. From that point, valuation and payment followed the note's own terms. There was never an ETF-style promise that holders would get any particular price. ([Credit Suisse announcement, SEC filing](https://www.sec.gov/Archives/edgar/data/1053092/000095010318001572/dp86358_ex9901.htm))
+
+A later U.S. appellate decision records the notes being terminated with a final payment of **$5.99 per note**. The last Bloomberg closing price in the sample, on February 15, is **$6.04**. Close, but not the same number, and that's exactly the point: market price, indicative value and legal payout are three different things. ([Second Circuit decision](https://caselaw.findlaw.com/court/us-2nd-circuit/2124632.html))
+
+The lesson for any product-level QIS work is simple. **A close-to-close price backtest is not the same thing as close-to-close risk accounting for the underlying strategy**, and the gap is widest on exactly the days that matter most.
+
+## 3. Does halving the exposure fix it?
+
+XIV ended. SVXY survived, but with a new mandate. ProShares announced that SVXY would move from seeking **−1×** to **−0.5×** the daily VIX short-term futures benchmark, effective after the close on February 27, 2018, so the new exposure applied from February 28. ([ProShares SEC announcement](https://www.sec.gov/Archives/edgar/data/1415311/000119312518059052/d503117dex991.htm))
+
+That change creates a natural experiment. Both models were run over the same post-change window, **February 28, 2018 to November 20, 2026**. To be clear, nobody could actually hold XIV over this period. This is a controlled comparison of two exposures to the same index.
+
+<div style={{ overflowX: "auto", margin: "1.5rem 0" }}>
+  <table>
+    <thead>
+      <tr>
+        <th>Post-reform modeled result</th>
+        <th>-1×</th>
+        <th>-0.5×</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cumulative return</td>
+        <td>-17.0%</td>
+        <td>+70.7%</td>
+      </tr>
+      <tr>
+        <td>Annualized return</td>
+        <td>-2.1%</td>
+        <td>+6.3%</td>
+      </tr>
+      <tr>
+        <td>Maximum drawdown</td>
+        <td>-87.4%</td>
+        <td>-62.2%</td>
+      </tr>
+      <tr>
+        <td>Annualized daily-return volatility</td>
+        <td>74.3%</td>
+        <td>37.2%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+![Post-2018 modeled exposures, observed SVXY and the equity market](/images/blogs/qis-xiv/03_post_2018_strategy.png)
+
+Halving the exposure did a lot. Volatility halved, as expected, and while the full-exposure version actually lost money over almost nine years, half exposure made 70.7%. But a 62% drawdown is still a 62% drawdown. And −0.5× daily is not the same thing as a permanent half-sized short. Because the position resets every day, the path, the volatility of returns and the fees all shape the outcome over longer horizons. ProShares says as much on SVXY's own product page: returns over periods longer than a day can differ materially from the stated daily multiple. ([ProShares SVXY product page](https://www.proshares.com/our-etfs/strategic/svxy))
+
+As a sanity check, regressing SVXY's daily market-price returns after the change on same-day `SPVXSP` returns gives a slope of about **−0.49**, right next to the −0.5 target. That's a descriptive check on market prices, not proof of exact NAV tracking, but it is reassuring.
+
+## 4. Is it just contango?
+
+The usual pitch for short volatility is that it's "selling expensive insurance." In calm markets, front-month VIX futures usually trade below later months, so a long index that keeps rolling into the next contract tends to bleed. An inverse product collects that bleed.
+
+And the bleed is real. Over the sample, the long `SPVXSP` index fell from about 133.7 million to about 5,400, a loss of roughly 99.996%. Shorting something that loses essentially everything sounds like the easiest trade in the world. Yet the −1× daily-reset model, run over the same full period, still finished down about 62%. One bad day plus the arithmetic of daily compounding was enough to turn what looks like the best short in markets into a loser.
+
+That makes the curve story worth testing rather than assuming. Using the first- and second-month futures, the study computes <code>UX2_t / UX1_t − 1</code> each day, sorts the days into slope quartiles, and looks at the following 20 trading days of compounded −0.5× model returns.
+
+![Term structure quartiles and subsequent twenty-day modeled returns](/images/blogs/qis-xiv/04_curve_quartiles.png)
+
+Average forward returns came out at roughly **1.6%, 0.9%, 0.8% and 2.1%**, going from flattest or backwardated to steepest contango. **Not monotonic.** The windows overlap, and the calculation doesn't control for volatility regime, shifting risk premia or roll mechanics, so the exact numbers shouldn't be over-read. But it's enough to say that a simple two-contract slope doesn't work as a stand-alone trading signal here.
+
+This "nothing" result is arguably one of the more useful findings. It suggests short-vol returns come from a mix of futures risk premia, daily resetting, convexity during shocks and path dependence, not just the shape of the curve on a given morning.
+
+## 5. What this means for QIS design
+
+Read with hindsight, XIV's original offering document is striking, because the risk was never hidden. The document pitched the notes as trading tools for sophisticated investors, and it warned plainly that for anyone holding them as a long-term investment, "it is likely that you will lose all or a substantial portion of your investment." ([XIV offering document](https://www.sec.gov/Archives/edgar/data/1053092/000089109210005645/e41214fwp.htm)) Everything that happened in February 2018 was, in a sense, written down from day one. What the warning couldn't compete with was seven years of a chart that mostly went up.
+
+That is the first lesson for anyone building or buying a QIS product: the shape of the payoff matters far more than how smooth the cumulative-return line looks. A strategy can compound beautifully for years and still lose most of its capital in one session, and a Sharpe ratio estimated over the quiet years says almost nothing about that session. Annualized return and Sharpe belong next to drawdowns, stress tests, the distribution of single-day losses and an honest look at any barrier or trigger in the product, because those are the numbers that describe the day that actually matters.
+
+The second is that product terms are part of the strategy's risk, not legal small print sitting beside it. XIV was an unsecured ETN with an acceleration clause. SVXY is an ETF with a daily target and a different operational and legal structure. Both pointed at essentially the same index, yet their holders lived through February 2018 very differently. An index backtest can't show the indicative value, tradability, corporate actions, fees or mandatory redemption mechanics, and in a discontinuous event those mechanics *are* the outcome.
+
+The third is that cutting exposure helps, but it doesn't make the tail go away. Over the full hypothetical 2011–2026 path, the −1× model's worst drawdown was about **99.2%**, while the −0.5× model's was about **72.2%**. Half exposure kept far more wealth alive through the 2018 shock and had a meaningfully shallower drawdown afterward. Still, anything that can fall more than 60% from a peak is not a defensive substitute for cash or bonds, however it's labelled.
+
+![Simulated maximum drawdown paths for inverse VIX futures exposure](/images/blogs/qis-xiv/05_drawdown_2011_2026.png)
+
+Hyman Minsky's old argument was that long periods of stability breed exactly the behaviour that makes the next instability worse. XIV is a small, almost perfect illustration of that idea: the calm years were precisely what made the trade feel safe. And the lesson doesn't stop at volatility ETNs. Any rules-based product whose attractive carry is really compensation for adverse convexity or liquidity stress deserves two separate analyses. One is the return stream investors see in normal markets. The other, the one that usually gets skipped, is **the set of product mechanics that decide what happens when normal markets disappear**.
+
+---
+
+### Methods and limitations
+
+> "All models are wrong, but some are useful."
+>
+> — George E. P. Box
+
+Everything here is built on Bloomberg `PX_LAST` daily closes for `XIV US Equity`, `SVXY US Equity`, `VXX US Equity`, `SPVXSP Index`, `SPVXSTR Index`, `VIX Index`, `SPXT Index` and the `UX1`/`UX2` generic futures. XIV's history ends in February 2018, and the VXX series used here starts in January 2018.
+
+The simulation is intentionally bare-bones: <code>R_t = −L × R_SPVXSP,t − 0.01/252</code>, compounded daily, for <code>L = 1</code> or <code>0.5</code>. There's no intraday simulation, no margin, funding or collateral modelling, no execution slippage, no reconstruction of the actual indicative value, and no termination rule in the full-sample hypothetical paths. That last point matters: the −1× path after February 2018 exists only for comparison, since the real product no longer existed.
+
+A few things worth keeping in mind when reading the numbers:
+
+- All percentages come from the Bloomberg data and locally computed models. They are **not** the investable performance of some hypothetical surviving XIV, and actual SVXY prices are distinct from the modeled results.
+- The slope-quartile forward returns use overlapping 20-day windows and are descriptive only. They say nothing about statistical significance or causality.
+- Corporate-action adjustments in the price series should be confirmed in Bloomberg before anyone tries to replicate these figures exactly.
