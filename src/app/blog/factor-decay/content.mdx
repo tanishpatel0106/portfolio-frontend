@@ -1,0 +1,253 @@
+import { BlogLayout } from "@/components/BlogLayout";
+
+export const meta = {
+  date: "2026-11-15",
+  title: "When Value Stops Being Value: Measuring Factor Identity Drift in US Equities",
+  description:
+    "Fifty-five years of CRSP and Compustat data on how much equity factors change what they are while their rules stay fixed, and whether that change predicts anything.",
+  image:
+    "/images/blogs/factor-identity/01_value_industries.png",
+  tags: ["Quantitative Finance", "Factor Investing", "Equity Factors", "Systematic Investing"],
+};
+
+export default (props) => <BlogLayout meta={meta} {...props} />;
+
+> What's in a name? That which we call a rose
+> By any other name would smell as sweet.
+>
+> — William Shakespeare, *Romeo and Juliet* (1597)
+
+*Data: CRSP and Compustat via WRDS, January 1970 to December 2025*
+
+**Your value factor has been quietly dating the banks for twenty years. This post measures how much a factor's economic identity changes while its rulebook stays fixed, and then checks whether that change predicts anything. Short answer: it changes a lot, and it predicts nothing.**
+
+Shakespeare never ran a long-short book. In factor investing, the name stays fixed while the contents change. "Value" in 1985 meant owning utilities and phone companies against oil and tech. "Value" in 2025 means owning banks against almost all of tech. It's the same book-to-market rule and the same label, but a different trade.
+
+I built a way to measure that change across six US equity factors from 1970 to 2025. It rests on three numbers:
+
+- **Core identity:** how much of a factor never changes. This is 85–92% for value, low volatility and size, and 56% for momentum.
+- **Half-life:** how fast the rest is forgotten. This ranges from 3 months for momentum to about 2 years for size and quality.
+- **Predictive power:** whether a factor's identity drift warns you before it underperforms. It doesn't, and the test was pre-registered so I couldn't wriggle out of that.
+
+## 1. The Ship of Theseus, now with a Bloomberg terminal
+
+Plutarch tells of a ship whose rotten planks were replaced one at a time. Eventually none of the original wood remained, and philosophers argued for centuries about whether it was still the same ship. A factor portfolio has the same problem, rebalanced monthly.
+
+Each month a value portfolio sells some stocks that got expensive and buys some that got cheap. Over a year it replaces roughly a quarter of its capital. The usual way to track this is turnover, which counts planks. But turnover can't tell you whether the new planks are made of the same wood.
+
+That is the question this research asks:
+
+- If value swaps one cheap utility for another, the factor hasn't changed.
+- If it swaps a cheap utility for a cheap bank, it has.
+
+It also hands a strategist a sharper question than "is value working?" The better question is: **what is value right now, and is it still the thing your backtest was built on?**
+
+> No man ever steps in the same river twice.
+>
+> — attributed to Heraclitus, via Plato
+
+No allocator holds the same factor twice either. The rest of this post shows how much the river has moved.
+
+## 2. How to measure a factor's soul
+
+First, give each factor a fingerprint. Every month, for each factor, I compute what the long side owns relative to the short side along 29 dimensions:
+
+- **17 stock characteristics:** size, book-to-market, earnings yield, cash-flow yield, sales yield, gross profitability, operating profitability, ROE, leverage, asset growth, sales growth, R&D intensity, dividend yield, momentum, short-term reversal, volatility and market beta. Each is ranked across stocks every month so they're comparable.
+- **12 industries:** the net weight in each Fama–French industry.
+
+That gives the identity vector of factor *f* in month *t*:
+
+$$
+\boldsymbol{\beta}_{f,t} = \sum_i w^{L}_{i,t}\,x_{i,t} - \sum_i w^{S}_{i,t}\,x_{i,t}
+$$
+
+Here *x* is a stock's 29 characteristics and the *w*'s are its weights in the long and short legs. In plain English, the vector says what kind of company the factor owns compared with the kind it's short.
+
+Second, measure how far the fingerprint has moved. The obvious choice is a simple distance between this year's vector and last year's. But that treats a 10% tilt toward utilities the same as a 10% tilt toward high-momentum stocks, which have very different risk. So I weight each exposure by its risk, using the covariance matrix of pure characteristic returns (Fama–MacBeth slopes, trailing 60 months, Ledoit–Wolf shrinkage):
+
+$$
+D_{f,t}(h) = 1 - \frac{\boldsymbol{\beta}_{f,t}^{\top}\,\boldsymbol{\Sigma}_t\,\boldsymbol{\beta}_{f,t-h}}{\sqrt{\boldsymbol{\beta}_{f,t}^{\top}\boldsymbol{\Sigma}_t\boldsymbol{\beta}_{f,t}}\;\sqrt{\boldsymbol{\beta}_{f,t-h}^{\top}\boldsymbol{\Sigma}_t\boldsymbol{\beta}_{f,t-h}}}
+$$
+
+With that weighting, the fraction has a plain reading: it is the **correlation between the returns today's portfolio would earn and the returns last year's portfolio would earn**. So D is easy to interpret:
+
+| D | Meaning | Translation |
+|---|---|---|
+| 0 | Identical risk identity | Same trade as last year |
+| 0.3 | 70% correlated with last year's exposures | Same name, noticeably different trade |
+| 1 | Uncorrelated with last year | A new factor in an old jersey |
+| Above 1 | Negatively correlated | The factor has become its own opposite |
+
+The main measurement looks back 12 months. All the factors are built by me from CRSP and Compustat with fixed rules, rebalanced monthly, long the top 30% and short the bottom 30% of each signal. They track Ken French's published factors closely (correlations of 0.82 for value, 0.95 for momentum, 0.93 for size), so this isn't a homemade-factor artefact.
+
+## 3. What value turned into
+
+**Value has gone through three phases: a utilities trade until about 2000, a banks trade from 2007, and an increasingly anti-tech trade since 2010.** Its defining traits barely moved: it is always cheap, always low-profitability, always low-R&D. What changed was the *industries* that carry those traits.
+
+| Year | Biggest overweights | Biggest underweight | Beta tilt | Gross profitability tilt |
+|---|---|---|---|---|
+| 1980 | Utilities +0.21, Telecom +0.16 | Energy −0.31 | −0.25 | −0.31 |
+| 1990 | Utilities +0.27, Financials +0.18 | Consumer non-durables −0.19 | −0.04 | −0.41 |
+| 2000 | Utilities +0.13, Telecom +0.12 | Tech −0.22 | −0.10 | −0.25 |
+| 2007 | Financials +0.44 | Tech −0.23 | −0.02 | −0.45 |
+| 2015 | Financials +0.49, Energy +0.15 | Tech −0.26 | +0.20 | −0.46 |
+| 2025 | Financials +0.41, Energy +0.10 | Tech −0.50 | −0.24 | −0.45 |
+
+*Net weights are long minus short; tilts are in rank units from −0.5 to +0.5. December of each year, main universe.*
+
+Three things stand out:
+
+- **The banks moved in and stayed.** Financials went from a minor overweight of +0.11 in 1980 to more than +0.40 in every year since 2007. Since then, owning value has largely meant owning banks.
+- **The tech underweight more than doubled.** It went from −0.16 in 1980 to −0.50 in 2025, so roughly half the short side's net industry bet is now "not tech." That's worth knowing before attributing value's post-2010 drawdown to anything deeper.
+- **Beta is a passenger, not a driver.** Value's market-beta tilt swung from −0.25 to +0.20 and back to −0.24. Nobody chose those swings; they came with whichever cheap stocks happened to be available.
+
+![Value factor net industry weights, 1970-2025](/images/blogs/factor-identity/01_value_industries.png)
+
+*Value's net industry weights (long minus short, 12-month average). Financials take over after 2000; the tech underweight deepens after 2010.*
+
+The full fingerprint makes the split visible. In the top panel, the valuation rows (B/M, E/P, CF/P, dividend yield) form a solid red band for 50 years: that's the core. Nearly all the movement is in the industry panel below, plus the beta and volatility rows.
+
+![Value factor identity vector heatmap, annual averages](/images/blogs/factor-identity/02_value_identity_heatmap.png)
+
+*Value's annual-average identity vector. Top: characteristic tilts (red = long side higher). Bottom: net industry weights.*
+
+None of this means value is "broken." It means the label on the tin stayed the same while the contents were reformulated, more like shrinkflation than fraud.
+
+## 4. Every factor has a core and a satellite
+
+**No factor forgets everything. Each has a permanent core it keeps forever and a satellite layer it sheds with a measurable half-life.** If you plot how similar a factor is to itself *h* months earlier, the curve doesn't fall to zero. It levels off at a floor, so I fit:
+
+$$
+S_f(h) = s^{\infty}_f + \left(S^{0}_f - s^{\infty}_f\right) e^{-h/\tau_f}, \qquad t_{1/2} = \tau_f \ln 2
+$$
+
+Here s-infinity is the core (what never changes) and the half-life measures how fast the satellite fades. (My first attempt used a plain exponential decay. That reported value's identity half-life as 254 months, roughly the life expectancy of a tortoise. The core-plus-satellite model fixed that.)
+
+| Factor | Permanent core | Half-life of the rest | Same trade as 12 months ago | Same trade as 5 years ago |
+|---|---|---|---|---|
+| Size | 92% | 26 months | 96% | 93% |
+| Low volatility | 89% | 10 months | 93% | 88% |
+| Value | 85% | 12 months | 93% | 85% |
+| Quality | 79% | 22 months | 93% | 82% |
+| Investment | 68% | 11 months | 83% | 69% |
+| Momentum | 56% | **3 months** | 57% | 54% |
+
+*Main universe, 1973–2025. "Same trade" = average 1 − D at that lag. The S&P 500 universe gives near-identical numbers: value's core is 84% with a 12-month half-life, and momentum's is 57% with a 3-month half-life.*
+
+![Average identity similarity by horizon, six factors](/images/blogs/factor-identity/03_half_life.png)
+
+*How similar each factor is to itself h months earlier. Every curve flattens above zero, which is the permanent core. Momentum dips and then partly recovers.*
+
+How to read it:
+
+- **Size, low vol and value are mostly core.** About 85–92% of their risk identity is permanent. A value backtest from 1995 mostly describes the value you own today. The remaining ~15% is exactly the industry mix shown above.
+- **Quality's satellite is small but slow.** At 22 months it is the stickiest outside size. That fits quality's reputation as the factor least likely to surprise you.
+- **Investment is a quieter shapeshifter.** Only 68% is core, which makes it the most changeable factor after momentum.
+
+## 5. Turnover is not identity
+
+**Changing the planks doesn't change the ship. For five of the six factors, turnover explains only 5–25% of the variation in identity drift.**
+
+| Factor | Capital in new names after 12 months | Identity drift after 12 months | Variation in identity drift explained by turnover |
+|---|---|---|---|
+| Low volatility | 48% | 6% | 6% |
+| Size | 26% | 4% | 5% |
+| Value | 28% | 7% | 15% |
+| Quality | 30% | 8% | 15% |
+| Investment | 60% | 17% | 25% |
+| Momentum | 76% | 43% | 49% |
+
+*Identity drift shown is the average D at a 12-month lag.*
+
+![Identity drift versus composition drift, factor-months](/images/blogs/factor-identity/04_drift_vs_turnover.png)
+
+*Each dot is a factor-month. Across a wide range of turnover, value, quality, size and low vol stay close to zero identity drift. Only momentum climbs the chart.*
+
+Low volatility is the clearest example. Almost half its capital rotates into new names every year, yet its identity barely moves (D = 0.06), because the incoming stocks look exactly like the outgoing ones: low beta, low vol, similar industries. It is Theseus's ship rebuilt with the same timber from the same forest.
+
+Value is the reverse. It turns over modestly, but over two decades the new planks came from a different forest: banks instead of utilities.
+
+The practical point is that **monitoring turnover is not monitoring identity.** A factor can rotate heavily and stay the same trade, or rotate quietly and become a different one.
+
+## 6. Momentum, the shapeshifter
+
+**Momentum regularly becomes its own opposite: its 12-month identity drift went above 1 in 1984, 2001, 2003 and 2021.** Above 1 means its current exposures would earn returns *negatively* correlated with the returns its exposures a year earlier would have earned. The name is the same, but the bet is reversed.
+
+![Twelve-month identity drift by factor, 1973-2025](/images/blogs/factor-identity/05_identity_drift.png)
+
+*12-month identity drift for all six factors on a common scale. Momentum lives in a different world; value's biggest spike came after the dot-com unwind in 2001.*
+
+That isn't a bug in the measure; it's the reason momentum is in the study. Momentum buys whatever went up, so its identity is borrowed from the market's recent mood:
+
+| Date | Momentum was long | Momentum was short | Beta tilt |
+|---|---|---|---|
+| March 2000 | Tech (+0.48) | Financials (−0.27) | +0.23 |
+| March 2009 | Healthcare, retail | Manufacturing, financials | **−0.49** |
+| December 2020 | Tech (+0.48) | Financials (−0.34), energy | −0.11 |
+| December 2025 | Tech (+0.22), healthcare | Chemicals, other | +0.12 |
+
+March 2009 is the textbook setup for a momentum crash. After a brutal bear market the factor is long defensive low-beta stocks and short beaten-down cyclicals, so when the market snaps back it gets run over. That's exactly what happened in spring 2009, and it matches the academic work on momentum crashes by Daniel and Moskowitz. That the measure picks this up is the sanity check that it's measuring something real.
+
+Here is the same heatmap for momentum. Value's looked like a striped rug; momentum's looks like a barcode, with tilts flipping colour from one year to the next.
+
+![Momentum factor identity vector heatmap, annual averages](/images/blogs/factor-identity/06_momentum_identity_heatmap.png)
+
+*Momentum's annual-average identity vector. Only the momentum row itself stays put.*
+
+The less-known finding is that **momentum's identity is cyclical**. Its similarity to its past self falls to 0.50 at about 21 months, then *recovers* to 0.61 at about 48 months before falling again. Every four years or so momentum drifts back toward a configuration it held before, which fits its market-dependent beta and the rough length of a business cycle.
+
+## 7. The part where we tried to make money
+
+**Identity drift does not predict factor underperformance. Not in-sample, not out-of-sample, not in large caps, not under any alternative definition I tried.**
+
+The hypothesis was tempting. If a factor changes what it is *before* its returns reveal the change, drift should be an early warning. Before touching real data I wrote down the test: the 12-month horizon, the risk-weighted measure, the outcome (does the factor lose money over the next year?) and the controls (factor momentum, factor volatility, valuation spread, turnover). Fixing it in advance meant there was no option to try forty variants and report the one that worked.
+
+The model is a pooled logit across the six factors:
+
+$$
+\Pr\left(R_{f,t+1:t+12} < 0\right) = \Lambda\left(\alpha_f + \gamma D_{f,t} + \delta^{\top} X_{f,t}\right)
+$$
+
+In-sample, the drift coefficient is **γ = 0.035 with a t-statistic of 0.30**, and the bootstrap 90% interval [−0.17, 0.26] sits comfortably around zero. Out of sample, re-estimated every year from 1995 to 2024 without peeking at future outcomes:
+
+| Model | AUC | Brier skill vs. base rate | Out-of-sample R² on 12m returns |
+|---|---|---|---|
+| Base rate per factor | 0.491 | — | — |
+| + momentum, volatility, valuation spread | 0.514 | −6.0% | −4.4% |
+| + turnover | 0.534 | −3.9% | −3.9% |
+| **+ identity drift** | **0.533** | **−4.1%** | **−4.0%** |
+| Identity drift alone | 0.508 | +0.6% | +0.4% |
+
+*Adding drift lowers forecast accuracy slightly: Diebold–Mariano t = −1.33, Clark–West t = −1.00. 2,160 factor-month forecasts.*
+
+The second hypothesis, that a factor's identity changes *before* its return behaviour does, failed too. I measured behavioural drift as the change in a factor's sensitivity to market, 10-year yield and credit-spread shocks. A rise in identity drift is followed by a slight *fall* in behavioural drift over 3–12 months (t ≈ −1.7), and the effect fades to zero by month 21. If anything, behaviour moves first and the portfolio reshuffles after.
+
+![Local projections between identity drift and behavioural drift](/images/blogs/factor-identity/07_lead_lag.png)
+
+*Response of behavioural drift to identity drift (blue), and the reverse (orange). Shaded bands are 95% Driscoll–Kraay intervals; both include zero at every horizon.*
+
+Two honest footnotes:
+
+- **On its own, drift points the "wrong" way.** High-drift months were followed by *better* factor returns (t = 2.4). Value is the clearest case: +3.3% over the next year when drift was high, against −3.2% when it was low. But drift and turnover move together (correlation 0.66), and once turnover is in the model the effect disappears. It is turnover in disguise, not an independent signal.
+- **Even the controls lose to the base rate out of sample.** Every model with timing variables has *negative* Brier skill. Forecasting factor losses a year ahead is hard, and that is worth remembering the next time someone pitches a factor-timing model with a beautiful backtest.
+
+![Next-12-month factor returns by tercile of identity drift](/images/blogs/factor-identity/08_drift_terciles.png)
+
+*Next-12-month factor return by drift tercile, with cutoffs set using only past data. High-drift months did fine. This is turnover in disguise, not a signal.*
+
+> All models are wrong, but some are useful.
+>
+> — George E. P. Box
+
+This measure is useful for describing factors, but wrong for timing them. The market appears to price the stocks a factor holds, not the label on the factor.
+
+## 8. What identity drift is actually good for
+
+**Identity drift won't time a factor, but it tells you what a factor allocation currently is, which most dashboards don't.** Four practical uses:
+
+1. **Checking whether a backtest still applies.** The core numbers say how much of a factor's historical return was earned by exposures it still holds. For value that's about 85%. The other 15% was a utilities bet that is now a banks-and-anti-tech bet. An investment committee looking at value's 50-year Sharpe ratio should know that.
+2. **A dashboard number.** D(12) is one number per factor, and it reads as a correlation: 0.3 means today's exposures are 70% correlated with last year's. A reading near or above 1, which in practice happens only to momentum, should trigger the question "is this allocation still doing the job we hired it for?"
+3. **Separating three questions in attribution.** When a factor behaves strangely, the decomposition separates three causes: whether it holds different names (turnover), different kinds of companies (identity), or reacts differently to rates and credit (behaviour). Each can change without the others.
+4. **Choosing how to neutralise.** If the drift sits in the industry block, industry-neutral construction will stabilise the factor. If it sits in the beta tilt, beta-hedging will. The fingerprint tells you which fix addresses the actual problem, instead of applying every neutralisation by default.
+
+There's also a governance lesson. An intuitive, well-measured, economically sensible signal failed a pre-registered test. Any timing signal should face the same bar: specification fixed in advance, controls for turnover and level-based spreads, and an out-of-sample test that can't see the future through overlapping horizons.
